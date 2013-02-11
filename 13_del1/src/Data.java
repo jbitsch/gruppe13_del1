@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import bmi.Data1.Person;
-
-
 
 public class Data implements IOperatoerDAO {
 	
@@ -12,15 +9,14 @@ public class Data implements IOperatoerDAO {
 	
 	public Data()
 	{
-		personer = new ArrayList<Person>();
+		personer = new ArrayList<User>();
 		
 		// Tilføj personer
-		personer.add(new OperatorDTO("234567-8901", "Ib Olsen", 1.80, 75.0));
-		personer.add(new OperatorDTO("456789-0123", "Ole Jensen", 1.75, 95.0));
-		personer.add(new OperatorDTO("123456-7890", "Eva Hansen", 1.65, 65.0));
-		personer.add(new OperatorDTO("111111-1111", "Peter Jensen", 1.95, 55.0));
-		personer.add(new ("222222-2222", "Albert Svanesen", 1.65, 65.0));
-
+		personer.add(new OperatoerDTO(1, "Ib Olsen", "112233-4455","12Qwerty"));
+		personer.add(new OperatoerDTO(2, "Ole Jensen", "112233-4455","12Qwerty"));
+		personer.add(new OperatoerDTO(3, "Eva Hansen", "112233-4455","12Qwerty"));
+		personer.add(new OperatoerDTO(4, "Peter Jensen", "112233-4455","12Qwerty"));
+		personer.add(new Admin(10, "Albert Svanesen", "112233-4455",">02324it!<"));
 	}
 	
 	
@@ -29,7 +25,20 @@ public class Data implements IOperatoerDAO {
 		return personer.get(0);
 	}
 	
-//	List<User> getOperatoerList() throws DALException;
-//	void createOperatoer(User opr) throws DALException;
-//	void updateOperatoer(User opr) throws DALException;
+	public ArrayList<User> getOperatoerList() throws DALException
+	{
+		return personer;
+	}
+	public void createOperatoer(User opr) throws DALException
+	{
+		
+	}
+	public void updateOperatoer(User opr) throws DALException
+	{
+		
+	}
+	public void deleteOperatoer(User opr) throws DALException
+	{
+		
+	}
 }

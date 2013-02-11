@@ -6,6 +6,7 @@ public interface IOperatoerDAO {
 	List<User> getOperatoerList() throws DALException;
 	void createOperatoer(User opr) throws DALException;
 	void updateOperatoer(User opr) throws DALException;
+	void deleteOperatoer(User opr) throws DALException;
 	
 	public class DALException extends Exception
 	{
