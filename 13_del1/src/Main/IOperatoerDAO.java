@@ -10,6 +10,7 @@ public interface IOperatoerDAO {
 	void updateOperatoer(User opr) throws DALException;
 	void deleteOperatoer(User opr) throws DALException;
 	
+	@SuppressWarnings("serial")
 	public class DALException extends Exception
 	{
 		public DALException(int id)

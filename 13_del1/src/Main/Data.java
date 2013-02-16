@@ -1,10 +1,10 @@
 package Main;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Data implements IOperatoerDAO {
 
 	private ArrayList<User> personer;
-
 
 	public Data()
 	{
@@ -17,7 +17,6 @@ public class Data implements IOperatoerDAO {
 		personer.add(new OperatoerDTO(4, "Peter Jensen", "112233-4455","12Qwerty"));
 		personer.add(new Admin(10, "Albert Svanesen", "112233-4455",">02324it!<"));
 	}
-
 
 	public User getOperatoer(int oprId) throws DALException
 	{
@@ -97,5 +96,37 @@ public class Data implements IOperatoerDAO {
 		{
 			throw new DALException(opr.getOprID());
 		}
+	}
+	
+	public void attemptLogin() {
+		Scanner input = new Scanner(System.in);
+		int enteredID = 0;
+		String enteredPassword = "";
+		boolean go = true;
+		
+		System.out.print("Enter your user ID: ");
+		while(go){
+			String str = input.nextLine();
+			try{
+				enteredID = Integer.parseInt(str);
+				go = false;
+			} catch (Exception e){
+				System.out.println("Enter a number!");
+			}
+		}
+		
+		System.out.print("Enter your password: ");
+		enteredPassword = input.nextLine();
+		
+		for (User u: personer){
+			if (u.oprID == enteredID)
+				if (u.password.equals(enteredPassword)){
+					System.out.println("Hello " + u.oprNavn);
+				} else {
+					System.out.println("Wrong password");
+				}
+		}
+	
+		input.close();
 	}
 }
