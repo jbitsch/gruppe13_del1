@@ -1,3 +1,4 @@
+package Main;
 import java.util.List;
 
 
@@ -12,7 +13,7 @@ public interface IOperatoerDAO {
 	{
 		public DALException(int id)
 		{
-			super("Fejl ved login med bruger: " + id);
+			super("Fejl ved søgning efter bruger med ID: " + id);
 		}
 	}
 }
