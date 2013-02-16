@@ -1,10 +1,11 @@
 package Main;
-import java.util.List;
+import java.util.ArrayList;
+
 
 
 public interface IOperatoerDAO {
 	User getOperatoer(int oprId) throws DALException;
-	List<User> getOperatoerList() throws DALException;
+	ArrayList<User> getOperatoerList() throws DALException;
 	void createOperatoer(User opr) throws DALException;
 	void updateOperatoer(User opr) throws DALException;
 	void deleteOperatoer(User opr) throws DALException;
