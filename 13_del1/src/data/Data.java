@@ -1,6 +1,6 @@
 package data;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Data implements IOperatoerDAO {
 
@@ -11,7 +11,7 @@ public class Data implements IOperatoerDAO {
 		personer = new ArrayList<User>();
 
 		// Tilføj personer
-		personer.add(new OperatoerDTO(1, "Ib Olsen", "112233-4455","12Qwerty"));
+		personer.add(new OperatoerDTO(1, "Ib Olsen", "112233-4455","12"));
 		personer.add(new OperatoerDTO(2, "Ole Jensen", "112233-4455","12Qwerty"));
 		personer.add(new OperatoerDTO(3, "Eva Hansen", "112233-4455","12Qwerty"));
 		personer.add(new OperatoerDTO(4, "Peter Jensen", "112233-4455","12Qwerty"));
@@ -38,9 +38,17 @@ public class Data implements IOperatoerDAO {
 		}
 	}
 
-	public ArrayList<User> getOperatoerList() throws DALException
+	public ArrayList<OperatoerDTO> getOperatoerList() throws DALException
 	{
-		return personer;
+		ArrayList<OperatoerDTO> operatoer = new ArrayList<OperatoerDTO>();
+		for (int i = 0; personer.size() > i; i++)
+		{
+			if (personer.get(i) instanceof OperatoerDTO )
+			{
+				operatoer.add((OperatoerDTO)personer.get(i));
+			}
+		}
+		return operatoer;
 	}
 
 	public void createOperatoer(User opr) throws DALException
@@ -98,35 +106,27 @@ public class Data implements IOperatoerDAO {
 		}
 	}
 	
-	public void attemptLogin() {
-		Scanner input = new Scanner(System.in);
-		int enteredID = 0;
-		String enteredPassword = "";
-		boolean go = true;
-		
-		System.out.print("Enter your user ID: ");
-		while(go){
-			String str = input.nextLine();
-			try{
-				enteredID = Integer.parseInt(str);
-				go = false;
-			} catch (Exception e){
-				System.out.println("Enter a number!");
+	public boolean attemptLogin(int ID, String password) throws DALException {
+		boolean loginOk = false;
+		int i = 0;
+		try 
+		{
+			while (true)
+			{
+				if(personer.get(i).getOprID()==ID)
+				{
+					if (personer.get(i).getPassword().equals(password)){
+						loginOk = true;
+						break;
+					} 
+				}
+				i++;
 			}
 		}
-		
-		System.out.print("Enter your password: ");
-		enteredPassword = input.nextLine();
-		
-		for (User u: personer){
-			if (u.oprID == enteredID)
-				if (u.password.equals(enteredPassword)){
-					System.out.println("Hello " + u.oprNavn);
-				} else {
-					System.out.println("Wrong password");
-				}
-		}
-	
-		input.close();
+		catch (IndexOutOfBoundsException e)
+		{
+			throw new DALException(ID);
+		}	
+		return loginOk;
 	}
 }
