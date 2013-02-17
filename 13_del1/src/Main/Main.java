@@ -1,5 +1,7 @@
 package Main;
 
+import data.Data;
+
 public class Main {
 
 	public static void main(String[] args) {

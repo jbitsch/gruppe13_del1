@@ -1,7 +1,12 @@
 package Main;
 import java.util.ArrayList;
 
-import Main.IOperatoerDAO.DALException;
+import data.Admin;
+import data.Data;
+import data.IOperatoerDAO;
+import data.User;
+import data.IOperatoerDAO.DALException;
+
 
 public class Test {
 	IOperatoerDAO data;
