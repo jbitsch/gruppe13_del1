@@ -4,15 +4,16 @@ import data.Admin;
 import data.IOperatoerDAO.DALException;
 import data.User;
 import function.Function;
+import userInterface.IMenu;
 import userInterface.Menu;
 
 
 public class MenuController {
 
-	private Menu menu;
+	private IMenu menu;
 	private Function function;
 	
-	public MenuController(Menu menu, Function function) {
+	public MenuController(IMenu menu, Function function) {
 		this.menu = menu;
 		this.function = function;
 	}
@@ -135,7 +136,7 @@ public class MenuController {
 			changePassword(user);
 			break;
 		case 4:
-			adminMenu();
+			adminMenu(user);
 			break;
 		default:invalidInputHandler();
 		}
@@ -150,16 +151,42 @@ public class MenuController {
 		{
 			do
 			{
-				menu.weightApplication();
+				showWeightApp();
 				menu.outString("Ønsker du at afveje endnu en portion? (j/n) ");
 				if(!menu.getInput().equalsIgnoreCase("j"))
+				{
 					runApp = false;
+				}
+					
 			} while(runApp);
 		}
 		else
 		{
 			menu.outString("Forkert password, du bliver sendt tilbage til menuen");
 		}
+	}
+	//==================Hjælpe metode til weight app ==================//
+	private void showWeightApp()
+	{
+		int tarra = 0;
+		do
+		{
+			tarra = menu.weightApplication("Indtast tarra vægt (kg): ");
+			
+		}while(tarra<0);
+
+		int brutto = 0;
+		do
+		{
+			brutto = menu.weightApplication("Indtast brutto vægt (kg): ");
+			
+		}while(brutto<0);
+		
+		int netto = function.calculateWeight(tarra, brutto);
+		if(netto >= 0)
+			menu.outString("Netto vægt: " + netto + " kg");
+		else
+			menu.outString("Tarra kan ikke være større end brutto.");
 	}
 	//===================================================================
 	
@@ -173,6 +200,10 @@ public class MenuController {
 			menu.outString("Indtast gammelt password: ");
 			String oldPassword = menu.getInput();
 			oldPasswordOk = function.checkOldPassword(user, oldPassword);
+			if(!oldPasswordOk)
+			{
+				menu.outString("Forkert gammelt password");
+			}
 		}while(!oldPasswordOk);
 		
 		do
@@ -196,10 +227,10 @@ public class MenuController {
 		}while(!newPasswordOk);
 	}
 	//===================================================================
-	private void adminMenu()
+	private void adminMenu(User user)
 	{
 		AdminController adminCon = new AdminController(menu,function);
-		adminCon.run();
+		adminCon.run(user);
 	}
 }
 

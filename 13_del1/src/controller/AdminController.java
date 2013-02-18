@@ -3,37 +3,36 @@ package controller;
 import java.util.ArrayList;
 
 import data.IOperatoerDAO.DALException;
-import data.OperatoerDTO;
 import data.User;
 import function.Function;
-import userInterface.Menu;
+import userInterface.IMenu;
 
 public class AdminController {
-	Menu menu;
+	IMenu menu;
 	Function function;
-	public AdminController(Menu menu, Function function)
+	public AdminController(IMenu menu, Function function)
 	{
 		this.menu = menu;
 		this.function = function;
 	}
-	public void run()
+	public void run(User user)
 	{
 		int in = 0;
 		do							
 		{	
 			in = menu.showMenu("Administrer operatører", new String[]{"Vis operatør", "Tilføj operatør", "Rediger operatør", "Slet operatør", "Tilbage"});
-			handleMenuInput(in);
+			handleMenuInput(in,user);
 
 		} while (in != 5) ; // go back, in=5;
 	}
 
-	public void handleMenuInput(int choise)
+	public void handleMenuInput(int choise, User currentUser)
 	{
 		User user;
 		switch(choise)
 		{
 		case 1:
-			user = getOperatoer();
+			user = getOperatoer(currentUser);
 			if (user!=null)
 				showOperatoer(user);
 			break;
@@ -41,12 +40,12 @@ public class AdminController {
 			createUser();
 			break;
 		case 3:
-			user = getOperatoer();
+			user = getOperatoer(currentUser);
 			if(user!=null)
 				run2(user);
 			break;
 		case 4:
-			user = getOperatoer();
+			user = getOperatoer(currentUser);
 			if(user!=null)
 				deleteOperatoer(user);
 			break;
@@ -62,12 +61,12 @@ public class AdminController {
 		menu.outString("Invalid input!");
 	}
 	//===================================================================
-	private User getOperatoer()
+	private User getOperatoer(User currentUser)
 	{
-		ArrayList<OperatoerDTO> operatoers = new ArrayList<OperatoerDTO>();
+		ArrayList<User> operatoers = new ArrayList<User>();
 		try
 		{
-			operatoers = function.getUsers();
+			operatoers = function.getUsers(currentUser);
 		}
 		catch(DALException e)
 		{
@@ -87,11 +86,18 @@ public class AdminController {
 			{
 				menu.outString("Indtast bruger ID, på den operatør, du vil vælge: ");
 				ID = Integer.parseInt(menu.getInput()); 
-				inputIsOk = true;
+				if(ID!=currentUser.getOprID())
+				{
+					inputIsOk = true;
+				}
+				else 
+				{
+					menu.outString("Forkert bruger ID");
+				}
 			}
 			catch(NumberFormatException e)
 			{
-				menu.outString("Bruger ID skal være et tal.");
+				menu.outString("Forkert bruger ID.");
 			}
 		}while(!inputIsOk);
 		User user = null;
@@ -113,6 +119,7 @@ public class AdminController {
 		menu.outString("Navn: "+user.getOprNavn());
 		menu.outString("ID: "+user.getOprID());
 		menu.outString("CPR: "+user.getCprNr());
+		menu.outString("Password: "+user.getPassword());
 	}
 	//===================================================================
 	private void deleteOperatoer(User user)

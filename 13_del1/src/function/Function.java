@@ -19,9 +19,20 @@ public class Function implements IFunction{
 		pwGenerator = new PasswordGenerator();
 	}
 	@Override
-	public ArrayList<OperatoerDTO> getUsers() throws DALException
+	public ArrayList<User> getUsers(User currentUser) throws DALException
 	{
-		return data.getOperatoerList();
+		
+		ArrayList<User> users = data.getOperatoerList();	
+        Collections.sort(users); //sort the arrayList after ID
+        //removing the current person
+        for(int i=0; users.size()> i; i++)
+        {
+        	if (users.get(i).getOprID()==currentUser.getOprID())
+        	{
+        		users.remove(i);
+        	}
+        }
+		return users;
 	}
 	@Override
 	public User getUser(int ID) throws DALException
@@ -39,7 +50,8 @@ public class Function implements IFunction{
 	public void createUser(String name, String cpr) throws DALException
 	{
 		String password = pwGenerator.generateRandomPassword();
-		User newUser = new OperatoerDTO(0, name, cpr,password);
+		int id = unusedId(data.getOperatoerList());
+		User newUser = new OperatoerDTO(id, name, cpr,password);
 		data.createOperatoer(newUser);
 	}
 	@Override
@@ -66,6 +78,30 @@ public class Function implements IFunction{
 			passwordOk = true;
 		}
 		return passwordOk;
+	}
+	public int unusedId(ArrayList<User> personer) {
+		boolean emptyId;
+		for(int b = 11; b < 99; b++) {
+			emptyId = true;
+			for(int c = 0; c < personer.size(); c++) {
+				if(b == personer.get(c).getOprID()) {
+					emptyId = false;
+					break;
+				}
+			}
+			if(emptyId){
+				return b;
+			}
+		}
+		return 0;
+	}
+	public int calculateWeight(int tarra, int brutto)
+	{
+		int netto = brutto - tarra;
+		if(netto >= 0)
+			return netto;
+		else
+			return -1;
 	}
 	
 }

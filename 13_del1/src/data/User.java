@@ -1,6 +1,6 @@
 package data;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
 	protected int oprID;
 	protected String oprNavn;
@@ -45,6 +45,15 @@ public abstract class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	//Metode til at sortere users i faldende ordre
+	public int compareTo(User compareUsers) {
+		 
+		int compareID = ((User) compareUsers).getOprID(); 
+		//ascending order
+		return this.oprID - compareID;
+ 
 	}
 	
 }

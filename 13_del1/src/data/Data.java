@@ -14,9 +14,10 @@ public class Data implements IOperatoerDAO {
 		// Tilføj personer
 		personer.add(new OperatoerDTO(11, "Ib Olsen", "112233-4455","12"));
 		personer.add(new OperatoerDTO(13, "Ole Jensen", "112233-4455","12Qwerty"));
-		personer.add(new OperatoerDTO(1, "Eva Hansen", "112233-4455","12Qwerty"));
+		personer.add(new OperatoerDTO(12, "Eva Hansen", "112233-4455","12Qwerty"));
 		personer.add(new OperatoerDTO(14, "Peter Jensen", "112233-4455","12Qwerty"));
 		personer.add(new Admin(10, "Albert Svanesen", "112233-4455",">02324it!<"));
+		personer.add(new Admin(1, "Albert Svanesen", "112233-4455","12"));
 	}
 
 	public User getOperatoer(int oprId) throws DALException
@@ -29,7 +30,6 @@ public class Data implements IOperatoerDAO {
 			{
 				person =  personer.get(i);
 				personFound = true;
-				
 			}
 		}
 		if(!personFound)
@@ -37,35 +37,16 @@ public class Data implements IOperatoerDAO {
 			throw new DALException(oprId);
 		}
 		return person;
-			
-			
 	}
 
-	public ArrayList<OperatoerDTO> getOperatoerList() throws DALException
+	public ArrayList<User> getOperatoerList() throws DALException
 	{
-		ArrayList<OperatoerDTO> operatoer = new ArrayList<OperatoerDTO>();
-		for (int i = 0; personer.size() > i; i++)
-		{
-			if (personer.get(i) instanceof OperatoerDTO )
-			{
-				operatoer.add((OperatoerDTO)personer.get(i));
-			}
-		}
-		return operatoer;
+
+		return personer;
 	}
 
 	public void createOperatoer(User opr) throws DALException
 	{
-//		int max = 0;
-//		
-//		for (int i = 0; personer.size() > i; i++)
-//		{
-//			if (personer.get(i).getOprID() >= max)
-//			{
-//				max = personer.get(i).getOprID();
-//			}
-//		}
-		opr.setOprID(unusedId(personer));
 		personer.add(opr);
 	}
 	public void updateOperatoer(User opr) throws DALException
@@ -124,22 +105,8 @@ public class Data implements IOperatoerDAO {
 		return loginOk;
 	}
 	
-	public int unusedId(ArrayList<User> personer) {
-		boolean emptyId;
-		for(int b = 11; b < 99; b++) {
-			emptyId = true;
-			for(int c = 0; c < personer.size(); c++) {
-				if(b == personer.get(c).getOprID()) {
-					emptyId = false;
-					break;
-				}
-			}
-			if(emptyId){
-				return b;
-			}
-		}
-		return 0;
-	}
+
+	
 	
 	
 }

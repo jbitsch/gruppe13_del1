@@ -22,25 +22,22 @@ public class Menu implements IMenu {
 		
 	}
 	@Override
-	public void weightApplication() {
+	public int weightApplication(String text) {
 		System.out.println();
+		int input = 0;
 		try
 		{
-			System.out.print("Indtast tarra vægt (kg): ");
-			int tarra = Integer.parseInt(scan.next());
-			System.out.print("Indtast brutto vægt (kg): ");
-			int brutto = Integer.parseInt(scan.next());
-			int netto = brutto - tarra;
-			if(netto >= 0)
-				System.out.println("Netto vægt: " + netto + " kg");
-			else
-				System.out.println("Tarra kan ikke være større end brutto.");
+			System.out.println(text);
+			input = Integer.parseInt(scan.next());
 		}
 		catch(NumberFormatException e)
 		{
-			System.out.println("Vægten skal angives med tal.");
+			System.out.println("Vægten skal angives med et positivt tal.");
+			input = -1;
 		}
+		return input;
 	}
+	
 	@Override
 	public int userID()
 	{
