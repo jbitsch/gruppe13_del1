@@ -21,6 +21,11 @@ public class Function {
 	{
 		return data.getOperatoer(ID);
 	}
+	public boolean checkPassword()
+	{
+		boolean passwordOk = false; //TODO Password tjek....
+		return passwordOk;
+	}
 	
 	public void createUser(String name, String cpr) throws DALException
 	{
