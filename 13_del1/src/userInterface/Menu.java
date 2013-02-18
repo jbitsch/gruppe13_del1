@@ -21,7 +21,7 @@ public class Menu implements IMenu {
 		System.out.println();
 		
 	}
-	
+	@Override
 	public void weightApplication() {
 		System.out.println();
 		try
@@ -41,7 +41,7 @@ public class Menu implements IMenu {
 			System.out.println("Vægten skal angives med tal.");
 		}
 	}
-		
+	@Override
 	public int userID()
 	{
 		int id;
@@ -59,6 +59,7 @@ public class Menu implements IMenu {
 		}
 		return id;
 	}
+	@Override
 	public String getPassword()
 	{
 		System.out.print("Enter your password: ");
@@ -66,7 +67,7 @@ public class Menu implements IMenu {
 		return password;
 
 	}
-	
+	@Override
 	public int showMenu(String header, String[] options)
 	{
 		int choise;
@@ -108,11 +109,12 @@ public class Menu implements IMenu {
 			System.out.print("-");
 			System.out.println();
 	}
-	
+	@Override
 	public void outString(String text)
 	{
 		System.out.println(text);
 	}
+	@Override
 	public String getInput()
 	{
 		return scan.next();
