@@ -65,7 +65,6 @@ public class MenuController {
 		try
 		{
 			function.login(password, id);
-			System.out.println("her 2");
 			user = function.getUser(id);
 		}
 		catch(DALException e)
@@ -146,15 +145,21 @@ public class MenuController {
 	{
 		boolean runApp = true;
 		menu.outString("Indtast applikationskode: ");
-		//String appCode = scan.next();
-		// TODO check whether app code is correct
-		do
+		String appCode = menu.getInput();
+		if(appCode.equals("appCode"))
 		{
-			menu.weightApplication();
-			menu.outString("Ønsker du at afveje endnu en portion? (j/n) ");
-			if(!menu.getInput().equalsIgnoreCase("j"))
-				runApp = false;
-		} while(runApp);
+			do
+			{
+				menu.weightApplication();
+				menu.outString("Ønsker du at afveje endnu en portion? (j/n) ");
+				if(!menu.getInput().equalsIgnoreCase("j"))
+					runApp = false;
+			} while(runApp);
+		}
+		else
+		{
+			menu.outString("Forkert password, du bliver sendt tilbage til menuen");
+		}
 	}
 	//===================================================================
 	
@@ -185,10 +190,6 @@ public class MenuController {
 				menu.outString("De 2 nye passwords er ikke ens");
 			}
 		}while(!newPasswordOk);
-		
-		
-		
-		
 	}
 	//===================================================================
 	private void adminMenu()
