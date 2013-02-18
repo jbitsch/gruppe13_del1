@@ -167,7 +167,7 @@ public class MenuController {
 			menu.outString("");
 			menu.outString("Indtast gammelt password: ");
 			String oldPassword = menu.getInput();
-			//TODO check if the old password is legal. 
+			oldPasswordOk = function.checkOldPassword(user, oldPassword);
 		}while(!oldPasswordOk);
 		
 		do
@@ -176,7 +176,14 @@ public class MenuController {
 			String newPassword = menu.getInput();
 			menu.outString("Gentag nyt password: ");
 			String newPassword2 = menu.getInput();
-			//TODO check if password change is legal. 
+			if(newPassword2.equals(newPassword))
+			{
+				newPasswordOk = function.checkPassword(newPassword2); 
+			}
+			else
+			{
+				menu.outString("De 2 nye passwords er ikke ens");
+			}
 		}while(!newPasswordOk);
 		
 		

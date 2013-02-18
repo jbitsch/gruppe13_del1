@@ -28,16 +28,16 @@ public class Function implements IFunction{
 		return data.getOperatoer(ID);
 	}
 	@Override
-	public boolean checkPassword()
+	public boolean checkPassword(String password)
 	{
-		boolean passwordOk = false; //TODO Password tjek....
+		boolean passwordOk = pwGenerator.acceptablePassword(password);
 		return passwordOk;
 	}
 	
 	@Override
 	public void createUser(String name, String cpr) throws DALException
 	{
-		String password = ""; //TODO Modtag nyt password fra programmet. 
+		String password = pwGenerator.generateRandomPassword();
 		User newUser = new OperatoerDTO(0, name, cpr,password);
 		data.createOperatoer(newUser);
 	}
@@ -56,6 +56,15 @@ public class Function implements IFunction{
 	{
 		boolean loginOk = data.attemptLogin(ID, password);
 		return loginOk;
+	}
+	public boolean checkOldPassword(User user, String password)
+	{
+		boolean passwordOk = false;
+		if(user.getPassword().equals(password))
+		{
+			passwordOk = true;
+		}
+		return passwordOk;
 	}
 	
 }

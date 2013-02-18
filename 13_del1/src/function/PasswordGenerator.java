@@ -147,19 +147,19 @@ public class PasswordGenerator implements IPasswordGenerator {
 					type0Implemented = true;
 				}
 			}
-			for(int j = 0; j < uppercaseLetters.length; i++) {
+			for(int j = 0; j < uppercaseLetters.length; j++) {
 				if(passwordChars[i] == uppercaseLetters[j]) {
 					passwordChars[i] = ' ';
 					type1Implemented = true;
 				}
 			}
-			for(int j = 0; j < lowercaseLetters.length; i++) {
+			for(int j = 0; j < lowercaseLetters.length; j++) {
 				if(passwordChars[i] == lowercaseLetters[j]) {
 					passwordChars[i] = ' ';
 					type2Implemented = true;
 				}
 			}
-			for(int j = 0; j < specielCharacters.length; i++) {
+			for(int j = 0; j < specielCharacters.length; j++) {
 				if(passwordChars[i] == specielCharacters[j]) {
 					passwordChars[i] = ' ';
 					type3Implemented = true;

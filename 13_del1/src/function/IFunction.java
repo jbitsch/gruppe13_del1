@@ -10,9 +10,9 @@ public interface IFunction {
 	public ArrayList<OperatoerDTO> getUsers() throws DALException;
 	public User getUser(int ID) throws DALException;
 	public void createUser(String name, String cpr) throws DALException;
-	public boolean checkPassword();
 	public void updateUser(User user) throws DALException;
 	public void deleteUser(User user) throws DALException;
 	public boolean login(String password, int ID) throws DALException;
+	public boolean checkPassword(String password);
 	
 }
