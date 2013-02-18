@@ -20,22 +20,24 @@ public class Data implements IOperatoerDAO {
 
 	public User getOperatoer(int oprId) throws DALException
 	{
-		int i = 0;
-		try 
+		User person = null;
+		boolean personFound = false;
+		for (int i = 0; personer.size() > i; i++)
 		{
-			while (true)
+			if (personer.get(i).getOprID()==oprId)
 			{
-				if (personer.get(i).getOprID()==oprId)
-				{
-					return personer.get(i);
-				}
-				i++;
+				person =  personer.get(i);
+				personFound = true;
+				
 			}
 		}
-		catch (IndexOutOfBoundsException e)
+		if(!personFound)
 		{
 			throw new DALException(oprId);
 		}
+		return person;
+			
+			
 	}
 
 	public ArrayList<OperatoerDTO> getOperatoerList() throws DALException
@@ -67,66 +69,59 @@ public class Data implements IOperatoerDAO {
 	}
 	public void updateOperatoer(User opr) throws DALException
 	{	
-		int i = 0;
-		try 
+		boolean updateOk = false;
+		for (int i = 0; personer.size() > i; i++)
 		{
-			while (true)
+			if(personer.get(i).getOprID()==opr.getOprID())
 			{
-				if(personer.get(i).getOprID()==opr.getOprID())
-				{
-					personer.set(i, opr);
-					break;
-				}
-				i++;
+				personer.set(i, opr);
+				updateOk = true;
+				break;
 			}
 		}
-		catch (IndexOutOfBoundsException e)
+		if(!updateOk)
 		{
-			throw new DALException(opr.getOprID());
-		}			
+			throw new DALException(opr.getOprID());		
+		}
 	}
 	public void deleteOperatoer(User opr) throws DALException
 	{
-		int i = 0;
-		try 
+		boolean deleteOk = false;
+		for (int i = 0; personer.size() > i; i++)
 		{
-			while (true)
+			if(personer.get(i).getOprID()==opr.getOprID())
 			{
-				if(personer.get(i).getOprID()==opr.getOprID())
-				{
-					personer.remove(i);
-					break;
-				}
-				i++;
+				personer.remove(i);
+				deleteOk = true;
+				break;
 			}
 		}
-		catch (IndexOutOfBoundsException e)
+		if(!deleteOk)
 		{
-			throw new DALException(opr.getOprID());
+			throw new DALException(opr.getOprID());		
 		}
 	}
 	
 	public boolean attemptLogin(int ID, String password) throws DALException {
 		boolean loginOk = false;
-		int i = 0;
-		try 
+	
+		for (int i = 0; personer.size() > i; i++)
 		{
-			while (true)
+			System.out.println(personer.get(i).getOprID());
+			if(personer.get(i).getOprID()==ID)
 			{
-				if(personer.get(i).getOprID()==ID)
-				{
-					if (personer.get(i).getPassword().equals(password)){
-						loginOk = true;
-						break;
-					} 
-				}
-				i++;
+				if (personer.get(i).getPassword().equals(password)){
+					loginOk = true;
+					System.out.println(loginOk);
+					break;
+				} 
 			}
 		}
-		catch (IndexOutOfBoundsException e)
+	
+		if(!loginOk)
 		{
-			throw new DALException(ID);
-		}	
+			throw new DALException(ID);		
+		}
 		return loginOk;
 	}
 }

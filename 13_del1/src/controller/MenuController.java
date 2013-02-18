@@ -65,6 +65,7 @@ public class MenuController {
 		try
 		{
 			function.login(password, id);
+			System.out.println("her 2");
 			user = function.getUser(id);
 		}
 		catch(DALException e)
@@ -159,17 +160,27 @@ public class MenuController {
 	
 	private void changePassword(User user)
 	{
-		menu.outString("");
-		menu.outString("Indtast bruger ID: ");
-		String id  = menu.getInput();
-		menu.outString("Indtast gammelt password: ");
-		String oldPassword = menu.getInput();
-		menu.outString("Indtast nyt password: ");
-		String newPassword = menu.getInput();
-		menu.outString("Gentag nyt password: ");
-		String newPassword2 = menu.getInput();
+		boolean oldPasswordOk = false;
+		boolean newPasswordOk = false;
+		do
+		{
+			menu.outString("");
+			menu.outString("Indtast gammelt password: ");
+			String oldPassword = menu.getInput();
+			//TODO check if the old password is legal. 
+		}while(!oldPasswordOk);
 		
-		//TODO check if password change is legal. 
+		do
+		{
+			menu.outString("Indtast nyt password: ");
+			String newPassword = menu.getInput();
+			menu.outString("Gentag nyt password: ");
+			String newPassword2 = menu.getInput();
+			//TODO check if password change is legal. 
+		}while(!newPasswordOk);
+		
+		
+		
 		
 	}
 	//===================================================================

@@ -23,7 +23,14 @@ public class Function implements IFunction{
 	{
 		return data.getOperatoer(ID);
 	}
-	@Override
+
+	public boolean checkPassword()
+	{
+		boolean passwordOk = false; //TODO Password tjek....
+		return passwordOk;
+	}
+	
+
 	public void createUser(String name, String cpr) throws DALException
 	{
 		String password = ""; //TODO Modtag nyt password fra programmet. 
