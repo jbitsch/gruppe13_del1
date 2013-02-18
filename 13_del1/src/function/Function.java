@@ -8,10 +8,12 @@ import data.IOperatoerDAO.DALException;
 import data.User;
 
 public class Function {
+	IPasswordGenerator pwGenerator;
 	IOperatoerDAO data;
 	public Function(IOperatoerDAO data)
 	{
 		this.data = data;
+		//pwGenerator = 
 	}
 	public ArrayList<OperatoerDTO> getUsers() throws DALException
 	{

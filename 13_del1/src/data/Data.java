@@ -112,7 +112,6 @@ public class Data implements IOperatoerDAO {
 			{
 				if (personer.get(i).getPassword().equals(password)){
 					loginOk = true;
-					System.out.println(loginOk);
 					break;
 				} 
 			}
