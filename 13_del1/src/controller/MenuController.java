@@ -184,6 +184,10 @@ public class MenuController {
 			if(newPassword2.equals(newPassword))
 			{
 				newPasswordOk = function.checkPassword(newPassword2); 
+				if(!newPasswordOk)
+				{
+					menu.outString("Det nye password overholder ikke reglerne");
+				}
 			}
 			else
 			{
