@@ -15,7 +15,7 @@ public class Function implements IFunction{
 	public Function(IOperatoerDAO data)
 	{
 		this.data = data;
-		//pwGenerator = 
+		pwGenerator = new PasswordGenerator();
 	}
 	@Override
 	public ArrayList<OperatoerDTO> getUsers() throws DALException

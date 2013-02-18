@@ -107,7 +107,6 @@ public class Data implements IOperatoerDAO {
 	
 		for (int i = 0; personer.size() > i; i++)
 		{
-			System.out.println(personer.get(i).getOprID());
 			if(personer.get(i).getOprID()==ID)
 			{
 				if (personer.get(i).getPassword().equals(password)){
