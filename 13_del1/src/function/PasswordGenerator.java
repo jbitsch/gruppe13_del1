@@ -143,26 +143,30 @@ public class PasswordGenerator implements IPasswordGenerator {
 
 			for(int j = 0; j <= 9; j++) {
 				if(passwordChars[i] == Character.forDigit(j, 10)) { //TODO check virker
-					passwordChars[i] = ' ';
+					spaceCounter++;
 					type0Implemented = true;
+					break;
 				}
 			}
 			for(int j = 0; j < uppercaseLetters.length; j++) {
 				if(passwordChars[i] == uppercaseLetters[j]) {
-					passwordChars[i] = ' ';
+					spaceCounter++;
 					type1Implemented = true;
+					break;
 				}
 			}
 			for(int j = 0; j < lowercaseLetters.length; j++) {
 				if(passwordChars[i] == lowercaseLetters[j]) {
-					passwordChars[i] = ' ';
+					spaceCounter++;
 					type2Implemented = true;
+					break;
 				}
 			}
 			for(int j = 0; j < specielCharacters.length; j++) {
 				if(passwordChars[i] == specielCharacters[j]) {
-					passwordChars[i] = ' ';
+					spaceCounter++;
 					type3Implemented = true;
+					break;
 				}
 			}
 		}
@@ -181,14 +185,14 @@ public class PasswordGenerator implements IPasswordGenerator {
 			typeCounter++;
 		}
 
-		if(typeCounter >= 3) {
-			for(int i = 0; i < passwordChars.length; i++) {
-				if(passwordChars[i] == ' ') {
-					spaceCounter++;
-				}
-			}
-		}
-		if(spaceCounter == passwordChars.length) {
+	//	if(typeCounter >= 3) {
+	//		for(int i = 0; i < passwordChars.length; i++) {
+	//			if(passwordChars[i] == ' ') {
+	//				spaceCounter++;
+	//			}
+	//		}
+	//	}
+		if(spaceCounter == passwordChars.length || typeCounter >= 3) {
 			acceptable = true;
 		}
 		type0Implemented = false;
