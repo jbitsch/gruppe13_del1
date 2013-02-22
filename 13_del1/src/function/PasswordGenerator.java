@@ -57,10 +57,10 @@ public class PasswordGenerator implements IPasswordGenerator {
 			}
 		}
 
-	//	type0Implemented = false;
-	//	type1Implemented = false;
-	//	type2Implemented = false;
-	//	type3Implemented = false;
+		//	type0Implemented = false;
+		//	type1Implemented = false;
+		//	type2Implemented = false;
+		//	type3Implemented = false;
 
 		return randomPassword;
 	}
@@ -73,19 +73,19 @@ public class PasswordGenerator implements IPasswordGenerator {
 	private int pickCharType(Random random) {
 		int charType = random.nextInt(4);
 
-	//	if(charType == 0) {
-	//		type0Implemented = true;
-	//	}
-	//	else if(charType == 1) {
-	//		type1Implemented = true;
-	//	}
-	//	else if(charType == 2) {
-	//		type2Implemented = true;
-	//	}
-	//	else {
-	//		type3Implemented = true;
-	//	}
-	//
+		//	if(charType == 0) {
+		//		type0Implemented = true;
+		//	}
+		//	else if(charType == 1) {
+		//		type1Implemented = true;
+		//	}
+		//	else if(charType == 2) {
+		//		type2Implemented = true;
+		//	}
+		//	else {
+		//		type3Implemented = true;
+		//	}
+		//
 		return charType;
 	}
 
@@ -123,7 +123,7 @@ public class PasswordGenerator implements IPasswordGenerator {
 	}
 
 	@Override
-	public boolean acceptablePassword(String passwordToCheck) { 
+	public boolean acceptablePassword(String passwordToCheck, int id, String name) { 
 		boolean acceptable = false;
 		char[] passwordChars = new char[passwordToCheck.length()];
 		int spaceCounter = 0;
@@ -133,73 +133,123 @@ public class PasswordGenerator implements IPasswordGenerator {
 
 			passwordChars = passwordToCheck.toCharArray();
 
-		}
 
-		for(int i = 0; i < passwordChars.length; i++) {
 
-			if(passwordChars[i] == ' ') {
-				return false;
-			}
+			for(int i = 0; i < passwordChars.length; i++) {
 
-			for(int j = 0; j <= 9; j++) {
-				if(passwordChars[i] == Character.forDigit(j, 10)) { //TODO check virker
-					spaceCounter++;
-					type0Implemented = true;
-					break;
+				if(passwordChars[i] == ' ') {
+					return false;
+				}
+
+				for(int j = 0; j <= 9; j++) {
+					if(passwordChars[i] == Character.forDigit(j, 10)) { //TODO check virker
+						spaceCounter++;
+						type0Implemented = true;
+						break;
+					}
+				}
+				for(int j = 0; j < uppercaseLetters.length; j++) {
+					if(passwordChars[i] == uppercaseLetters[j]) {
+						spaceCounter++;
+						type1Implemented = true;
+						break;
+					}
+				}
+				for(int j = 0; j < lowercaseLetters.length; j++) {
+					if(passwordChars[i] == lowercaseLetters[j]) {
+						spaceCounter++;
+						type2Implemented = true;
+						break;
+					}
+				}
+				for(int j = 0; j < specielCharacters.length; j++) {
+					if(passwordChars[i] == specielCharacters[j]) {
+						spaceCounter++;
+						type3Implemented = true;
+						break;
+					}
 				}
 			}
-			for(int j = 0; j < uppercaseLetters.length; j++) {
-				if(passwordChars[i] == uppercaseLetters[j]) {
-					spaceCounter++;
-					type1Implemented = true;
-					break;
-				}
-			}
-			for(int j = 0; j < lowercaseLetters.length; j++) {
-				if(passwordChars[i] == lowercaseLetters[j]) {
-					spaceCounter++;
-					type2Implemented = true;
-					break;
-				}
-			}
-			for(int j = 0; j < specielCharacters.length; j++) {
-				if(passwordChars[i] == specielCharacters[j]) {
-					spaceCounter++;
-					type3Implemented = true;
-					break;
-				}
-			}
-		}
-		int typeCounter = 0;
+			int typeCounter = 0;
 
-		if(type0Implemented) {
-			typeCounter++;
-		}
-		if(type1Implemented) {
-			typeCounter++;
-		}
-		if(type2Implemented) {
-			typeCounter++;
-		}
-		if(type3Implemented) {
-			typeCounter++;
-		}
+			if(type0Implemented) {
+				typeCounter++;
+			}
+			if(type1Implemented) {
+				typeCounter++;
+			}
+			if(type2Implemented) {
+				typeCounter++;
+			}
+			if(type3Implemented) {
+				typeCounter++;
+			}
 
-	//	if(typeCounter >= 3) {
-	//		for(int i = 0; i < passwordChars.length; i++) {
-	//			if(passwordChars[i] == ' ') {
-	//				spaceCounter++;
-	//			}
-	//		}
-	//	}
-		if(spaceCounter == passwordChars.length || typeCounter >= 3) {
-			acceptable = true;
+			//	if(typeCounter >= 3) {
+			//		for(int i = 0; i < passwordChars.length; i++) {
+			//			if(passwordChars[i] == ' ') {
+			//				spaceCounter++;
+			//			}
+			//		}
+			//	}
+			if(spaceCounter == passwordChars.length && typeCounter >= 3) {
+				acceptable = true;
+			}
+			type0Implemented = false;
+			type1Implemented = false;
+			type2Implemented = false;
+			type3Implemented = false;
 		}
-		type0Implemented = false;
-		type1Implemented = false;
-		type2Implemented = false;
-		type3Implemented = false;
-
 		return acceptable;
+	}
+	
+	private boolean checkIfIdIsPresent(String passwordToCheck, int id) {
+		boolean output = true;
+		String idString = "" + id;
+		char[] idArray = idString.toCharArray();
+		char[] passwordArray = passwordToCheck.toCharArray();
+		int idCounter = 0;
+		int digitCounter = 0;
+		
+		for(int i = 0; i < idArray.length;) {
+			for(int j = 0; j < passwordArray.length; j++) {
+				if(idArray[i] == passwordArray[j]) {
+					idCounter++;
+					break;
+				}
+			}
+		}
+		if(idCounter != 2) {
+			return true;
+		}
+		else {
+			for(int i = 0; i < passwordArray.length; i++) {
+				if(idArray[digitCounter] == passwordArray[i]) {
+					digitCounter++;
+					if(digitCounter == 2) {
+						output = false;
+					}
+				}
+				else {
+					digitCounter = 0;
+				}
+			}
+		}
+		return output;
+	}
+	
+	private boolean checkIfNameIsPresent(String passwordToCheck, String name) {
+		boolean output = true;
+		char[] nameArray = name.toCharArray();
+		char[] passwordArray = passwordToCheck.toCharArray();
+		int spaceCounter = 0;
+		
+		for(int i = 0; i < nameArray.length; i++) {
+			if(nameArray[i] == ' ') {
+				spaceCounter++;
+			}
+		}
+		
+		
 	}
 }

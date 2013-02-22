@@ -7,7 +7,7 @@ public interface IPasswordGenerator {
 	 * @param passwordToCheck The password which is checked
 	 * @return A boolean value. True if the password is acceptable, fales if not
 	 */
-	boolean acceptablePassword(String passwordToCheck);
+	boolean acceptablePassword(String passwordToCheck, int id, String name);
 	
 	/**
 	 * A method which generates a semi-randomzied password
