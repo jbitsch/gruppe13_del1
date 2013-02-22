@@ -1,11 +1,11 @@
 package userInterface;
 
 public interface IMenu {
-	public void start();
-	public int userID();
-	public String getPassword();
-	public int showMenu(String header, String[] options);
-	public void outString(String text);
-	public String getInput();
-	int weightApplication(String text);
+	void start();
+	int userID();
+	String getPassword();
+	int showMenu(String header, String[] options);
+	void outString(String text);
+	String getInput();
+	double weightApplication(String text);
 }

@@ -22,17 +22,17 @@ public class Menu implements IMenu {
 		
 	}
 	@Override
-	public int weightApplication(String text) {
+	public double weightApplication(String text) {
 		System.out.println();
-		int input = 0;
+		double input = 0;
 		try
 		{
 			System.out.println(text);
-			input = Integer.parseInt(scan.next());
+			input = Double.parseDouble(scan.next());
 		}
 		catch(NumberFormatException e)
 		{
-			System.out.println("Vægten skal angives med et positivt tal.");
+			System.out.println("Vægten skal angives med et positivt kommatal. komma angives med punktum(.)");
 			input = -1;
 		}
 		return input;

@@ -70,6 +70,7 @@ public class Function implements IFunction{
 		boolean loginOk = data.attemptLogin(ID, password);
 		return loginOk;
 	}
+	@Override
 	public boolean checkOldPassword(User user, String password)
 	{
 		boolean passwordOk = false;
@@ -79,6 +80,7 @@ public class Function implements IFunction{
 		}
 		return passwordOk;
 	}
+	@Override
 	public int unusedId(ArrayList<User> personer) {
 		boolean emptyId;
 		for(int b = 11; b < 99; b++) {
@@ -95,9 +97,10 @@ public class Function implements IFunction{
 		}
 		return 0;
 	}
-	public int calculateWeight(int tarra, int brutto)
+	@Override
+	public double calculateWeight(double tarra, double brutto)
 	{
-		int netto = brutto - tarra;
+		double netto = brutto - tarra;
 		if(netto >= 0)
 			return netto;
 		else

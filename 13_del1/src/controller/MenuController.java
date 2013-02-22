@@ -168,21 +168,21 @@ public class MenuController {
 	//==================Hjælpe metode til weight app ==================//
 	private void showWeightApp()
 	{
-		int tarra = 0;
+		double tarra = 0;
 		do
 		{
 			tarra = menu.weightApplication("Indtast tarra vægt (kg): ");
 			
 		}while(tarra<0);
 
-		int brutto = 0;
+		double brutto = 0;
 		do
 		{
 			brutto = menu.weightApplication("Indtast brutto vægt (kg): ");
 			
 		}while(brutto<0);
 		
-		int netto = function.calculateWeight(tarra, brutto);
+		double netto = function.calculateWeight(tarra, brutto);
 		if(netto >= 0)
 			menu.outString("Netto vægt: " + netto + " kg");
 		else

@@ -5,14 +5,15 @@ import data.User;
 import data.IOperatoerDAO.DALException;
 
 public interface IFunction {
-	public ArrayList<User> getUsers(User currentUser) throws DALException;
-	public User getUser(int ID) throws DALException;
-	public void createUser(String name, String cpr) throws DALException;
-	public void updateUser(User user) throws DALException;
-	public void deleteUser(User user) throws DALException;
-	public boolean login(String password, int ID) throws DALException;
-	public boolean checkPassword(String password);
+	ArrayList<User> getUsers(User currentUser) throws DALException;
+	User getUser(int ID) throws DALException;
+	void createUser(String name, String cpr) throws DALException;
+	void updateUser(User user) throws DALException;
+	void deleteUser(User user) throws DALException;
+	boolean login(String password, int ID) throws DALException;
+	boolean checkPassword(String password);
 	int unusedId(ArrayList<User> personer);
-	public int calculateWeight(int tarra, int brutto);
+	boolean checkOldPassword(User user, String password);
+	double calculateWeight(double tarra, double brutto);
 	
 }
