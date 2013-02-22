@@ -219,6 +219,19 @@ public class MenuController {
 				{
 					menu.outString("Det nye password overholder ikke reglerne");
 				}
+				else
+				{
+					user.setPassword(newPassword);
+					newPasswordOk = true;
+					try
+					{
+						function.updateUser(user);
+					}
+					catch(DALException e)
+					{
+						menu.outString(e.getMessage());
+					}
+				}
 			}
 			else
 			{
