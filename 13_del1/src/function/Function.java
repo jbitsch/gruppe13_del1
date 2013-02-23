@@ -25,13 +25,13 @@ public class Function implements IFunction{
 		ArrayList<User> users = data.getOperatoerList();	
         Collections.sort(users); //sort the arrayList after ID
         //removing the current person
-        for(int i=0; users.size()> i; i++)
-        {
-        	if (users.get(i).getOprID()==currentUser.getOprID())
-        	{
-        		users.remove(i);
-        	}
-        }
+//        for(int i=0; users.size()> i; i++)
+//        {
+//        	if (users.get(i).getOprID()==currentUser.getOprID())
+//        	{
+//        		users.remove(i);
+//        	}
+//        }
 		return users;
 	}
 	@Override

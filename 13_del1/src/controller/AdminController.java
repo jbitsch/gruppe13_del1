@@ -47,7 +47,14 @@ public class AdminController {
 		case 4:
 			user = getOperatoer(currentUser);
 			if(user!=null)
-				deleteOperatoer(user);
+				if(user.getOprID()!=currentUser.getOprID())
+				{
+					deleteOperatoer(user);
+				}
+				else
+				{
+					menu.outString("Du kan ikke slette dig selv");
+				}
 			break;
 		case 5:
 			menu.outString("");
@@ -84,16 +91,9 @@ public class AdminController {
 		{
 			try
 			{
-				menu.outString("Indtast bruger ID, på den operatør, du vil vælge: ");
+				menu.outString("Indtast bruger ID, på den operatør, du vil vælge(OBS du kan ikke slette dig selv): ");
 				ID = Integer.parseInt(menu.getInput()); 
-				if(ID!=currentUser.getOprID())
-				{
-					inputIsOk = true;
-				}
-				else 
-				{
-					menu.outString("Forkert bruger ID");
-				}
+				inputIsOk = true;
 			}
 			catch(NumberFormatException e)
 			{
@@ -222,15 +222,18 @@ public class AdminController {
 		{
 			menu.outString("Indtast nyt password: ");
 			String password = menu.getInput();
-			//TODO check the password........
-			user.setCprNr(password);
-			try
+			passwordOk = function.checkPassword(password);
+			if(passwordOk)
 			{
-				function.updateUser(user);
-			}
-			catch(DALException e)
-			{
-				menu.outString(e.getMessage());
+				user.setCprNr(password);
+					try
+					{
+						function.updateUser(user);
+					}
+					catch(DALException e)
+					{
+						menu.outString(e.getMessage());
+					}
 			}
 		}while(!passwordOk);
 	}
