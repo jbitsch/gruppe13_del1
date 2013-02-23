@@ -91,7 +91,7 @@ public class AdminController {
 		{
 			try
 			{
-				menu.outString("Indtast bruger ID, på den operatør, du vil vælge(OBS du kan ikke slette dig selv): ");
+				menu.outString("Indtast bruger ID, på den operatør, du vil vælge: ");
 				ID = Integer.parseInt(menu.getInput()); 
 				inputIsOk = true;
 			}
