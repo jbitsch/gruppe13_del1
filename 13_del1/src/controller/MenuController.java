@@ -214,7 +214,7 @@ public class MenuController {
 			String newPassword2 = menu.getInput();
 			if(newPassword2.equals(newPassword))
 			{
-				newPasswordOk = function.checkPassword(newPassword2); 
+				newPasswordOk = function.checkPassword(newPassword2,user); 
 				if(!newPasswordOk)
 				{
 					menu.outString("Det nye password overholder ikke reglerne");

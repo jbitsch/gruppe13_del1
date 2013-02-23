@@ -32,9 +32,9 @@ public class Function implements IFunction{
 		return data.getOperatoer(ID);
 	}
 	@Override
-	public boolean checkPassword(String password)
+	public boolean checkPassword(String password, User user)
 	{
-		boolean passwordOk = pwGenerator.acceptablePassword(password);
+		boolean passwordOk = pwGenerator.acceptablePassword(password,user.getOprID(),user.getOprNavn());
 		return passwordOk;
 	}
 	

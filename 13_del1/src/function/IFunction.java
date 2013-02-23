@@ -11,9 +11,9 @@ public interface IFunction {
 	void updateUser(User user) throws DALException;
 	void deleteUser(User user) throws DALException;
 	boolean login(String password, int ID) throws DALException;
-	boolean checkPassword(String password);
 	int unusedId(ArrayList<User> personer);
 	boolean checkOldPassword(User user, String password);
 	double calculateWeight(double tarra, double brutto);
+	boolean checkPassword(String password, User user);
 	
 }

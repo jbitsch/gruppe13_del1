@@ -222,7 +222,7 @@ public class AdminController {
 		{
 			menu.outString("Indtast nyt password: ");
 			String password = menu.getInput();
-			passwordOk = function.checkPassword(password);
+			passwordOk = function.checkPassword(password,user);
 			if(passwordOk)
 			{
 				user.setCprNr(password);
