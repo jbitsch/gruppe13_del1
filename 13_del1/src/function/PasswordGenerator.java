@@ -165,13 +165,6 @@ public class PasswordGenerator implements IPasswordGenerator {
 				typeCounter++;
 			}
 
-			//	if(typeCounter >= 3) {
-			//		for(int i = 0; i < passwordChars.length; i++) {
-			//			if(passwordChars[i] == ' ') {
-			//				spaceCounter++;
-			//			}
-			//		}
-			//	}
 			if(spaceCounter == passwordChars.length && typeCounter >= 3) {
 				if(!idIsPresent(passwordToCheck, id) && 
 						!nameIsPresent(passwordToCheck, name)) {
@@ -186,77 +179,6 @@ public class PasswordGenerator implements IPasswordGenerator {
 		return acceptable;
 	}
 	
-//	private boolean checkIfIdIsPresent(String passwordToCheck, int id) {
-//		boolean output = true;
-//		String idString = "" + id;
-//		char[] idArray = idString.toCharArray();
-//		char[] passwordArray = passwordToCheck.toCharArray();
-//		int idCounter = 0;
-//		int digitCounter = 0;
-//		
-//		for(int i = 0; i < idArray.length;) {
-//			for(int j = 0; j < passwordArray.length; j++) {
-//				if(idArray[i] == passwordArray[j]) {
-//					idCounter++;
-//					break;
-//				}
-//			}
-//		}
-//		if(idCounter != 2) {
-//			return true;
-//		}
-//		else {
-//			for(int i = 0; i < passwordArray.length; i++) {
-//				if(idArray[digitCounter] == passwordArray[i]) {
-//					digitCounter++;
-//					if(digitCounter == idArray.length) {
-//						output = false;
-//						return output;
-//					}
-//				}
-//				else {
-//					digitCounter = 0;
-//				}
-//			}
-//		}
-//		return output;
-//	}
-//	
-//	private boolean checkIfNameIsPresent(String passwordToCheck, String name) {
-//		boolean output = true;
-//		char[] nameArray = name.toCharArray();
-//		char[] passwordArray = passwordToCheck.toCharArray();
-//		int spaceCounter = 0;
-//		String[] splitNames;
-//		char[] subSplitNames;
-//		int digitCounter = 0;
-//		
-//		for(int i = 0; i < nameArray.length; i++) {
-//			if(nameArray[i] == ' ') {
-//				spaceCounter++;
-//			}
-//		}
-//		
-//		splitNames = new String[spaceCounter + 1];
-//		splitNames = name.split(" ");
-//		
-//		for(int i = 0; i < nameArray.length; i++) {
-//			subSplitNames = splitNames[i].toCharArray();
-//			for(int j = 0; j < passwordArray.length; j++) {
-//				if(subSplitNames[digitCounter] == passwordArray[i]) {
-//					digitCounter++;
-//					if(digitCounter == subSplitNames.length) {
-//						output = false;
-//						return output;
-//					}
-//				}
-//				else {
-//					digitCounter = 0;
-//				}
-//			}
-//		}
-//		return output;
-//	}
 	private boolean idIsPresent(String passwordToCheck, int id) {
 		boolean output;
 		String idString = "" + id;
