@@ -291,12 +291,12 @@ public class PasswordGenerator implements IPasswordGenerator {
 	}
 	
 	private boolean nameIsPresent(String passwordToCheck, String name) {
-		boolean output = true;
+		boolean output = false;
 		String[] nameStringArray = name.split(" ");
 		
 		for(int i = 0; i < nameStringArray.length; i++) {
-			if(passwordToCheck.indexOf(nameStringArray[i]) == -1) {
-				return false;
+			if(passwordToCheck.indexOf(nameStringArray[i]) != -1) {
+				return true;
 			}
 		}
 		return output;
