@@ -56,12 +56,6 @@ public class PasswordGenerator implements IPasswordGenerator {
 				break;
 			}
 		}
-
-		//	type0Implemented = false;
-		//	type1Implemented = false;
-		//	type2Implemented = false;
-		//	type3Implemented = false;
-
 		return randomPassword;
 	}
 
@@ -72,20 +66,6 @@ public class PasswordGenerator implements IPasswordGenerator {
 
 	private int pickCharType(Random random) {
 		int charType = random.nextInt(4);
-
-		//	if(charType == 0) {
-		//		type0Implemented = true;
-		//	}
-		//	else if(charType == 1) {
-		//		type1Implemented = true;
-		//	}
-		//	else if(charType == 2) {
-		//		type2Implemented = true;
-		//	}
-		//	else {
-		//		type3Implemented = true;
-		//	}
-		//
 		return charType;
 	}
 
