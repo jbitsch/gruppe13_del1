@@ -16,6 +16,7 @@ public class Vaegt{
 
 	private static BufferedReader instream;
 	private static DataOutputStream outstream;
+	
 	public static void printmenu(){
 		for (int i=0;i<25;i++)
 			System.out.println(" ");
