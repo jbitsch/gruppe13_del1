@@ -17,26 +17,31 @@ public class Data {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getCon(int portdst) throws IOException
+	public void getCon(int portdst) throws IOException
 	{
 		
 		listener = new ServerSocket(portdst);
 		sock = listener.accept();
+	}
+	public String getInput() throws IOException
+	{
+		sock = listener.accept();
 		instream = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		return instream.readLine();
 	}
-
 	
 	public void writeTo(String text) throws IOException
 	{
 		outstream = new DataOutputStream(sock.getOutputStream());
 		outstream.writeBytes(text);
 	}
+	
 	public void closeCon() throws IOException
 	{
 		instream.close();
 		outstream.close();
 	}
+	
 	public String getIp()
 	{
 		return sock.getInetAddress().toString();

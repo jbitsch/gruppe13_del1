@@ -20,12 +20,10 @@ public class Controller {
 		menu.startMenu(portdst);
 		
 		try{
-			String in  = data.getCon(portdst);
+			data.getCon(portdst);
 			printMenu();
 			
-			System.out.println(in);
-			
-			while (!(inline = in.toUpperCase()).isEmpty()){
+			while (!(inline = data.getInput().toUpperCase()).isEmpty()){
 				if (inline.startsWith("DN")){
 					// ikke implimenteret
 				}
