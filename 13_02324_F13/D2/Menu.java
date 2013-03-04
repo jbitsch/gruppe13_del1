@@ -9,7 +9,7 @@ public class Menu {
 	{
 		scan  = new Scanner(System.in);
 	}
-	public char printmenu(double brutto, double tara, String inline, String indstruktionsDisplay, String conIp){
+	public void printmenu(double brutto, double tara, String inline, String indstruktionsDisplay, String conIp){
 		
 		for (int i=0;i<25;i++)
 			System.out.println(" ");
@@ -34,7 +34,7 @@ public class Menu {
 		System.out.println("Indtast (T/B/Q for knaptryk / brutto ændring /quit)");
 		System.out.print ("Tast her: ");
 		
-		return scan.next().charAt(0);
+		//return scan.next().charAt(0); //TODO get char T/B/Q
 	}
 	public void startMenu(int portdst) //TODO get new port
 	{

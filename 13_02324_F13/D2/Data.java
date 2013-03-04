@@ -22,17 +22,18 @@ public class Data {
 		
 		listener = new ServerSocket(portdst);
 		sock = listener.accept();
+		instream = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+		outstream = new DataOutputStream(sock.getOutputStream());
 	}
 	public String getInput() throws IOException
 	{
-		sock = listener.accept();
-		instream = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-		return instream.readLine();
+		String input = instream.readLine();
+		return input;
 	}
 	
 	public void writeTo(String text) throws IOException
 	{
-		outstream = new DataOutputStream(sock.getOutputStream());
+		
 		outstream.writeBytes(text);
 	}
 	

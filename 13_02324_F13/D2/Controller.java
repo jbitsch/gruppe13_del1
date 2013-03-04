@@ -60,6 +60,11 @@ public class Controller {
 					data.closeCon();
 					System.exit(0);
 				}
+				else
+				{
+					printMenu();
+					data.writeTo("ES"+"\r\n");
+				}
 			}
 		}
 		catch (Exception e){
