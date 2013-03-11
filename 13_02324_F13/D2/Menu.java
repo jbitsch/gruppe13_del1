@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
-
 public class Menu {
 
 	private static Scanner scan;
-	
+
 	public Menu()
 	{
 		scan  = new Scanner(System.in);
 	}
+
 	public void printmenu(double brutto, double tara, String inline, String indstruktionsDisplay, String conIp){
 		
 		for (int i=0;i<25;i++)
@@ -33,22 +33,33 @@ public class Menu {
 		System.out.println("Tast Q for at afslutte program program");
 		System.out.println("Indtast (T/B/Q for knaptryk / brutto ændring /quit)");
 		System.out.print ("Tast her: ");
-		
-		//return scan.next().charAt(0); //TODO get char T/B/Q
 	}
-	public void startMenu(int portdst) //TODO get new port
+	
+	public void startMenu(int portdst) 
 	{
 		System.out.println("Venter paa connection paa port " + portdst );
 		System.out.println("Indtast eventuel portnummer som 1. argument");
 		System.out.println("paa kommando linien for andet portnr");
 		
-		//return scan.nextInt();
 	}
 	public void closeCon()
 	{
 		System.out.println("");
 		System.out.println("Program stoppet Q modtaget paa com port");
 	}
-
+	public double getBruto()
+	{
+		System.out.println("Indtast ny brutto: ");
+		return scan.nextDouble();
+	}
+	public String getInput()
+	{	
+		return scan.next();
+	}
+	public void printText(String text)
+	{
+		System.out.println();
+		System.out.println(text);
+	}
 
 }

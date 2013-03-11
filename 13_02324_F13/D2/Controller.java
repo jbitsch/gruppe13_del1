@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -8,8 +9,8 @@ public class Controller {
 	
 	private static String inline="";
 	private static String IndstruktionsDisplay= "";
-	private static int portdst = 8000;
-
+	private static int portdst;
+	private static boolean RN20 = false;
 	private Menu menu;
 	private Data data;
 
@@ -18,21 +19,31 @@ public class Controller {
 		this.data = data;
 	}
 
-	public synchronized void run()
+	public synchronized void run(int port)
 	{
+		
+		portdst = port;
+		
+		try
+		{
+			menu.startMenu(portdst);
+			data.getCon(portdst);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		printMenu();
 		
 		new Thread(new PhysicalScaleSim()).start();
 		
-		
-		menu.startMenu(portdst);
-		
 		try{
-			data.getCon(portdst);
-			printMenu();
 			
 			while (!(inline = data.getInput().toUpperCase()).isEmpty()){
-				if (inline.startsWith("DN")){
-					// ikke implimenteret
+				if (inline.startsWith("DW")){
+					IndstruktionsDisplay="";
+					printMenu();
+					data.writeTo("DW"+"\r\n");
 				}
 				else if (inline.startsWith("D")){
 					if (inline.equals("D"))
@@ -45,7 +56,7 @@ public class Controller {
 				}
 				else if (inline.startsWith("T")){
 					data.writeTo("T " + (tara) + " kg "+"\r\n");
-					tara=brutto;
+					tara = brutto;
 					printMenu();
 
 				}
@@ -53,12 +64,18 @@ public class Controller {
 					printMenu();
 					data.writeTo("S " + (brutto-tara)+ " kg " +"\r\n");
 				}
-				else if (inline.startsWith("B")){ // denne ordre findes
-					//ikke p� en fysisk v�gt
+				else if (inline.startsWith("B")){ 
 					String temp= inline.substring(2,inline.length());
 					brutto = Double.parseDouble(temp);
 					printMenu();
 					data.writeTo("DB"+"\r\n");
+				}
+				else if ((inline.startsWith("RM20"))){
+					data.writeTo("RM20 B\r\n");
+					RN20 = true;
+					printMenu();
+					menu.printText("Venter p� svar fra RN20 ordre: ");
+					
 				}
 				else if ((inline.startsWith("Q"))){
 					menu.closeCon();
@@ -84,44 +101,64 @@ public class Controller {
 		
 	}
 	
-	public class PhysicalScaleSim implements Runnable {
+	private class PhysicalScaleSim implements Runnable {
 
 		public void run() {
 			choosePhysicalAction();
 		}
 		
 		private void choosePhysicalAction() {
-			Scanner scan = new Scanner(System.in);
-			//TODO spørg om konsol plads
-			System.out.println("Vægten venter på bruger-input");
-			int functionChoice = scan.nextInt(); 
-			if(functionChoice == 1) {
-				setBrutto(scan.nextInt());
-				choosePhysicalAction();
+			try{
+				while (true){
+					String input = menu.getInput().toUpperCase();
+					
+                    if (RN20){
+                        int retur = Integer.parseInt(input);
+                        try {
+                            data.writeTo("RM20 A "+retur+"\r\n");
+                   
+                        } catch (IOException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                        RN20=false;
+                        printMenu();    
+                    }
+					
+					else if (input.startsWith("T")){
+						setTara();
+						printMenu();
+					}
+					else if (input.startsWith("B")){
+						double newBruto = menu.getBruto();
+						setBrutto(newBruto);
+						printMenu();
+					}
+					else if ((input.startsWith("Q"))){
+						menu.closeCon();
+						System.in.close();
+						System.out.close();
+						data.closeCon();
+						System.exit(0);
+					}
+					else
+					{
+						System.out.println("Ugyldigt input");
+						printMenu();	
+					}
+				}
 			}
-			else if(functionChoice == 2) {
-				setTara();
-				choosePhysicalAction();
-			}
-			else if(functionChoice == 0) {
-				quitApp();
-				choosePhysicalAction();
-			}
-			else {
-				choosePhysicalAction();
+			catch (Exception e){
+				System.out.println("Exception: "+e.getMessage());
 			}
 			
 		}
-		private synchronized void setBrutto(int brutto) {
-			Controller.brutto = brutto;
-			System.out.println("DB"+"\r\n");
+		private synchronized void setBrutto(double brut) {
+			brutto = brut;
+			
 		}
 		private synchronized void setTara() {
 			tara = brutto;
-			System.out.println("T " + (tara) + " kg "+"\r\n");
-		}
-		private synchronized void quitApp() {
-	
 		}
 	}
 }

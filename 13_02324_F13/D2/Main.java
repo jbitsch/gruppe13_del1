@@ -8,7 +8,11 @@ public class Main {
 		Data d = new Data();
 		Menu m = new Menu();
 		Controller con = new Controller(m,d);
-		con.run();
+		int portdst = 8000;
+        if (args.length > 0)
+            portdst = Integer.parseInt(args[0]);
+        
+        con.run(portdst);
 
 	}
 
