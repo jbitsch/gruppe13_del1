@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.util.Scanner;
-
 
 public class Controller {
 
@@ -74,7 +72,7 @@ public class Controller {
 					data.writeTo("RM20 B\r\n");
 					RN20 = true;
 					printMenu();
-					menu.printText("Venter på svar fra RN20 ordre: ");
+					menu.printText("Venter pï¿½ svar fra RN20 ordre: ");
 					
 				}
 				else if ((inline.startsWith("Q"))){

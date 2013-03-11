@@ -5,8 +5,6 @@ import data.IOperatoerDAO.DALException;
 import data.User;
 import function.Function;
 import userInterface.IMenu;
-import userInterface.Menu;
-
 
 public class MenuController {
 
