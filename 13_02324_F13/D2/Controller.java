@@ -1,8 +1,11 @@
+import java.util.Scanner;
+
 
 public class Controller {
 
 	private static double brutto=0;
 	private static double tara=0;
+	
 	private static String inline="";
 	private static String IndstruktionsDisplay= "";
 	private static int portdst = 8000;
@@ -15,8 +18,12 @@ public class Controller {
 		this.data = data;
 	}
 
-	public void run()
+	public synchronized void run()
 	{
+		
+		new Thread(new PhysicalScaleSim()).start();
+		
+		
 		menu.startMenu(portdst);
 		
 		try{
@@ -47,7 +54,7 @@ public class Controller {
 					data.writeTo("S " + (brutto-tara)+ " kg " +"\r\n");
 				}
 				else if (inline.startsWith("B")){ // denne ordre findes
-					//ikke på en fysisk vægt
+					//ikke pï¿½ en fysisk vï¿½gt
 					String temp= inline.substring(2,inline.length());
 					brutto = Double.parseDouble(temp);
 					printMenu();
@@ -76,5 +83,45 @@ public class Controller {
 		menu.printmenu(brutto, tara, inline, IndstruktionsDisplay, data.getIp());
 		
 	}
+	
+	public class PhysicalScaleSim implements Runnable {
 
+		public void run() {
+			choosePhysicalAction();
+		}
+		
+		private void choosePhysicalAction() {
+			Scanner scan = new Scanner(System.in);
+			//TODO spÃ¸rg om konsol plads
+			System.out.println("VÃ¦gten venter pÃ¥ bruger-input");
+			int functionChoice = scan.nextInt(); 
+			if(functionChoice == 1) {
+				setBrutto(scan.nextInt());
+				choosePhysicalAction();
+			}
+			else if(functionChoice == 2) {
+				setTara();
+				choosePhysicalAction();
+			}
+			else if(functionChoice == 0) {
+				quitApp();
+				choosePhysicalAction();
+			}
+			else {
+				choosePhysicalAction();
+			}
+			
+		}
+		private synchronized void setBrutto(int brutto) {
+			Controller.brutto = brutto;
+			System.out.println("DB"+"\r\n");
+		}
+		private synchronized void setTara() {
+			tara = brutto;
+			System.out.println("T " + (tara) + " kg "+"\r\n");
+		}
+		private synchronized void quitApp() {
+	
+		}
+	}
 }
