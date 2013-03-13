@@ -39,7 +39,9 @@ public class Controller {
 		
 		try{
 			
-			while (!(inline = data.getInput().toUpperCase()).isEmpty()){
+			while (true){
+				inline = data.getInput().toUpperCase();
+				
 				if (inline.startsWith("DW")){
 					IndstruktionsDisplay="";
 					printMenu();
@@ -65,16 +67,26 @@ public class Controller {
 					data.writeTo("S " + (brutto-tara)+ " kg " +"\r\n");
 				}
 				else if (inline.startsWith("B")){ 
-					String temp= inline.substring(2,inline.length());
-					brutto = Double.parseDouble(temp);
-					printMenu();
-					data.writeTo("DB"+"\r\n");
+					try
+					{
+						String temp= inline.substring(2,inline.length());
+						brutto = Double.parseDouble(temp);
+						printMenu();
+						data.writeTo("DB"+"\r\n");
+					}
+					catch(NumberFormatException e)
+					{
+						data.writeTo("ES"+"\r\n");
+					}
 				}
-				else if ((inline.startsWith("RM20"))){
+				else if ((inline.startsWith("RM20 8"))){
+					String[] temp;
+					String delimiter = "\"";
+					temp = inline.split(delimiter);
 					data.writeTo("RM20 B\r\n");
 					RN20 = true;
 					printMenu();
-					menu.printText("Venter på svar fra RN20 ordre: ");
+					menu.printText("Venter på svar fra RN20 ordre: "+temp[1]);
 					
 				}
 				else if ((inline.startsWith("Q"))){
@@ -124,27 +136,29 @@ public class Controller {
                         RN20=false;
                         printMenu();    
                     }
-					
-					else if (input.startsWith("T")){
+					char choise = input.charAt(0);
+					switch(choise)
+					{
+					case 'T':
 						setTara();
 						printMenu();
-					}
-					else if (input.startsWith("B")){
+						break;
+					case 'B':
 						double newBruto = menu.getBruto();
 						setBrutto(newBruto);
 						printMenu();
-					}
-					else if ((input.startsWith("Q"))){
+						break;
+					case 'Q':
 						menu.closeCon();
 						System.in.close();
 						System.out.close();
 						data.closeCon();
 						System.exit(0);
-					}
-					else
-					{
+						break;
+					default:
 						System.out.println("Ugyldigt input");
-						printMenu();	
+						printMenu();
+						
 					}
 				}
 			}
