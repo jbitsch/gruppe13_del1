@@ -72,6 +72,9 @@ public class Controller {
 						printMenu();
 						data.writeTo("DB"+"\r\n");
 					}
+					catch(IndexOutOfBoundsException e) {
+						data.writeTo("ES"+"\r\n");
+					}
 					catch(NumberFormatException e)
 					{
 						data.writeTo("ES"+"\r\n");
@@ -91,8 +94,6 @@ public class Controller {
 				}
 				else if ((inline.startsWith("Q"))){
 					menu.closeCon();
-					System.in.close();
-					System.out.close();
 					data.closeCon();
 					System.exit(0);
 				}
@@ -150,11 +151,8 @@ public class Controller {
 						break;
 					case 'Q':
 						menu.closeCon();
-						System.in.close();
-						System.out.close();
 						data.closeCon();
 						System.exit(0);
-						break;
 					default:
 						System.out.println("Ugyldigt input");
 						printMenu();
