@@ -88,7 +88,7 @@ public class Controller {
 					RN20 = true;
 					printMenu();
 
-					menu.printText("Venter p� svar fra RN20 ordre: "+temp[1]);
+					menu.printText("Venter paa svar fra RM20 ordre: "+temp[1]);
 
 					
 				}
