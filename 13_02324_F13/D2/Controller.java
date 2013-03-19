@@ -39,8 +39,11 @@ public class Controller {
 			
 			while (true){
 				inline = data.getInput().toUpperCase();
-				
-				if (inline.startsWith("DW")){
+				if(RM20)
+				{
+					data.writeTo("Venter på bruger svar fra bruger\r\n");
+				}
+				else if (inline.startsWith("DW")){
 					IndstruktionsDisplay="";
 					printMenu();
 					data.writeTo("DW"+"\r\n");
@@ -67,10 +70,16 @@ public class Controller {
 				else if (inline.startsWith("B")){ 
 					try
 					{
-						String temp= inline.substring(2,inline.length());
-						brutto = Double.parseDouble(temp);
-						printMenu();
-						data.writeTo("DB"+"\r\n");
+						char c = inline.charAt(1);
+						if(c == ' ')
+						{
+							String temp= inline.substring(2,inline.length());
+							brutto = Double.parseDouble(temp);
+							printMenu();
+							data.writeTo("DB"+"\r\n");
+						}
+						else 
+							data.writeTo("ES"+"\r\n");
 					}
 					catch(IndexOutOfBoundsException e) {
 						data.writeTo("ES"+"\r\n");
