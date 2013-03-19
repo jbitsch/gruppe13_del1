@@ -11,7 +11,6 @@ public class Main {
 		int portdst = 8000;
         if (args.length > 0)
             portdst = Integer.parseInt(args[0]);
-        
         con.run(portdst);
 
 	}

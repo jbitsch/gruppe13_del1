@@ -8,7 +8,7 @@ public class Controller {
 	private static String inline="";
 	private static String IndstruktionsDisplay= "";
 	private static int portdst;
-	private static boolean RN20 = false;
+	private static boolean RM20 = false;
 	private Menu menu;
 	private Data data;
 
@@ -85,7 +85,7 @@ public class Controller {
 					String delimiter = "\"";
 					temp = inline.split(delimiter);
 					data.writeTo("RM20 B\r\n");
-					RN20 = true;
+					RM20 = true;
 					printMenu();
 
 					menu.printText("Venter paa svar fra RM20 ordre: "+temp[1]);
@@ -125,16 +125,29 @@ public class Controller {
 				while (true){
 					String input = menu.getInput().toUpperCase();
 					
-                    if (RN20){
-                        int retur = Integer.parseInt(input);
-                        try {
+                    if (RM20){
+                        boolean inputOk = false;
+                        int retur = 0;
+                        while(!inputOk)
+                        {
+                        	try
+                        	{
+                        		retur = Integer.parseInt(input);
+                        		inputOk = true;
+                        	}
+        					catch(NumberFormatException e)
+        					{
+        						menu.printText("Input skal være tal");
+        						input = menu.getInput().toUpperCase();
+        					}
+                        }
+                    	try {
                             data.writeTo("RM20 A "+retur+"\r\n");
                    
                         } catch (IOException e1) {
-                            // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }
-                        RN20=false;
+                        RM20=false;
                         printMenu();    
                     }
 					char choise = input.charAt(0);
