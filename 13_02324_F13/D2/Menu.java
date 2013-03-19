@@ -24,14 +24,14 @@ public class Menu {
 		System.out.println("Brutto: " + (brutto)+ " kg" );
 		System.out.println("Streng modtaget: "+inline) ;
 		System.out.println(" ");
-		System.out.println("Denne vegt simulator lytter på ordrene ");
+		System.out.println("Denne vegt simulator lytter pï¿½ ordrene ");
 		System.out.println("D, DN, S, T, B, Q ");
 		System.out.println("paa kommunikationsporten. ");
 		System.out.println("******");
 		System.out.println("Tast T for tara (svarende til knaptryk paa vegt)");
-		System.out.println("Tast B for ny brutto (svarende til at belastningen paa vegt ændres)");
+		System.out.println("Tast B for ny brutto (svarende til at belastningen paa vegt ï¿½ndres)");
 		System.out.println("Tast Q for at afslutte program program");
-		System.out.println("Indtast (T/B/Q for knaptryk / brutto ændring /quit)");
+		System.out.println("Indtast (T/B/Q for knaptryk / brutto ï¿½ndring /quit)");
 		System.out.print ("Tast her: ");
 	}
 	
@@ -49,8 +49,21 @@ public class Menu {
 	}
 	public double getBruto()
 	{
-		System.out.println("Indtast ny brutto: ");
-		return scan.nextDouble();
+		double newB = 0;
+		while(true)
+		{
+			try
+			{
+				System.out.println("Indtast ny brutto: ");
+				newB = Double.parseDouble(scan.next());
+				break;
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Ugyldig ny bruto vÃ¦gt");
+			}
+		}
+		return newB;
 	}
 	public String getInput()
 	{	
