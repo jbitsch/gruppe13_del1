@@ -38,10 +38,17 @@ public class Controller {
 		try{
 			
 			while (true){
-				inline = data.getInput().toUpperCase();
+				try
+				{
+					inline = data.getInput().toUpperCase();
+				}
+				catch(NullPointerException e)
+				{
+					inline = "Q";
+				}
 				if(RM20)
 				{
-					data.writeTo("Venter på bruger svar fra bruger\r\n");
+					data.writeTo("RM20 I\r\n");
 				}
 				else if (inline.startsWith("DW")){
 					IndstruktionsDisplay="";
@@ -91,15 +98,35 @@ public class Controller {
 				}
 				else if ((inline.startsWith("RM20 8"))){
 					String[] temp;
-					String delimiter = "\"";
-					temp = inline.split(delimiter);
-					data.writeTo("RM20 B\r\n");
-					RM20 = true;
-					printMenu();
+					int count = 0;
+					for (int i=0; i<inline.length(); i++)
+					{
+						if(inline.charAt(i)=='\"')
+						{
+							count++;
+						}
+							
+					}
+					if (count==6)
+					{
+						String delimiter = "\"";
+						temp = inline.split(delimiter);
+		
+						if(temp[1].length()>30)
+						{
+							data.writeTo("RM20 L\r\n");
+						}
+						else 
+						{
+							data.writeTo("RM20 B\r\n");
+							RM20 = true;
+							printMenu();
+							menu.printText("Venter på RM20 8 ordre: "+temp[1]);
 
-					menu.printText("Venter paa svar fra RM20 ordre: "+temp[1]);
-
-					
+						}
+					}
+					else
+						data.writeTo("RM20 L\r\n");
 				}
 				else if ((inline.startsWith("Q"))){
 					menu.closeCon();
@@ -114,7 +141,9 @@ public class Controller {
 			}
 		}
 		catch (Exception e){
-			System.out.println("Exception: "+e.getMessage());
+			e.printStackTrace();
+			//menu.printText("Forbindelse til klient tabt, programmet lukkes");
+			
 		}
 	}
 	private void printMenu()
@@ -141,12 +170,18 @@ public class Controller {
                         {
                         	try
                         	{
-                        		retur = Integer.parseInt(input);
-                        		inputOk = true;
+                        		if(input.length()<=8)
+                        		{
+                        			retur = Integer.parseInt(input);
+                        			inputOk = true;
+                        		}
+                        		else
+                        			throw new NumberFormatException();
+                        		
                         	}
         					catch(NumberFormatException e)
         					{
-        						menu.printText("Input skal være tal");
+        						menu.printText("Input skal være maks 8 tal");
         						input = menu.getInput().toUpperCase();
         					}
                         }
