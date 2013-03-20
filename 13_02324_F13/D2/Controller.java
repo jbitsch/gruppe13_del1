@@ -22,17 +22,22 @@ public class Controller {
 		
 		portdst = port;
 		
+		
 		try
 		{
+			//Udskriver velkomst menu
 			menu.startMenu(portdst);
+			//lytter for forbindelser på portdst
 			data.getCon(portdst);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+		//Forbindelse er nu oprettet. Printermenuen udskrives. 
 		printMenu();
 		
+		//Der oprettes en ny traad som skal lytte på input fra selve programmet
 		new Thread(new PhysicalScaleSim()).start();
 		
 		try{
@@ -40,21 +45,26 @@ public class Controller {
 			while (true){
 				try
 				{
+					//Henter input fra den tilsluttede klient
 					inline = data.getInput().toUpperCase();
 				}
 				catch(NullPointerException e)
 				{
+					//Hvis forbindelsen er tabt, skal programmet lukke
 					inline = "Q";
 				}
+				//Hvis programmet afventer svar fra RM20 ordre
 				if(RM20)
 				{
 					data.writeTo("RM20 I\r\n");
 				}
+				//Fjerner tekst fra display
 				else if (inline.startsWith("DW")){
 					IndstruktionsDisplay="";
 					printMenu();
 					data.writeTo("DW"+"\r\n");
 				}
+				//Skriver tekst til display
 				else if (inline.startsWith("D")){
 					if (inline.equals("D"))
 						IndstruktionsDisplay="";
@@ -64,16 +74,19 @@ public class Controller {
 					printMenu();
 					data.writeTo("DB"+"\r\n");
 				}
+				//Saetter tara vaegt
 				else if (inline.startsWith("T")){
 					data.writeTo("T " + (tara) + " kg "+"\r\n");
 					tara = brutto;
 					printMenu();
 
 				}
+				//Henter netto vaegt
 				else if (inline.startsWith("S")){
 					printMenu();
 					data.writeTo("S " + (brutto-tara)+ " kg " +"\r\n");
 				}
+				//saetter ny brutto baegt. 
 				else if (inline.startsWith("B")){ 
 					try
 					{
@@ -96,6 +109,7 @@ public class Controller {
 						data.writeTo("ES"+"\r\n");
 					}
 				}
+				//Modtager RM20 8 ordre
 				else if ((inline.startsWith("RM20 8"))){
 					String[] temp;
 					int count = 0;
@@ -122,7 +136,6 @@ public class Controller {
 							RM20 = true;
 							printMenu();
 							menu.printText("Venter på RM20 8 ordre: "+temp[1]);
-
 						}
 					}
 					else
