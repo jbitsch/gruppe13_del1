@@ -29,11 +29,14 @@ public class Controller {
 			menu.startMenu(portdst);
 			//lytter for forbindelser på portdst
 			data.getCon(portdst);
+			data.writeTo("Understøttede kommandoer: RM20 8, DW, D, T, S, B, Q");
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+		
+		
 		//Forbindelse er nu oprettet. Printermenuen udskrives. 
 		printMenu();
 		

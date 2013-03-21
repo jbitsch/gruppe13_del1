@@ -23,8 +23,9 @@ public class Menu {
 		System.out.println("Streng modtaget: "+inline) ;
 		System.out.println(" ");
 		System.out.println("Understøttede kommandoer: ");
-		System.out.println("D, DN, S, T, B, Q ");
+		System.out.println("RM20 8, DW, D, T, S, B, Q");
 		System.out.println("******");
+		System.out.println("Indtast (T/B/Q for knaptryk / brutto aendring /quit)");
 		System.out.print ("Tast her: ");
 	}
 	
