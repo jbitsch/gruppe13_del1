@@ -17,21 +17,14 @@ public class Menu {
 		System.out.println("Netto: " + (brutto-tara)+ " kg" );
 		System.out.println("Instruktionsdisplay: " + indstruktionsDisplay );
 		System.out.println("*************************************************");
-		System.out.println(" ");
-		System.out.println(" ");
 		System.out.println("Debug info: ");
 		System.out.println("Hooked up to " + conIp );
 		System.out.println("Brutto: " + (brutto)+ " kg" );
 		System.out.println("Streng modtaget: "+inline) ;
 		System.out.println(" ");
-		System.out.println("Denne vegt simulator lytter p� ordrene ");
+		System.out.println("Understøttede kommandoer: ");
 		System.out.println("D, DN, S, T, B, Q ");
-		System.out.println("paa kommunikationsporten. ");
 		System.out.println("******");
-		System.out.println("Tast T for tara (svarende til knaptryk paa vegt)");
-		System.out.println("Tast B for ny brutto (svarende til at belastningen paa vegt �ndres)");
-		System.out.println("Tast Q for at afslutte program program");
-		System.out.println("Indtast (T/B/Q for knaptryk / brutto �ndring /quit)");
 		System.out.print ("Tast her: ");
 	}
 	

@@ -37,7 +37,7 @@ public class Controller {
 		//Forbindelse er nu oprettet. Printermenuen udskrives. 
 		printMenu();
 		
-		//Der oprettes en ny traad som skal lytte på input fra selve programmet
+		//Der oprettes en ny tråd som skal lytte på input fra selve programmet
 		new Thread(new PhysicalScaleSim()).start();
 		
 		try{
@@ -74,7 +74,7 @@ public class Controller {
 					printMenu();
 					data.writeTo("DB"+"\r\n");
 				}
-				//Saetter tara vaegt
+				// Sætter tara vægt
 				else if (inline.startsWith("T")){
 					data.writeTo("T " + (tara) + " kg "+"\r\n");
 					tara = brutto;
