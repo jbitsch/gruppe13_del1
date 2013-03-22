@@ -16,7 +16,12 @@ public class Controller {
 		this.menu = menu;
 		this.data = data;
 	}
-
+	
+	/**
+	 * The method which starts the program. It's primary function is to receive orders from the
+	 * connection and give the correct response. It also instantiates the PhysicalScaleSim thread
+	 * @param port The port number the program listens to.
+	 */
 	public synchronized void run(int port)
 	{
 		
@@ -168,12 +173,29 @@ public class Controller {
 		
 	}
 	
+	/**
+	 * 
+	 * A class which acts as the physical components of the scale being simulated.
+	 * This class implements the Runnable interface and is supposed to be instantiated as
+	 * a thread
+	 *
+	 */
 	private class PhysicalScaleSim implements Runnable {
 
+		
+		/**
+		 * The method used to start the thread. It's only function is to call the
+		 * choosePhysicalScaleAction method
+		 */
 		public void run() {
 			choosePhysicalAction();
 		}
 		
+		
+		/**
+		 * A method which will listen for input constantly. If an input is given, it will 
+		 * perform the specified action
+		 */
 		private void choosePhysicalAction() {
 			try{
 				while (true){
@@ -238,10 +260,23 @@ public class Controller {
 			}
 			
 		}
+		
+		/**
+		 * A method which is called by choosePhysicalScaleAction if it receives the input
+		 * "B (a double value)". When called the method will change the brutto value of the
+		 * scale
+		 * @param brut A double value representing the weigh which is placed on the scale
+		 */
 		private synchronized void setBrutto(double brut) {
 			brutto = brut;
 			
 		}
+		
+		/**
+		 * A method which is called by choosePhysicalScaleAction if it receives the input
+		 * "T". When called the method will set the tara value of the scale, to the current
+		 * brutto value
+		 */
 		private synchronized void setTara() {
 			tara = brutto;
 		}
