@@ -9,6 +9,14 @@ public class Menu {
 		scan  = new Scanner(System.in);
 	}
 
+	/**
+	 * A method which prints out information (host side)
+	 * @param brutto The current brutto value of the scale
+	 * @param tara the current tara value of the scale
+	 * @param inline A String received from the connected client
+	 * @param indstruktionsDisplay 
+	 * @param conIp IP address of the connected client
+	 */
 	public void printmenu(double brutto, double tara, String inline, String indstruktionsDisplay, String conIp){
 		
 		for (int i=0;i<25;i++)
@@ -29,6 +37,10 @@ public class Menu {
 		System.out.print ("Tast her: ");
 	}
 	
+	/**
+	 * Initial message from the program-
+	 * @param portdst Port number which the program listens to
+	 */
 	public void startMenu(int portdst) 
 	{
 		System.out.println("Venter paa connection paa port " + portdst );
@@ -36,11 +48,18 @@ public class Menu {
 		System.out.println("paa kommando linien for andet portnr");
 		
 	}
+	/**
+	 * Informs that the program received instructions to terminate
+	 */
 	public void closeCon()
 	{
 		System.out.println("");
 		System.out.println("Program stoppet Q modtaget paa com port");
 	}
+	/**
+	 * Prints out the current brutto value of the scale
+	 * @return The brutto value of the scale
+	 */
 	public double getBruto()
 	{
 		double newB = 0;
