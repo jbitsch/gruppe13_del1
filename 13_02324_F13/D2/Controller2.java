@@ -35,8 +35,9 @@ public class Controller2 {
 		try
 		{
 			//lytter for forbindelser på portdst
+			gui.notificationDialog("Du skal forbinde en terminal til port: "+port);
 			data.getCon(portdst);
-			data.writeTo("Understøttede kommandoer: RM20 8, DW, D, T, S, B, Q");
+			data.writeTo("Gyldige kommandoer: RM20 8, DW, D, T, S, B, Q");
 		}
 		catch(Exception e)
 		{
@@ -85,7 +86,7 @@ public class Controller2 {
 								inline.length()));
 					gui.writeCommand("D");
 					gui.setMessage(IndstruktionsDisplay);
-					data.writeTo("DB"+"\r\n");
+					data.writeTo("DA"+"\r\n");
 				}
 				// Sætter tara vægt
 				else if (inline.startsWith("T")){
@@ -153,6 +154,7 @@ public class Controller2 {
 							RM20 = true;
 							gui.setMessage(temp[1]);
 							gui.writeCommand("Venter paa svar fra RM20 8 ordre");
+							gui.disableButtons(true);
 						}
 					}
 					else
@@ -173,7 +175,7 @@ public class Controller2 {
 		catch (Exception e){
 
 			gui.notificationDialog("Connection to Client lost");
-			e.printStackTrace(System.out);
+			e.printStackTrace();
 			//menu.printText("Forbindelse til klient tabt, programmet lukkes");
 
 		}
@@ -191,9 +193,10 @@ public class Controller2 {
 
 
 		/**
-		 * The method used to start the thread. It's only function is to call the
-		 * choosePhysicalScaleAction method
+		 * The method used to start the thread. The method will listen for input constantly. 
+		 * If an input is given, it will perform the specified action
 		 */
+	
 		public void run() {
 			try{
 				
@@ -201,15 +204,11 @@ public class Controller2 {
 					String input = gui.getAnswer().toUpperCase();
 
 
-
-		
-					
-					
-					
 					if (RM20){
 
 						boolean inputOk = false;
 						int retur = 0;
+						
 						while(!inputOk)
 						{
 							try
@@ -225,8 +224,8 @@ public class Controller2 {
 							}
 							catch(NumberFormatException e)
 							{
-								gui.notificationDialog("Input skal være maks 8 tal");
-								input = gui.getAnswer().toUpperCase();
+								gui.notificationDialog("Input skal være maks 7 tal");
+						
 							}
 						}
 						try {
@@ -256,7 +255,7 @@ public class Controller2 {
 							data.closeCon();
 							System.exit(0);
 						default:
-							gui.notificationDialog("Ugyldigt input");
+							updateGUI();
 
 
 						}
@@ -303,8 +302,5 @@ public class Controller2 {
 		}
 
 
-		/**
- * A method which will listen for input constantly. If an input is given, it will 
- * perform the specified action
- */
-//private void choosePhysicalAction() { 
+
+private void choosePhysicalAction() {*/ 

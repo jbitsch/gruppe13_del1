@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
@@ -33,8 +33,9 @@ import javax.swing.SwingConstants;
 
 public class GuiControl {
 
-	private static boolean buttonEssential = true;
-	private static boolean buttonTest = false;
+	private boolean btnCatOne;
+	private boolean btnCatTwo;
+	private boolean btnCatThree;
 	private static int dimensionY = 300;
 	private static int frameDimensionX = 540;
 	private static int panelKeyPadDimensionX = 250;
@@ -45,6 +46,7 @@ public class GuiControl {
 	private Object lock;
 	private char choice;
 	private String answer = new String();
+	private StringBuffer bufferedAnswer = new StringBuffer(8);
 	private JLabel taraAmountLbl = new JLabel("0.000Kg");
 	private JSpinner jSpBrutto;
 	private double brutto;
@@ -92,7 +94,7 @@ public class GuiControl {
 		weightReturnTxt = new JTextField();
 		weightReturnTxt.setEditable(false);
 		returnValuePane.add(weightReturnTxt);
-		weightReturnTxt.setColumns(10);
+		weightReturnTxt.setColumns(18);
 		
 		return returnValuePane;
 	}
@@ -136,6 +138,7 @@ public class GuiControl {
 		jSpBrutto =new JSpinner(model);
 		JSpinner.NumberEditor editor = new JSpinner.NumberEditor(jSpBrutto);
 		jSpBrutto.setEditor(editor);
+		editor.getTextField().setEditable(false);
 		jSpBrutto.setBounds(150, 107, 134, 28);
 		
 		mirror.add(jSpBrutto);
@@ -143,8 +146,7 @@ public class GuiControl {
 			public void stateChanged(ChangeEvent e){
 				brutto = (Double)jSpBrutto.getValue();
 				firstDisplayLine.setText(bruttoFormat.format(brutto));
-				choice ='B';
-				ok();
+				choice ='B';	
 			}
 		});
 		
@@ -163,91 +165,112 @@ public class GuiControl {
 		//keyPad's JPanel initialisering
 		JPanel keypad = new JPanel(new GridLayout(4, 4, 5, 9));
 		keypad.setPreferredSize(new Dimension(panelKeyPadDimensionX,dimensionY));
+		btnCatOne=true;
+		btnCatTwo=true;
+		btnCatThree=true;
 		
 		//JButtons + ActionListener's
 		//JButton 1
 		JButton but_nr1 = new JButton("1");
 		but_nr1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(1);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr1.setEnabled(buttonEssential);
+		but_nr1.setEnabled(btnCatTwo);
 		keypad.add(but_nr1);
 		//JButton 2
 		JButton but_nr2 = new JButton("2");
 		but_nr2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(2);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr2.setEnabled(buttonEssential);
+		but_nr2.setEnabled(btnCatTwo);
 		keypad.add(but_nr2);
 		//JButton 3
 		JButton but_nr3 = new JButton("3");
 		but_nr3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(3);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr3.setEnabled(buttonEssential);
+		but_nr3.setEnabled(btnCatTwo);
 		keypad.add(but_nr3);
 		//JButton interval imellem 0 til 1
 		JButton but_RANGE_0to1 = new JButton(" 0-1Kg");
-		but_RANGE_0to1.setEnabled(buttonTest);
+		but_RANGE_0to1.setEnabled(btnCatThree);
 		keypad.add(but_RANGE_0to1);
 		//JButton 4
 		JButton but_nr4 = new JButton("4");
 		but_nr4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(4);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr4.setEnabled(buttonEssential);
+		but_nr4.setEnabled(btnCatTwo);
 		keypad.add(but_nr4);
 		//JButton 5
 		JButton but_nr5 = new JButton("5");
 		but_nr5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(5);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr5.setEnabled(buttonEssential);
+		but_nr5.setEnabled(btnCatTwo);
 		keypad.add(but_nr5);
 		//JButton 6
 		JButton but_nr6 = new JButton("6");
 		but_nr6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(6);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr6.setEnabled(buttonEssential);
+		but_nr6.setEnabled(btnCatTwo);
 		keypad.add(but_nr6);
 		//JButton interval imellem 1 til 5
 		JButton but_RANGE_1to5 = new JButton("1-5Kg");
-		but_RANGE_1to5.setEnabled(buttonTest);
+		but_RANGE_1to5.setEnabled(btnCatThree);
 		keypad.add(but_RANGE_1to5);
 		//JButton 7
 		JButton but_nr7 = new JButton("7");
 		but_nr7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(7);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr7.setEnabled(buttonEssential);
+		but_nr7.setEnabled(btnCatTwo);
 		keypad.add(but_nr7);
 		//JButton 8
 		JButton but_nr8 = new JButton("8");
 		but_nr8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(8);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr8.setEnabled(buttonEssential);
+		but_nr8.setEnabled(btnCatTwo);
 		keypad.add(but_nr8);
 		//JButton 9
 		JButton but_nr9 = new JButton("9");
 		but_nr9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(9);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
-		but_nr9.setEnabled(buttonEssential);
+		but_nr9.setEnabled(btnCatTwo);
 		keypad.add(but_nr9);
 		//JButton Interval imellem 1 til 15
 		JButton but_RANGE_1to15 = new JButton("1-15Kg");
-		but_RANGE_1to15.setEnabled(buttonTest);
+		but_RANGE_1to15.setEnabled(btnCatThree);
 		but_RANGE_1to15.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -255,16 +278,21 @@ public class GuiControl {
 		keypad.add(but_RANGE_1to15);
 		//JButton CLEAR
 		JButton but_CLEAR = new JButton("Clear");
+		but_CLEAR.setEnabled(btnCatOne);
 		but_CLEAR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.delete(0, bufferedAnswer.length());
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
 		keypad.add(but_CLEAR);
 		//JButton 0
 		JButton but_nr0 = new JButton("0");
-		but_nr0.setEnabled(buttonEssential);
+		but_nr0.setEnabled(btnCatTwo);
 		but_nr0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bufferedAnswer.append(0);
+				secondDisplayLine.setText(getAnswer());
 			}
 		});
 		keypad.add(but_nr0);
@@ -272,9 +300,12 @@ public class GuiControl {
 		JButton but_RETURN = new JButton("Return");
 		but_RETURN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ok();
+				
+				
 			}
 		});
-		but_nr1.setEnabled(buttonEssential);
+		//but_RETURN.setEnabled(btnCatTwo);
 		keypad.add(but_RETURN);
 		//JButton TARA
 		JButton but_TARA = new JButton("TARA");
@@ -285,7 +316,7 @@ public class GuiControl {
 				ok();
 			}
 		});
-		but_TARA.setEnabled(buttonEssential);
+		but_TARA.setEnabled(btnCatOne);
 		keypad.add(but_TARA);
 		
 		
@@ -346,6 +377,7 @@ public class GuiControl {
 		} catch (InterruptedException e) {}	
 		return choice;
 	}
+	
 	private void ok() {
 		synchronized (lock) {
 			lock.notifyAll();
@@ -354,13 +386,16 @@ public class GuiControl {
 
 	public String getAnswer()
 	{	
+		answer = bufferedAnswer.toString();
 		return answer;
 			
 	}
+	
 	public void writeCommand(String text)
 	{
-		weightReturnTxt.setText("Streng modtaget: "+text);
+		weightReturnTxt.setText(text);
 	}
+	
 	public void setMessage(String text)
 	{
 		secondDisplayLine.setText(text);
@@ -368,7 +403,7 @@ public class GuiControl {
 
 	public void updateWeight(String net, Double bru, String tar)
 	{
-		firstDisplayLine.setText(net+" kg");
+		secondDisplayLine.setText(net+" kg");
 		jSpBrutto.setValue(bru);
 		taraAmountLbl.setText(tar+" Kg");
 	}
@@ -379,7 +414,13 @@ public class GuiControl {
 
 	}
 	public void notificationDialog(String string) {
-		JOptionPane.showMessageDialog(frame, string);
+		try {
+			JOptionPane.showMessageDialog(frame, string);
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	
 		
 	}
@@ -387,5 +428,19 @@ public class GuiControl {
 		
 		return brutto;
 	}
+	public void disableButtons(Boolean show){
+		if (show) {
+			btnCatOne = false;
+			btnCatTwo = true;
+			btnCatThree= false;
+					
+		} else {
+			btnCatOne = true;
+			btnCatTwo = false;
+			btnCatThree= false;
+
+		}
+	}
+	
 	
 }

@@ -33,6 +33,7 @@ public class Main {
 
 		} else {
 			System.out.println("Closing down Program.");
+			System.exit(0);
 		}
 		
 		/*Data d = new Data();
