@@ -134,6 +134,7 @@ public class GuiControl {
 		thirdDisplayLine.setBounds(6, 51, 278, 28);
 		mirror.add(thirdDisplayLine);
 		thirdDisplayLine.setColumns(10);
+		thirdDisplayLine.setText("TextDisplay med info fra vægten");
 
 		SpinnerNumberModel model = new SpinnerNumberModel(0.0, 0.0, 200000, 0.1);
 		jSpBrutto = new JSpinner(model);
@@ -446,8 +447,8 @@ public class GuiControl {
 		}
 	}
 
-	public void setAnotherMessage(String string) {
-		thirdDisplayLine.setText(string);
+	public void setAnotherMessage(String third) {
+		thirdDisplayLine.setText(third);
 	}
 
 

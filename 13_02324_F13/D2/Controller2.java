@@ -194,6 +194,7 @@ public class Controller2 {
 
 							} catch (NumberFormatException e) {
 								gui.notificationDialog("Input skal være maks 7 tal");
+								input = "";
 
 							}
 						}
