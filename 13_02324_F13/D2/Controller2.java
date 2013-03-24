@@ -5,7 +5,7 @@ public class Controller2 {
 
 	private static double brutto=0;
 	private static double tara=0;
-	
+
 	private static String inline="";
 	private static String IndstruktionsDisplay= "";
 	private static int portdst;
@@ -13,14 +13,14 @@ public class Controller2 {
 	private GuiControl gui;
 	private Data data;
 	private DecimalFormat bruttoFormat;
-	
+
 
 	public Controller2(GuiControl gui, Data data) {
 		this.gui = gui;
 		this.data = data;
 		bruttoFormat = new DecimalFormat("0,000");
 	}
-	
+
 	/**
 	 * The method which starts the program. It's primary function is to receive orders from the
 	 * connection and give the correct response. It also instantiates the PhysicalScaleSim thread
@@ -28,10 +28,10 @@ public class Controller2 {
 	 */
 	public synchronized void run(int port)
 	{
-		
+
 		portdst = port;
-		
-		
+
+
 		try
 		{
 			//lytter for forbindelser på portdst
@@ -42,16 +42,17 @@ public class Controller2 {
 		{
 			e.printStackTrace();
 		}
-		
-		
+
+
 		//Forbindelse er nu oprettet. Printermenuen udskrives. 
 		gui.visibility();
-		
+
 		//Der oprettes en ny tråd som skal lytte på input fra selve programmet
-		new Thread(new PhysicalScaleSim()).start();
-		
+		Thread physSim = new Thread(new PhysicalScaleSim());
+		physSim.start();
+
 		try{
-			
+
 			while (true){
 				try
 				{
@@ -134,13 +135,13 @@ public class Controller2 {
 						{
 							count++;
 						}
-							
+
 					}
 					if (count==6)
 					{
 						String delimiter = "\"";
 						temp = inline.split(delimiter);
-		
+
 						if(temp[1].length()>30)
 						{
 							data.writeTo("RM20 L\r\n");
@@ -170,15 +171,15 @@ public class Controller2 {
 			}
 		}
 		catch (Exception e){
-			
+
 			gui.notificationDialog("Connection to Client lost");
 			e.printStackTrace(System.out);
 			//menu.printText("Forbindelse til klient tabt, programmet lukkes");
-			
+
 		}
 	}
 
-	
+
 	/**
 	 * 
 	 * A class which acts as the physical components of the scale being simulated.
@@ -188,85 +189,86 @@ public class Controller2 {
 	 */
 	private class PhysicalScaleSim implements Runnable {
 
-		
+
 		/**
 		 * The method used to start the thread. It's only function is to call the
 		 * choosePhysicalScaleAction method
 		 */
 		public void run() {
-			choosePhysicalAction();
-		}
-		
-		
-		/**
-		 * A method which will listen for input constantly. If an input is given, it will 
-		 * perform the specified action
-		 */
-		private void choosePhysicalAction() {
 			try{
+				
 				while (true){
 					String input = gui.getAnswer().toUpperCase();
+
+
+
+		
 					
-                    if (RM20){
-                        boolean inputOk = false;
-                        int retur = 0;
-                        while(!inputOk)
-                        {
-                        	try
-                        	{
-                        		if(input.length()<=8)
-                        		{
-                        			retur = Integer.parseInt(input);
-                        			inputOk = true;
-                        		}
-                        		else
-                        			throw new NumberFormatException();
-                        		
-                        	}
-        					catch(NumberFormatException e)
-        					{
-        						gui.notificationDialog("Input skal være maks 8 tal");
-        						input = gui.getAnswer().toUpperCase();
-        					}
-                        }
-                    	try {
-                            data.writeTo("RM20 A "+retur+"\r\n");
-                   
-                        } catch (IOException e1) {
-                            e1.printStackTrace(System.out);
-                        }
-                        RM20=false;
-                           
-                    }
-					char choise = gui.getInput();
-					switch(choise)
-					{
-					case 'T':
-						setTara();
-						updateGUI();
-						break;
-					case 'B':
-						double newBruto = gui.getBrutto();
-						setBrutto(newBruto);
-						updateGUI();
-						break;
-					case 'Q':
-						gui.dispose();
-						data.closeCon();
-						System.exit(0);
-					default:
-						gui.notificationDialog("Ugyldigt input");
-						
-						
+					
+					
+					if (RM20){
+
+						boolean inputOk = false;
+						int retur = 0;
+						while(!inputOk)
+						{
+							try
+							{
+								if(input.length()<=8)
+								{
+									retur = Integer.parseInt(input);
+									inputOk = true;
+								}
+								else
+									throw new NumberFormatException();
+
+							}
+							catch(NumberFormatException e)
+							{
+								gui.notificationDialog("Input skal være maks 8 tal");
+								input = gui.getAnswer().toUpperCase();
+							}
+						}
+						try {
+							data.writeTo("RM20 A "+retur+"\r\n");
+
+						} catch (IOException e1) {
+							e1.printStackTrace(System.out);
+						}
+						RM20=false;
+
+					}else{
+	
+						char choise = gui.getInput();
+						switch(choise)
+						{
+						case 'T':
+							setTara();
+							updateGUI();
+							break;
+						case 'B':
+							double newBruto = gui.getBrutto();
+							setBrutto(newBruto);
+							updateGUI();
+							break;
+						case 'Q':
+							gui.dispose();
+							data.closeCon();
+							System.exit(0);
+						default:
+							gui.notificationDialog("Ugyldigt input");
+
+
+						}
 					}
 				}
 			}
 			catch (Exception e){
 				System.out.println("Exception: "+e.getMessage());
 			}
-			
+
 		}
-		
+
 		/**
 		 * A method which is called by choosePhysicalScaleAction if it receives the input
 		 * "B (a double value)". When called the method will change the brutto value of the
@@ -275,9 +277,9 @@ public class Controller2 {
 		 */
 		private synchronized void setBrutto(double brut) {
 			brutto = brut;
-			
+
 		}
-		
+
 		/**
 		 * A method which is called by choosePhysicalScaleAction if it receives the input
 		 * "T". When called the method will set the tara value of the scale, to the current
@@ -296,3 +298,13 @@ public class Controller2 {
 	}
 }
 
+
+/*		choosePhysicalAction();
+		}
+
+
+		/**
+ * A method which will listen for input constantly. If an input is given, it will 
+ * perform the specified action
+ */
+//private void choosePhysicalAction() { 

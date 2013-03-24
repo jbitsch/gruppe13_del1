@@ -44,7 +44,7 @@ public class GuiControl {
 	private static JTextField weightReturnTxt;
 	private Object lock;
 	private char choice;
-	private String answer;
+	private String answer = new String();
 	private JLabel taraAmountLbl = new JLabel("0.000Kg");
 	private JSpinner jSpBrutto;
 	private double brutto;
@@ -348,13 +348,14 @@ public class GuiControl {
 	}
 	private void ok() {
 		synchronized (lock) {
-			lock.notify();
+			lock.notifyAll();
 		}
 	}
 
 	public String getAnswer()
 	{	
 		return answer;
+			
 	}
 	public void writeCommand(String text)
 	{
