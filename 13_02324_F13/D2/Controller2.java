@@ -134,6 +134,7 @@ public class Controller2 {
 							data.writeTo("RM20 B\r\n");
 							RM20 = true;
 							gui.setMessage(temp[1]);
+							gui.setAnotherMessage(temp[2]);
 							gui.writeCommand("Venter paa svar fra RM20 8 ordre");
 							gui.disableButtons(true);
 						}
@@ -209,6 +210,7 @@ public class Controller2 {
 						char choise = gui.getInput();
 						switch (choise) {
 						case 'T':
+							setBrutto(gui.getBrutto());
 							setTara();
 							updateGUI();
 							break;

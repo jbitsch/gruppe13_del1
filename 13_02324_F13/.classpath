@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="D1"/>
-	<classpathentry including="pingo.gif" kind="src" path="D2/Images"/>
 	<classpathentry excluding="Images/" kind="src" path="D2"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>

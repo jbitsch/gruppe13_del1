@@ -53,6 +53,7 @@ public class GuiControl {
 	private double brutto;
 	private JFrame frame;
 	private DecimalFormat bruttoFormat;
+	private Double tempTara;
 
 	public GuiControl() {
 		GuiINIT();
@@ -108,7 +109,7 @@ public class GuiControl {
 		firstDisplayLine = new JTextField();
 		firstDisplayLine.setEditable(false);
 		firstDisplayLine.setHorizontalAlignment(SwingConstants.RIGHT);
-		firstDisplayLine.setText("LOOOOOOOOSER");
+		firstDisplayLine.setText("Brutto");
 		firstDisplayLine.setBackground(Color.BLACK);
 		firstDisplayLine.setForeground(Color.GREEN);
 		firstDisplayLine.setBounds(6, 6, 278, 28);
@@ -118,6 +119,7 @@ public class GuiControl {
 		secondDisplayLine = new JTextField();
 		secondDisplayLine.setEditable(false);
 		secondDisplayLine.setHorizontalAlignment(SwingConstants.RIGHT);
+		secondDisplayLine.setText("Netto");
 		secondDisplayLine.setForeground(Color.GREEN);
 		secondDisplayLine.setBackground(Color.BLACK);
 		secondDisplayLine.setBounds(6, 27, 278, 28);
@@ -137,15 +139,20 @@ public class GuiControl {
 		jSpBrutto = new JSpinner(model);
 		JSpinner.NumberEditor editor = new JSpinner.NumberEditor(jSpBrutto);
 		jSpBrutto.setEditor(editor);
-		editor.getTextField().setEditable(false);
+		//editor.getTextField().setEditable(false);
 		jSpBrutto.setBounds(150, 107, 134, 28);
 
 		mirror.add(jSpBrutto);
 		jSpBrutto.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+		/*		if (tempTara==null){
+					tempTara = 0.0;
+				}*/
 				brutto = (Double) jSpBrutto.getValue();
 				firstDisplayLine.setText(bruttoFormat.format(brutto));
+			//	secondDisplayLine.setText(bruttoFormat.format(brutto-tempTara));
 				choice = 'B';
+				ok();
 			}
 		});
 
@@ -312,7 +319,6 @@ public class GuiControl {
 		JButton but_TARA = new JButton("TARA");
 		but_TARA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// taraAmountLbl.setText(bruttoFormat.format(brutto));
 				choice = 'T';
 				ok();
 			}
@@ -375,13 +381,14 @@ public class GuiControl {
 				lock.wait();
 			}
 		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		return choice;
 	}
 
 	private void ok() {
 		synchronized (lock) {
-			lock.notifyAll();
+			lock.notify();
 		}
 	}
 
@@ -398,11 +405,12 @@ public class GuiControl {
 	public void setMessage(String text) {
 		secondDisplayLine.setText(text);
 	}
-
+	
 	public void updateWeight(String net, Double bru, String tar) {
 		secondDisplayLine.setText(net + " kg");
 		jSpBrutto.setValue(bru);
 		taraAmountLbl.setText(tar + " Kg");
+		tempTara = Double.parseDouble(tar);
 	}
 
 	public void dispose() {
@@ -414,7 +422,6 @@ public class GuiControl {
 		try {
 			JOptionPane.showMessageDialog(frame, string);
 		} catch (HeadlessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -438,4 +445,10 @@ public class GuiControl {
 
 		}
 	}
+
+	public void setAnotherMessage(String string) {
+		thirdDisplayLine.setText(string);
+	}
+
+
 }
