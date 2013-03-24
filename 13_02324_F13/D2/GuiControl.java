@@ -4,11 +4,9 @@
 
 import java.awt.event.ActionEvent;
 
-import javax.imageio.ImageIO;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.KeyEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,15 +22,12 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.io.IOException;
 import java.text.DecimalFormat;
 
 import javax.swing.SwingConstants;
