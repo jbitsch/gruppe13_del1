@@ -1,3 +1,4 @@
+package Weight;
 import java.io.IOException;
 
 public class Controller {

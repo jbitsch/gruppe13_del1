@@ -1,3 +1,4 @@
+package Weight;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
