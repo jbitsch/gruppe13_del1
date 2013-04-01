@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.KeyEvent;
+
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -163,9 +165,9 @@ public class GuiControl {
 		mirror.add(taraLbl);
 		taraAmountLbl.setBounds(71, 86, 61, 16);
 		mirror.add(taraAmountLbl);
-
+		Icon icon = new ImageIcon(getClass().getResource("/pingo.gif"));
 		JLabel lblPingo = new JLabel("pingo");
-		lblPingo.setIcon(new ImageIcon("pingo.gif"));
+		lblPingo.setIcon(icon);
 		lblPingo.setBounds(6, 107, 110, 105);
 		mirror.add(lblPingo);
 
