@@ -41,8 +41,8 @@ public class GuiControl {
 	private boolean btnCatTwo;
 	private boolean btnCatThree;
 	private static int dimensionY = 300;
-	private static int frameDimensionX = 540;
-	private static int panelKeyPadDimensionX = 250;
+	private static int frameDimensionX = 560;
+	private static int panelKeyPadDimensionX = 270;
 	private JTextField firstDisplayLine;
 	private JTextField secondDisplayLine;
 	private JTextField thirdDisplayLine;
