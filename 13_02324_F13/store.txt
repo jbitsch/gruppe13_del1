@@ -1,0 +1,66 @@
+1;Anthranilic acid;2.55
+2;Benzaldehyde;3.34
+3;Benzyl cyanide;10.62
+4;Gamma-Butyrolactone;6.39
+5;Ephedrine;8.68
+6;Ergocristine;12.88
+7;Ergonovine;1.45
+8;Ergotamine;17.74
+9;Ethylamine;18.69
+10;Hydroiodic acid;10.83
+11;Hypophosphorous acid;15.58
+12;Iodine;7.61
+13;Isosafrole;2.68
+14;Methylamine;16.06
+15;N-Methylephedrine;6.4
+16;N-Methylpseudoephedrine;18.01
+17;N-Acetylanthranilic acid;13.63
+18;Nitroethane;1.51
+19;Norpseudoephedrine;12.11
+20;Phenylacetic acid;4.44
+21;Phenylpropanolamine;9.23
+22;Phosphorus;5.18
+23;Piperidine and its salts;3.08
+24;Piperonal;17.31
+25;N-phenethyl-4-piperidone;1.06
+26;Propionic anhydride;3.58
+27;3,4-methylenedioxyphenyl-2-propanone;9.5
+28;Pseudoephedrine;0.42
+29;Safrole;7.31
+30;Acetic anhydride;6.71
+31;Acetone;18.42
+32;Benzyl chloride;19.44
+33;2-butanone;7.54
+34;Diethyl ether;0.83
+35;Hydrochloric acid;1.11
+36;Potassium permanganate;1.43
+37;Methyl isobutyl ketone;8.75
+38;Sodium permanganate;6.55
+39;Sulfuric acid;5.92
+40;Toluene;12.49
+41;Ammonia gas;19.07
+42;Ammonium formate;2.71
+43;Bromobenzene;3.53
+44;Carbonyldiimidazole;7.52
+45;Cyclohexanone;14.86
+46;1,1-Dichloro-1-fluoroethane;15.83
+47;Diethylamine and its salts;15.57
+48;2,5-Dimethoxyphenethylamine and its salts;1.93
+49;Formamide;11.93
+50;Formic acid;7.72
+51;Lithium metal;6.75
+52;Lithium aluminum hydride;12.63
+53;Magnesium metal;12.87
+54;Mercuric chloride;6.2
+55;N-Methylformamide;9.46
+56;Organomagnesium halides;11.68
+57;Phenylethanolamine and its salts;9.6
+58;Phosphorus pentachloride;6.6
+59;Potassium dichromate;19.26
+60;Pyridine and its salts;1.24
+61;Sodium dichromate;16.27
+62;Sodium metal;12.58
+63;Thionyl chloride;18.96
+64;ortho-Toluidine;13.62
+65;Trichloromonofluoromethane;13.82
+66;1,1,2-Trichloro-1,2,2-trifluoroethane;14.58
