@@ -68,7 +68,7 @@ public class WeightController {
 		while(menuRunning)
 		{
 			menu.printOut("Serveren svarer ikke.");
-			int choise = menu.showMenu("", new String[]{"Forsøg igen", "Indtast ny IP og port nr", "Afslut program"});
+			int choise = menu.showMenu("", new String[]{"Forsï¿½g igen", "Indtast ny IP og port nr", "Afslut program"});
 
 			switch(choise)
 			{
@@ -100,7 +100,7 @@ public class WeightController {
 
 	public void communicate() throws IOException
 	{
-		int choise = menu.showMenu("", new String[]{"Aflæs vægt (pc)", "Sæt tarra vægt", "Nulstil vægt", "Vis tekst på vægten", "Slet tekst på vægten","Lav afvejnings sekvens", "Afslut program"});
+		int choise = menu.showMenu("", new String[]{"Aflï¿½s vï¿½gt (pc)", "Sï¿½t tarra vï¿½gt", "Nulstil vï¿½gt", "Vis tekst pï¿½ vï¿½gten", "Slet tekst pï¿½ vï¿½gten","Lav afvejnings sekvens", "Afslut program"});
 
 		switch(choise)
 		{
@@ -119,9 +119,9 @@ public class WeightController {
 			menu.printOut(".................");
 
 			if(output.contentEquals("ES"))
-				menu.printOut("Det lykkedes ikke at sætte tarra vægten.");
+				menu.printOut("Det lykkedes ikke at sï¿½tte tarra vï¿½gten.");
 			else
-				menu.printOut("Tarra vægt sat til: " + weight);
+				menu.printOut("Tarra vï¿½gt sat til: " + weight);
 			break;
 		}
 		case 3:
@@ -129,19 +129,19 @@ public class WeightController {
 			mySocket.sendToServer("Z");
 			String output = mySocket.recieveFromServer();
 			if(output.contentEquals("Z A"))
-				menu.printOut("Vægten blev nulstillet.");
+				menu.printOut("Vï¿½gten blev nulstillet.");
 			else
-				menu.printOut("Der skete en fejl. Vægten blev ikke nulstillet.");
+				menu.printOut("Der skete en fejl. Vï¿½gten blev ikke nulstillet.");
 			break;
 		}
 		case 4:
 		{
-			menu.printOut("Indtast den besked, du vil skrive på vætens display: ");
+			menu.printOut("Indtast den besked, du vil skrive pï¿½ vï¿½tens display: ");
 			String toServer = menu.getInput();
 			mySocket.sendToServer("D \"" + toServer + "\"");
 			String output = mySocket.recieveFromServer();
 			if(output.contentEquals("D A"))
-				menu.printOut("Din besked vises nu på vægten.");
+				menu.printOut("Din besked vises nu pï¿½ vï¿½gten.");
 			else
 				menu.printOut("Der opstod en fejl. Beskeden blev ikke vist.");
 			break;
@@ -151,7 +151,7 @@ public class WeightController {
 			mySocket.sendToServer("DW");
 			String output = mySocket.recieveFromServer();
 			if(output.contentEquals("DW A"))
-				menu.printOut("Teksten blev slettet. Vægten kan nu aflæses.");
+				menu.printOut("Teksten blev slettet. Vï¿½gten kan nu aflï¿½ses.");
 			else
 				menu.printOut("Der opstod en fejl. Teksten blev ikke slettet.");
 			break;
@@ -198,7 +198,7 @@ public class WeightController {
 	}
 
 	//==========================================
-	//Fjerner overflødige tegn
+	//Fjerner overflï¿½dige tegn
 	private String returnNumber(String output)
 	{
 		String number = "";
@@ -236,7 +236,7 @@ public class WeightController {
 			try
 			{
 				//getting the user id
-				System.out.println("Venter paa operatoer number");
+				System.out.println("Venter paa operatoer numner");
 				keepRunning =  getONumber();
 				break;
 			}
@@ -247,6 +247,15 @@ public class WeightController {
 			catch(IOException e)
 			{
 				System.out.println("IOException, afbryder sekvens.");
+				try
+				{
+					mySocket.sendToServer("D \"Fejl i forbindelse, sekvens afbrudt\"");
+					mySocket.recieveFromServer();
+				}
+				catch(IOException ee )
+				{
+					System.out.println("Fejl meddelse blev ikke sendt til vaegt");
+				}
 				pNumber = 0;
 				keepRunning = false;
 				break;
@@ -274,12 +283,27 @@ public class WeightController {
 				{
 					System.out.println("IOException, sekvens afbrydes");
 					pNumber = 0;
-					//mySocket.sendToServer("D \"Fejl i load af database\"");
+					try
+					{
+						mySocket.sendToServer("D \"Fejl i forbindelse, sekvens afbrudt\"");
+						mySocket.recieveFromServer();
+					}
+					catch(IOException ee )
+					{
+						System.out.println("Fejl meddelse blev ikke sendt til vaegt");
+					}
 					keepRunning = false;
 					break;
 				}
 			}
 		}
+		
+		while(!validateWeight(keepRunning)){}
+		
+	}
+	private boolean validateWeight(boolean keepRunning)
+	{
+		boolean weightOk = false;
 		if(keepRunning)
 		{
 			try
@@ -310,9 +334,10 @@ public class WeightController {
 		if(keepRunning)
 		{
 			boolean bruttoOk = checkBruttoDifference(tarraS, tarraE);
-			System.out.println(bruttoOk);
+			
 			if(bruttoOk == true)
 			{
+				weightOk = true;
 				try
 				{
 					mySocket.sendToServer("D \"BRUTTO KONTROL OK\"");
@@ -325,8 +350,6 @@ public class WeightController {
 					Calendar cal = Calendar.getInstance();
 					String date = dateFormat.format(cal.getTime());
 					String time = timeFormat.format(cal.getTime());
-		
-					
 					
 					double store = new FileReader().updateStore(netto, pNumber);
 					String toLog = date+";"+time+";"+oNumber+";"+pNumber+";"+netto+";"+store;
@@ -335,6 +358,10 @@ public class WeightController {
 				catch(IOException e){}
 			}
 		}
+		if(!keepRunning)
+			weightOk = true;
+		
+		return weightOk;
 	}
 
 	private boolean  getONumber() throws NumberFormatException, IOException
