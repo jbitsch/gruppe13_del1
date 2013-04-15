@@ -118,30 +118,30 @@ public class WeightController {
 			String output = mySocket.recieveFromServer();
 			menu.printOut(".................");
 
-			if(output.contentEquals("ES"))
-				menu.printOut("Det lykkedes ikke at s�tte tarra v�gten.");
+			if(output.startsWith("ES"))
+				menu.printOut("Det lykkedes ikke at saette tarra vaegten.");
 			else
-				menu.printOut("Tarra v�gt sat til: " + weight);
+				menu.printOut("Tarra vaegt sat til: " + weight);
 			break;
 		}
 		case 3:
 		{
 			mySocket.sendToServer("Z");
 			String output = mySocket.recieveFromServer();
-			if(output.contentEquals("Z A"))
-				menu.printOut("V�gten blev nulstillet.");
+			if(output.startsWith("Z A"))
+				menu.printOut("Vaegten blev nulstillet.");
 			else
-				menu.printOut("Der skete en fejl. V�gten blev ikke nulstillet.");
+				menu.printOut("Der skete en fejl. Vaegten blev ikke nulstillet.");
 			break;
 		}
 		case 4:
 		{
-			menu.printOut("Indtast den besked, du vil skrive p� v�tens display: ");
+			menu.printOut("Indtast den besked, du vil skrive paa vaegtens display: ");
 			String toServer = menu.getInput();
 			mySocket.sendToServer("D \"" + toServer + "\"");
 			String output = mySocket.recieveFromServer();
 			if(output.contentEquals("D A"))
-				menu.printOut("Din besked vises nu p� v�gten.");
+				menu.printOut("Din besked vises nu paa vaegten.");
 			else
 				menu.printOut("Der opstod en fejl. Beskeden blev ikke vist.");
 			break;
@@ -150,8 +150,8 @@ public class WeightController {
 		{
 			mySocket.sendToServer("DW");
 			String output = mySocket.recieveFromServer();
-			if(output.contentEquals("DW A"))
-				menu.printOut("Teksten blev slettet. V�gten kan nu afl�ses.");
+			if(output.startsWith("DW A"))
+				menu.printOut("Teksten blev slettet. Vaegten kan nu aflaeses.");
 			else
 				menu.printOut("Der opstod en fejl. Teksten blev ikke slettet.");
 			break;
@@ -159,6 +159,8 @@ public class WeightController {
 		case 6:
 		{
 			sekvens();
+			mySocket.sendToServer("DW");
+			mySocket.recieveFromServer();
 			break;
 		}
 		case 7:
@@ -198,7 +200,7 @@ public class WeightController {
 	}
 
 	//==========================================
-	//Fjerner overfl�dige tegn
+	//Fjerner overfloedige tegn
 	private String returnNumber(String output)
 	{
 		String number = "";
@@ -224,6 +226,19 @@ public class WeightController {
 			}
 		}
 		return Double.parseDouble(number);
+	}
+	private int returnInt(String output)
+	{
+		String number = "";
+		char[] outputArray = output.toCharArray();
+		for(char character: outputArray)
+		{
+			if(character >= '0' && character <= '9')
+			{
+				number = number + character;
+			}
+		}
+		return Integer.parseInt(number);
 	}
 
 	public void sekvens()
@@ -340,7 +355,7 @@ public class WeightController {
 				weightOk = true;
 				try
 				{
-					mySocket.sendToServer("D \"BRUTTO KONTROL OK\"");
+					mySocket.sendToServer("D \"KONTROL OK\"");
 					System.out.println("Brutto kontrol OK");
 					mySocket.recieveFromServer();
 					
@@ -370,23 +385,22 @@ public class WeightController {
 		boolean keepRunning = true;
 
 		do {
-			mySocket.sendToServer("RM20 8 \"Indtast operatoer nummer, enter 0 to quit\" \"\" \"\" ");
-
+			mySocket.sendToServer("RM20 8 \"Indtast operatoer nummer\" \"\" \"&3\" ");
+			
 			String fromServer = "";
 			do 
 			{
 				fromServer = mySocket.recieveFromServer();
-			}while(!fromServer.startsWith("RM20"));
+			}while(!fromServer.startsWith("RM20 B"));
 
 			fromServer = mySocket.recieveFromServer();
-
 			if (fromServer.equals("RM20 A 0")){
 				oNumber = 0;
 				quit = true;
 				keepRunning = false;
 			}
 			else {
-				oNumber = Integer.parseInt(fromServer.substring(7, fromServer.length()));
+				oNumber = returnInt(fromServer.substring(4));
 				String Onum = new FileReader().checkNum(oNumber, "users.txt", 0);
 				if (Onum!=null)
 				{
@@ -406,9 +420,9 @@ public class WeightController {
 		boolean keepRunning = true;;
 
 		do {
-			mySocket.sendToServer("RM20 8 \"Indtast varenummer, enter 0 to quit\" \"\" \"\" ");
+			mySocket.sendToServer("RM20 8 \"Indtast varenr.\" \"\" \"&3\" ");
 			String fromServer = mySocket.recieveFromServer(); //RM20 B
-			if(fromServer.startsWith("RM20"))
+			if(fromServer.startsWith("RM20 B"))
 			{
 				fromServer = mySocket.recieveFromServer(); //RM20 A -----
 				
@@ -418,24 +432,24 @@ public class WeightController {
 					keepRunning = false;
 				}
 				else {
-					pNumber = Integer.parseInt(fromServer.substring(7, fromServer.length()));
+					pNumber = returnInt(fromServer.substring(4));
 					productName = new FileReader().checkNum(pNumber, "store.txt", 1);
 					
 					if(productName!=null)
 					{
-						String s   = "RM20 8 \"confirm productname: "+productName +" ,OK = 1, Quit = 0\" \"\" \"\" ";
+						String s   = "RM20 8 \""+productName +"(Y,N)\" \"\" \"&1\" ";
 						mySocket.sendToServer(s);
 						response = mySocket.recieveFromServer(); //RM20 B
 
 						if(response.startsWith("RM20"))
 						{
 							response = mySocket.recieveFromServer(); //RM20 A------
-							if(response.equals("RM20 A 0")) {
+							if(response.equals("RM20 A \"N\"")) {
 								pNumber = 0;
 								quit = true;
 								keepRunning = false;
 							}
-							else if(response.equals("RM20 A 1"))
+							else if(response.equals("RM20 A \"Y\""))
 							{
 								quit = true;
 							}
@@ -456,18 +470,19 @@ public class WeightController {
 	private boolean place() throws IOException {
 		boolean keepRunning = true;
 		
-		mySocket.sendToServer("RM20 8 \"Place bowl, OK = 1, Quit = 0\" \"\" \"\" ");
+		mySocket.sendToServer("RM20 8 \"Place bowl(Y,N)\" \"\" \"\" ");
 		
 		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			if(mySocket.recieveFromServer().equals("RM20 A 1")) //RM20 A 1
+			if(mySocket.recieveFromServer().equals("RM20 A \"Y\"")) //RM20 A 1
 			{
-				//TODO remove when testing on the real weight...
-				mySocket.sendToServer("B 1.00");
-				mySocket.recieveFromServer();
-				//
+//				//TODO remove when testing on the real weight...
+//				mySocket.sendToServer("B 1.00");
+//				mySocket.recieveFromServer();
+//				//
 				
 				mySocket.sendToServer("T");
 				String output = mySocket.recieveFromServer();
+				System.out.println(output);
 				tarraS = returnDouble(output);
 			}
 			else
@@ -485,19 +500,20 @@ public class WeightController {
 	private boolean fill() throws IOException {
 		boolean keepRunning = true;
 		
-		mySocket.sendToServer("RM20 8 \"Fill the bowl, OK = 1, Quit = 0\" \"\" \"\" ");
+		mySocket.sendToServer("RM20 8 \"Fill the bowl(Y,N)\" \"\" \"\" ");
 
 		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			if(mySocket.recieveFromServer().equals("RM20 A 1")) //RM20 A 1
+			if(mySocket.recieveFromServer().equals("RM20 A \"Y\"")) //RM20 A 1
 			{
-				//TODO remove when testing on the real weight
-				mySocket.sendToServer("B 2.00");
-				mySocket.recieveFromServer();
-				//
+//				//TODO remove when testing on the real weight
+//				mySocket.sendToServer("B 2.00");
+//				mySocket.recieveFromServer();
+//				//
 				
 				mySocket.sendToServer("S");
 				String output = mySocket.recieveFromServer();
 				netto = returnDouble(output);
+				System.out.println(output);
 			}
 			else
 				keepRunning = false;
@@ -510,17 +526,18 @@ public class WeightController {
 	private boolean remove() throws IOException {
 		boolean keepRunning = true;
 		
-		mySocket.sendToServer("RM20 8 \"Remove the bowl, OK = 1, Quit = 0\" \"\" \"\" ");
+		mySocket.sendToServer("RM20 8 \"Remove the bowl(Y,N)\" \"\" \"\" ");
 		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			if(mySocket.recieveFromServer().equals("RM20 A 1")) //RM20 A 1
+			if(mySocket.recieveFromServer().equals("RM20 A \"Y\"")) //RM20 A Y
 			{
-				//TODO remove when testing on the real weight. 
-				mySocket.sendToServer("B -1.00");
-				mySocket.recieveFromServer();
-				//
+//				//TODO remove when testing on the real weight. 
+//				mySocket.sendToServer("B -1.00");
+//				mySocket.recieveFromServer();
+//				//
 				
 				mySocket.sendToServer("T");
 				String output = mySocket.recieveFromServer();
+				System.out.println(output);
 				tarraE = returnDouble(output);
 			}
 			else
@@ -534,10 +551,12 @@ public class WeightController {
 	}
 	public boolean checkBruttoDifference(double bruttoStart, double bruttoEnd)
 	{
-		double tol = 0.035;
-		double bruttoDifference = Math.abs(bruttoStart - bruttoEnd);
-		double deviation = bruttoDifference/bruttoStart * 100;
-		return deviation <= tol;
+		double top = 0.002;
+		double bot = -0.002;
+		if(bruttoEnd > top || bruttoEnd < bot)
+			return false;
+		else 
+			return true;
 	}
 
 }

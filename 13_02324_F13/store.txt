@@ -1,4 +1,4 @@
-1;Anthranilic acid;2.55
+1;Anthranilic acid;1.938
 2;Benzaldehyde;3.34
 3;Benzyl cyanide;10.62
 4;Gamma-Butyrolactone;6.39
