@@ -7,13 +7,13 @@ import java.util.Calendar;
 
 import clientSocket.*;
 
-public class WeightController {
+public class WeightController2 {
 
-	private MySocket mySocket = new MySocket();
+	private MySocket2 mySocket = new MySocket2();
 	private String ip;
 	private int port;
 	private boolean programRunning = true;
-	private Menu menu;
+	private Menu2 menu;
 
 	private int oNumber;
 	private int pNumber;
@@ -21,7 +21,7 @@ public class WeightController {
 	private double tarraS;
 	private double tarraE;
 
-	public WeightController(Menu menu)
+	public WeightController2(Menu2 menu)
 	{
 		this.menu = menu;
 	}
@@ -56,9 +56,8 @@ public class WeightController {
 			}
 		}
 	}
-
-
-	public void noAnswer()
+	
+	private void noAnswer()
 	{
 		boolean menuRunning = true;
 		while(menuRunning)
@@ -92,72 +91,20 @@ public class WeightController {
 		}
 
 	}
-
-
-	public void communicate() throws IOException
+	private void communicate() throws IOException
 	{
-		int choise = menu.showMenu("", new String[]{"Aflaes vaegt (pc)", "Saet tarra vaegt", "Nulstil vaegt", "Vis tekst paa vaegten", "Slet tekst paa vaegten","Lav afvejnings sekvens", "Afslut program"});
+		int choise = menu.showMenu("", new String[]{"Lav afvejnings sekvens", "Afslut program"});
 
 		switch(choise)
 		{
 		case 1:
-		{
-			String output = getWeight();
-			menu.printOut(output);
-			break;
-		}
-		case 2:
-		{
-			String weight = getWeight();
-			mySocket.sendToServer("T");
-			String output = mySocket.recieveFromServer();
-
-			if(output.startsWith("ES"))
-				menu.printOut("Det lykkedes ikke at saette tarra vaegten.");
-			else
-				menu.printOut("Tarra vaegt sat til: " + weight);
-			break;
-		}
-		case 3:
-		{
-			mySocket.sendToServer("Z");
-			String output = mySocket.recieveFromServer();
-			if(output.startsWith("Z A"))
-				menu.printOut("Vaegten blev nulstillet.");
-			else
-				menu.printOut("Der skete en fejl. Vaegten blev ikke nulstillet.");
-			break;
-		}
-		case 4:
-		{
-			menu.printOut("Indtast den besked, du vil skrive paa vaegtens display: ");
-			String toServer = menu.getInput();
-			mySocket.sendToServer("D \"" + toServer + "\"");
-			String output = mySocket.recieveFromServer();
-			if(output.startsWith("D A"))
-				menu.printOut("Din besked vises nu paa vaegten.");
-			else
-				menu.printOut("Der opstod en fejl. Beskeden blev ikke vist.");
-			break;
-		}
-		case 5:
-		{
-			mySocket.sendToServer("DW");
-			String output = mySocket.recieveFromServer();
-			if(output.startsWith("DW A"))
-				menu.printOut("Teksten blev slettet. Vaegten kan nu aflaeses.");
-			else
-				menu.printOut("Der opstod en fejl. Teksten blev ikke slettet.");
-			break;
-		}
-		case 6:
 		{
 			sekvens();
 			mySocket.sendToServer("DW");
 			mySocket.recieveFromServer();
 			break;
 		}
-		case 7:
+		case 2:
 		{
 			programRunning = false;
 			break;
@@ -165,14 +112,7 @@ public class WeightController {
 		}
 	}
 
-	public String getWeight() throws IOException
-	{
-		mySocket.sendToServer("S");
-		String output = mySocket.recieveFromServer();
-		return returnNumber(output) + " kg";
-	}
-
-	public boolean reEstablishConnection() 
+	private boolean reEstablishConnection() 
 	{
 		boolean connected = false;
 
@@ -192,49 +132,7 @@ public class WeightController {
 		return connected;
 	}
 
-	//==========================================
-	//Fjerner overfloedige tegn
-	private String returnNumber(String output)
-	{
-		String number = "";
-		char[] outputArray = output.toCharArray();
-		for(char character: outputArray)
-		{
-			if((character >= '0' && character <= '9') || character == '.')
-			{
-				number = number + character;
-			}
-		}
-		return number;
-	}
-	private double returnDouble(String output) throws NumberFormatException
-	{
-		String number = "";
-		char[] outputArray = output.toCharArray();
-		for(char character: outputArray)
-		{
-			if((character >= '0' && character <= '9') || character == '.')
-			{
-				number = number + character;
-			}
-		}
-		return Double.parseDouble(number);
-	}
-	private int returnInt(String output) throws NumberFormatException
-	{
-		String number = "";
-		char[] outputArray = output.toCharArray();
-		for(char character: outputArray)
-		{
-			if(character >= '0' && character <= '9')
-			{
-				number = number + character;
-			}
-		}
-		return Integer.parseInt(number);
-	}
-
-	public void sekvens()
+	private void sekvens()
 	{
 
 		boolean keepRunning = true;
@@ -305,10 +203,12 @@ public class WeightController {
 				}
 			}
 		}
-
-		while(!validateWeight(keepRunning)){}
-
+		if(keepRunning)
+		{
+			while(!validateWeight(keepRunning)){}
+		}
 	}
+	
 	private boolean validateWeight(boolean keepRunning)
 	{
 		boolean weightOk = false;
@@ -378,16 +278,16 @@ public class WeightController {
 		boolean keepRunning = true;
 
 		do {
-			mySocket.sendToServer("RM20 8 \"Indtast operator nr.\" \"\" \"&3\" ");
+			mySocket.sendToServer("RM20 8 \"Indtast operator nr.( Q )\" \" \" \"&3\" ");
 
 			String fromServer = "";
 			do 
 			{
-				fromServer = mySocket.recieveFromServer();
+				fromServer = mySocket.recieveFromServer().toUpperCase();
 			}while(!fromServer.startsWith("RM20 B"));
 
-			fromServer = mySocket.recieveFromServer();
-			if (fromServer.equals("RM20 A \"0\"")){
+			fromServer = mySocket.recieveFromServer().toUpperCase();
+			if (fromServer.equals("RM20 A \"Q\"") || fromServer.equals("RM20 A Q")){
 				oNumber = 0;
 				quit = true;
 				keepRunning = false;
@@ -413,13 +313,12 @@ public class WeightController {
 		boolean keepRunning = true;;
 
 		do {
-			mySocket.sendToServer("RM20 8 \"Indtast varenr.\" \"\" \"&3\" ");
+			mySocket.sendToServer("RM20 8 \"Indtast varenr. ( Q )\" \" \" \"&3\" ");
 			String fromServer = mySocket.recieveFromServer(); //RM20 B
 			if(fromServer.startsWith("RM20 B"))
 			{
-				fromServer = mySocket.recieveFromServer(); //RM20 A -----
-
-				if (fromServer.equals("RM20 A \"0\"")){
+				fromServer = mySocket.recieveFromServer().toUpperCase(); //RM20 A -----
+				if (fromServer.equals("RM20 A \"Q\"") || fromServer.equals("RM20 A Q")){
 					pNumber = 0;
 					quit = true;
 					keepRunning = false;
@@ -430,19 +329,19 @@ public class WeightController {
 
 					if(productName!=null)
 					{
-						String s   = "RM20 8 \""+productName +"(Y,N)\" \"\" \"&1\" ";
+						String s   = "RM20 8 \""+productName +"(Y,N,Q)\" \" \" \"&1\" ";
 						mySocket.sendToServer(s);
 						response = mySocket.recieveFromServer(); //RM20 B
 
 						if(response.startsWith("RM20"))
 						{
-							response = mySocket.recieveFromServer(); //RM20 A------
-							if(response.equals("RM20 A \"N\"")) {
+							response = mySocket.recieveFromServer().toUpperCase(); //RM20 A------
+							if(response.equals("RM20 A \"Q\"") || response.equals("RM20 A Q")) {
 								pNumber = 0;
 								quit = true;
 								keepRunning = false;
 							}
-							else if(response.equals("RM20 A \"Y\""))
+							else if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y"))
 							{
 								quit = true;
 							}
@@ -463,10 +362,11 @@ public class WeightController {
 	private boolean place() throws IOException {
 		boolean keepRunning = true;
 
-		mySocket.sendToServer("RM20 8 \"Place bowl(Y,N)\" \"\" \"\" ");
+		mySocket.sendToServer("RM20 8 \"Place bowl(Y,N)\" \" \" \" \" ");
 
 		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			if(mySocket.recieveFromServer().equals("RM20 A \"Y\"")) //RM20 A 1
+			String response = mySocket.recieveFromServer().toUpperCase();
+			if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y") ) //RM20 A Y
 			{
 				//				//TODO remove when testing on the real weight...
 				//				mySocket.sendToServer("B 1.00");
@@ -489,13 +389,15 @@ public class WeightController {
 		}
 		return keepRunning;
 	}
+	
 	private boolean fill() throws IOException {
 		boolean keepRunning = true;
 
-		mySocket.sendToServer("RM20 8 \"Fill the bowl(Y,N)\" \"\" \"\" ");
+		mySocket.sendToServer("RM20 8 \"Fill the bowl(Y,N)\" \" \" \" \" ");
 
 		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			if(mySocket.recieveFromServer().equals("RM20 A \"Y\"")) //RM20 A 1
+			String response  = mySocket.recieveFromServer().toUpperCase();
+			if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y")) //RM20 A Y
 			{
 				//				//TODO remove when testing on the real weight
 				//				mySocket.sendToServer("B 2.00");
@@ -514,12 +416,16 @@ public class WeightController {
 		}
 		return keepRunning;
 	}
+	
 	private boolean remove() throws IOException {
 		boolean keepRunning = true;
 
-		mySocket.sendToServer("RM20 8 \"Remove the bowl(Y,N)\" \"\" \"\" ");
+		mySocket.sendToServer("RM20 8 \"Remove the bowl(Y,N)\" \" \" \" \" ");
 		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			if(mySocket.recieveFromServer().equals("RM20 A \"Y\"")) //RM20 A Y
+			
+			String response = mySocket.recieveFromServer().toUpperCase();
+			
+			if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y")) //RM20 A Y
 			{
 				//				//TODO remove when testing on the real weight. 
 				//				mySocket.sendToServer("B -1.00");
@@ -539,7 +445,7 @@ public class WeightController {
 		}
 		return keepRunning;
 	}
-	public boolean checkBruttoDifference(double bruttoEnd)
+	private boolean checkBruttoDifference(double bruttoEnd)
 	{
 		double top = 0.002;
 		double bot = -0.002;
@@ -547,6 +453,32 @@ public class WeightController {
 			return false;
 		else 
 			return true;
+	}
+	private double returnDouble(String output) throws NumberFormatException
+	{
+		String number = "";
+		char[] outputArray = output.toCharArray();
+		for(char character: outputArray)
+		{
+			if((character >= '0' && character <= '9') || character == '.')
+			{
+				number = number + character;
+			}
+		}
+		return Double.parseDouble(number);
+	}
+	private int returnInt(String output) throws NumberFormatException
+	{
+		String number = "";
+		char[] outputArray = output.toCharArray();
+		for(char character: outputArray)
+		{
+			if(character >= '0' && character <= '9')
+			{
+				number = number + character;
+			}
+		}
+		return Integer.parseInt(number);
 	}
 
 }

@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="D1"/>
 	<classpathentry excluding="Images/" kind="src" path="D2"/>
-	<classpathentry kind="src" path="DataKom"/>
+	<classpathentry kind="src" path="DataKomD1"/>
 	<classpathentry kind="src" path="D3"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
@@ -11,5 +11,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="DataKomD2"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
