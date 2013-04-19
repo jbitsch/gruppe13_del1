@@ -56,7 +56,7 @@ public class WeightController2 {
 			}
 		}
 	}
-	
+
 	private void noAnswer()
 	{
 		boolean menuRunning = true;
@@ -100,6 +100,7 @@ public class WeightController2 {
 		case 1:
 		{
 			sekvens();
+			
 			mySocket.sendToServer("DW");
 			mySocket.recieveFromServer();
 			break;
@@ -134,14 +135,12 @@ public class WeightController2 {
 
 	private void sekvens()
 	{
-
 		boolean keepRunning = true;
 		//get operator ID
 		while(true)
 		{
 			try
 			{
-				//getting the user id
 				System.out.println("Venter paa operatoer numner");
 				keepRunning =  getONumber();
 				break;
@@ -149,19 +148,12 @@ public class WeightController2 {
 			catch(NumberFormatException e)
 			{
 				System.out.println("Ugyldig operatoer nummer, sender anmodning igen.");
+				waitMethod("Skal vaere et tal");
 			}
 			catch(IOException e)
 			{
 				System.out.println("IOException, afbryder sekvens.");
-				try
-				{
-					mySocket.sendToServer("D \"Fejl i forbindelse, sekvens afbrudt\"");
-					mySocket.recieveFromServer();
-				}
-				catch(IOException ee )
-				{
-					System.out.println("Fejl meddelse blev ikke sendt til vaegt");
-				}
+				waitMethod("IOException, ");
 				pNumber = 0;
 				keepRunning = false;
 				break;
@@ -182,22 +174,14 @@ public class WeightController2 {
 				catch(NumberFormatException e)
 				{
 					System.out.println("Ugyldigt ptoduktnummer, sender anmodning igen");
-					//mySocket.sendToServer("D \"Produkt nummer ugyldigt\"");
+					waitMethod("Skal vaere et tal");
 					pNumber = 0;
 				}
 				catch(IOException e)
 				{
 					System.out.println("IOException, sekvens afbrydes");
 					pNumber = 0;
-					try
-					{
-						mySocket.sendToServer("D \"Fejl i forbindelse, sekvens afbrudt\"");
-						mySocket.recieveFromServer();
-					}
-					catch(IOException ee )
-					{
-						System.out.println("Fejl meddelse blev ikke sendt til vaegt");
-					}
+					waitMethod("IOException, ");
 					keepRunning = false;
 					break;
 				}
@@ -208,19 +192,21 @@ public class WeightController2 {
 			while(!validateWeight(keepRunning)){}
 		}
 	}
-	
+
 	private boolean validateWeight(boolean keepRunning)
 	{
 		boolean weightOk = false;
-		if(keepRunning)
+		try
 		{
-			try
-			{
-				System.out.println("Afventer bruger paasaetter skaal");
-				keepRunning = place();
-			}
-			catch(IOException e){}
+			System.out.println("Afventer bruger paasaetter skaal");
+			keepRunning = place();
 		}
+		catch(IOException e)
+		{
+			System.out.println("Fejl ved paasaetelse af skaal");
+			keepRunning = false;
+		}
+		
 		if(keepRunning)
 		{
 			try
@@ -228,7 +214,11 @@ public class WeightController2 {
 				System.out.println("Afventer bruger paafylder stof");
 				keepRunning = fill();
 			}
-			catch(IOException e){}
+			catch(IOException e)
+			{
+				System.out.println("Fejl ved paafyldning af stof");
+				keepRunning = false;
+			}
 		}
 		if(keepRunning)
 		{
@@ -237,7 +227,11 @@ public class WeightController2 {
 				System.out.println("Afventer bruger fjerner skaal");
 				keepRunning = remove();
 			}
-			catch(IOException e){}
+			catch(IOException e)
+			{
+				System.out.println("Fejl ved fjernelse af skaal");
+				keepRunning = false;
+			}
 		}
 		if(keepRunning)
 		{
@@ -248,9 +242,8 @@ public class WeightController2 {
 				weightOk = true;
 				try
 				{
-					mySocket.sendToServer("D \"OK\"");
+					waitMethod("OK, ");
 					System.out.println("Brutto kontrol OK");
-					mySocket.recieveFromServer();
 
 					//Create the time stamp
 					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -299,6 +292,8 @@ public class WeightController2 {
 				{
 					quit = true;
 				}
+				else
+					waitMethod("Ugyldigt operator nr., ");
 			}
 		}while( quit==false );
 
@@ -314,7 +309,7 @@ public class WeightController2 {
 
 		do {
 			mySocket.sendToServer("RM20 8 \"Indtast varenr. ( Q )\" \" \" \"&3\" ");
-			String fromServer = mySocket.recieveFromServer(); //RM20 B
+			String fromServer = mySocket.recieveFromServer().toUpperCase(); //RM20 B
 			if(fromServer.startsWith("RM20 B"))
 			{
 				fromServer = mySocket.recieveFromServer().toUpperCase(); //RM20 A -----
@@ -331,7 +326,7 @@ public class WeightController2 {
 					{
 						String s   = "RM20 8 \""+productName +"(Y,N,Q)\" \" \" \"&1\" ";
 						mySocket.sendToServer(s);
-						response = mySocket.recieveFromServer(); //RM20 B
+						response = mySocket.recieveFromServer().toUpperCase(); //RM20 B
 
 						if(response.startsWith("RM20"))
 						{
@@ -345,12 +340,17 @@ public class WeightController2 {
 							{
 								quit = true;
 							}
+							else if(response.equals("RM20 A \"N\"") || response.equals("RM20 A N"))
+							{
+								//do nothing
+							}
+							else
+								waitMethod("D \"Wrong intput, ");
 						}
 					}
 					else
 					{
-						mySocket.sendToServer("D \"Ugyldigt produkt nummer\"");
-						mySocket.recieveFromServer(); //Clearing the output from the weight
+						waitMethod("D \"Ugyldigt produktnr., ");
 					}
 				}	
 			}
@@ -361,88 +361,120 @@ public class WeightController2 {
 	}
 	private boolean place() throws IOException {
 		boolean keepRunning = true;
+		boolean isDone = false;
+		do
+		{
+			mySocket.sendToServer("RM20 8 \"Place bowl(Y,N)\" \" \" \" \" ");
 
-		mySocket.sendToServer("RM20 8 \"Place bowl(Y,N)\" \" \" \" \" ");
+			if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
+				String response = mySocket.recieveFromServer().toUpperCase();
+				if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y") ) //RM20 A Y
+				{
+					//				//TODO remove when testing on the real weight...
+					//				mySocket.sendToServer("B 1.00");
+					//				mySocket.recieveFromServer();
+					//				//
 
-		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			String response = mySocket.recieveFromServer().toUpperCase();
-			if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y") ) //RM20 A Y
-			{
-				//				//TODO remove when testing on the real weight...
-				//				mySocket.sendToServer("B 1.00");
-				//				mySocket.recieveFromServer();
-				//				//
-
-				mySocket.sendToServer("T");
-				String output = mySocket.recieveFromServer();
-				tarraS = returnDouble(output);
+					mySocket.sendToServer("T");
+					String output = mySocket.recieveFromServer();
+					tarraS = returnDouble(output);
+					
+					isDone = true;
+				}
+				else if(response.equals("RM20 A \"N\"") || response.equals("RM20 A N"))
+				{
+					keepRunning = false;
+					isDone = true;
+				}
+				else
+					waitMethod("D \"Wrong input, ");
 			}
 			else
 			{
 				keepRunning = false;
+				isDone = true;
 			}
+		}while(!isDone);
 
-		}
-		else
-		{
-			keepRunning = false;
-		}
 		return keepRunning;
 	}
-	
+
 	private boolean fill() throws IOException {
 		boolean keepRunning = true;
+		boolean isDone = false;
+		do
+		{
+			mySocket.sendToServer("RM20 8 \"Fill the bowl(Y,N)\" \" \" \" \" ");
 
-		mySocket.sendToServer("RM20 8 \"Fill the bowl(Y,N)\" \" \" \" \" ");
+			if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
+				String response  = mySocket.recieveFromServer().toUpperCase();
+				if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y")) //RM20 A Y
+				{
+					//				//TODO remove when testing on the real weight
+					//				mySocket.sendToServer("B 2.00");
+					//				mySocket.recieveFromServer();
+					//				//
 
-		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			String response  = mySocket.recieveFromServer().toUpperCase();
-			if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y")) //RM20 A Y
-			{
-				//				//TODO remove when testing on the real weight
-				//				mySocket.sendToServer("B 2.00");
-				//				mySocket.recieveFromServer();
-				//				//
-
-				mySocket.sendToServer("S");
-				String output = mySocket.recieveFromServer();
-				netto = returnDouble(output);
+					mySocket.sendToServer("S");
+					String output = mySocket.recieveFromServer();
+					netto = returnDouble(output);
+					
+					isDone = true;
+				}
+				else if(response.equals("RM20 A \"N\"") || response.equals("RM20 A N"))
+				{
+					keepRunning = false;
+					isDone = true;
+				}
+				else
+					waitMethod("D \"Wrong input, ");
 			}
-			else
+			else{
 				keepRunning = false;
-		}
-		else{
-			keepRunning = false;
-		}
+				isDone = true;
+			}
+		}while(!isDone);
+
 		return keepRunning;
 	}
-	
+
 	private boolean remove() throws IOException {
 		boolean keepRunning = true;
+		boolean isDone = false;
+		do
+		{
+			mySocket.sendToServer("RM20 8 \"Remove the bowl(Y,N)\" \" \" \" \" ");
+			if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
 
-		mySocket.sendToServer("RM20 8 \"Remove the bowl(Y,N)\" \" \" \" \" ");
-		if(mySocket.recieveFromServer().startsWith("RM20")) { //RM20 B
-			
-			String response = mySocket.recieveFromServer().toUpperCase();
-			
-			if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y")) //RM20 A Y
-			{
-				//				//TODO remove when testing on the real weight. 
-				//				mySocket.sendToServer("B -1.00");
-				//				mySocket.recieveFromServer();
-				//				//
+				String response = mySocket.recieveFromServer().toUpperCase();
 
-				mySocket.sendToServer("T");
-				String output = mySocket.recieveFromServer();
-				tarraE = returnDouble(output);
+				if(response.equals("RM20 A \"Y\"") || response.equals("RM20 A Y")) //RM20 A Y
+				{
+					//				//TODO remove when testing on the real weight. 
+					//				mySocket.sendToServer("B -1.00");
+					//				mySocket.recieveFromServer();
+					//				//
+
+					mySocket.sendToServer("T");
+					String output = mySocket.recieveFromServer();
+					tarraE = returnDouble(output);
+
+					isDone = true;
+				}
+				else if(response.equals("RM20 A \"N\"") || response.equals("RM20 A N"))
+				{
+					keepRunning = false;
+					isDone = true;
+				}
+				else
+					waitMethod("D \"Wrong input, ");
 			}
 			else
+			{
 				keepRunning = false;
-		}
-		else
-		{
-			keepRunning = false;
-		}
+				isDone = true;
+			}
+		}while(!isDone);
 		return keepRunning;
 	}
 	private boolean checkBruttoDifference(double bruttoEnd)
@@ -479,6 +511,26 @@ public class WeightController2 {
 			}
 		}
 		return Integer.parseInt(number);
+	}
+	private void waitMethod(String text)
+	{
+		for (int i=5; i>  0; i--)
+		{
+			try
+			{
+				mySocket.sendToServer(text+i+"\"");
+				mySocket.recieveFromServer();
+				Thread.sleep(1000);
+			}
+			catch(IOException e)
+			{
+
+			}
+			catch(InterruptedException e)
+			{
+
+			}
+		}
 	}
 
 }
