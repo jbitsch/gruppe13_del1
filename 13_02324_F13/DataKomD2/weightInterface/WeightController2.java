@@ -239,24 +239,43 @@ public class WeightController2 {
 
 			if(bruttoOk == true)
 			{
-				weightOk = true;
+				
 				try
 				{
-					waitMethod("OK, ");
-					System.out.println("Brutto kontrol OK");
-
-					//Create the time stamp
-					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-					DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-					Calendar cal = Calendar.getInstance();
-					String date = dateFormat.format(cal.getTime());
-					String time = timeFormat.format(cal.getTime());
-
+					
 					double store = new FileReader().updateStore(netto, pNumber);
-					String toLog = date+";"+time+";"+oNumber+";"+pNumber+";"+netto+";"+store;
-					new FileReader().updateFile(toLog, "log.txt", true);
+					if(store>=0)
+					{
+						//Create the time stamp
+						DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+						Calendar cal = Calendar.getInstance();
+						String date = dateFormat.format(cal.getTime());
+						String time = timeFormat.format(cal.getTime());
+						
+						String toLog = date+";"+time+";"+oNumber+";"+pNumber+";"+netto+";"+store;
+						new FileReader().updateFile(toLog, "log.txt", true);
+						weightOk = true;
+						
+						System.out.println("Brutto kontrol OK");
+						waitMethod("OK, ");
+					}
+					else
+					{
+						System.out.println("Ikke nok paa lager");
+						waitMethod("-Stock, ");
+					}
+					
 				}
-				catch(IOException e){}
+				catch(IOException e){
+					System.out.println("Fejl i opdatering af filer");
+					waitMethod("F update E, ");
+				}
+			}
+			else
+			{
+				System.out.println("Fejl i brutto kontrol");
+				waitMethod("T error, ");
 			}
 		}
 		if(!keepRunning)

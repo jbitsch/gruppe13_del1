@@ -63,8 +63,16 @@ public class FileReader {
 			if( pNum== productNo)
 			{
 				
-				store = store - netto;
-				storeToReturn = store;
+				double temp = store - netto;
+				if(temp >=0.00)
+				{
+					store = store - netto;
+					storeToReturn = store;
+				}
+				else
+				{
+					storeToReturn = -1.00;
+				}
 			}
 			String toAdd = pNum+";"+pName+";"+store;
 			tempFile = tempFile + toAdd + "\n";
