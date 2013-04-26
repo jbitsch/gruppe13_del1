@@ -85,7 +85,7 @@ String validProductName(String productName)
 	
 	if(productName.length() < 2 || productName.length() > 20)
 	{
-		return error;
+		return "Prouktnavnet skal have en laengde mellem 2 og 20<br/>";
 	}
 	
 	// 2-20 karakterer
@@ -211,8 +211,8 @@ if(productNumError != "")
 }
 if(productNameError != "")
 {
-	
 	productName = "";
+	validRecept = false;
 }
 if(weightError != "")
 {
