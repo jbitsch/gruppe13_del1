@@ -1,36 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-  
+<%@ page import="java.io.*" %>
+<%@ page import="java.util.ArrayList" %>
+ 
 <%
-String receiptNo = null;
+String receptNo = null;
 String productNo = null;
 String productName = null;
 String desiredWeight = null;
 String tolerance = null;
 
-String receiptError;
+String receptError;
 String productMatchError;
 String weightError;
 String toleranceError;
 
-boolean validReceipt = true;
+boolean validRecept = true;
 %>
   
 <%!
-String validReceiptNo(int receiptNo)
+ArrayList<String[]> getRecepts(File receptFile)
+{	
+	ArrayList<String[]> recepts = new ArrayList<String[]>();
+	try
+	{
+		receptFile.createNewFile();
+		FileInputStream fstream = new FileInputStream(receptFile);
+		DataInputStream in = new DataInputStream(fstream);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		
+		String recept;
+		while((recept = br.readLine()) != null)
+		{
+			recepts.add(recept.split(";"));
+		}
+	}
+	catch(FileNotFoundException e){}
+	catch(IOException e){}
+	return recepts;
+}
+
+String validReceptNo(int receptNo, ArrayList<String[]> recepts)
 {
-	String error = "Receipt nummeret skal være et heltal (1-99999999)<br/>";
+	String error = "Recept nummeret skal være et heltal (1-99999999)<br/>";
 	
 	// Heltal mellem 1 og 99999999
-	if(receiptNo >= 1 && receiptNo <= 99999999)
+	if(receptNo >= 1 && receptNo <= 99999999)
 	{
-		return "";
+		// Må ikke findes i forvejen
+		boolean numberTaken = false;
+		for(int i = 0; i < recepts.size(); i++)
+		{
+			int currentNumber = Integer.parseInt(recepts.get(i)[0]);
+			if(currentNumber == receptNo)
+			{
+				numberTaken = true;
+			}
+		}
+		if(numberTaken)
+		{
+			error = "Recept nummeret er allerede i brug<br/>";
+		}
+		else
+		{
+			return "";
+		}
 	}
 	return error;
-	
-	
-	// Må ikke findes i forvejen
-	// Kan flere så tilføje samme receiptnavn, hvis de gør det samtidig? syncronize?.. og tjek igangværende
-	
 }
 
 String validProductMach(String productNo, String productName)
@@ -45,9 +80,16 @@ String validProductMach(String productNo, String productName)
 	// 2-20 karakterer
 	if(productName.length() >= 2 && productName.length() <= 20)
 	{
-		return "";
+		// Maa ikke indeholde semikolon
+		if(productName.contains(";"))
+		{
+			error = "Produktnavnet må ikke indeholde semikolon.";
+		}
+		else
+		{
+			return "";
+		}
 	}
-	// productName skal findes i databasen udfor angivet productNo (gør den det, indeholder den IKKE semikolon)
 	return error;
 }
 
@@ -120,47 +162,50 @@ double toDouble(String var)
 	<body>
 	
 <%
+File receptFile = new File(application.getRealPath("/recepts.txt"));
+ArrayList<String[]> receptArray = getRecepts(receptFile);
+
 String submitted = request.getParameter("submit");
 
 if(submitted != null)
 {
-	receiptNo = request.getParameter("receptNo");
+	receptNo = request.getParameter("receptNo");
 	productNo = request.getParameter("productNo");
 	productName = request.getParameter("productName");
 	desiredWeight = request.getParameter("desiredWeight");
 	tolerance = request.getParameter("tolerance");
 }
 
-receiptError = validReceiptNo(toInt(receiptNo));
+receptError = validReceptNo(toInt(receptNo), receptArray);
 productMatchError = validProductMach(productNo, productName);
 weightError = validWeight(toDouble(desiredWeight));
 toleranceError = validTolerance(toDouble(tolerance), toDouble(desiredWeight));
 
-if(receiptError != "")
+if(receptError != "")
 {
-	receiptNo = "";
-	validReceipt = false;
+	receptNo = "";
+	validRecept = false;
 }
 if(productMatchError != "")
 {
 	productNo = "";
 	productName = "";
-	validReceipt = false;
+	validRecept = false;
 }
 if(weightError != "")
 {
 	desiredWeight = "";
-	validReceipt = false;
+	validRecept = false;
 }
 if(toleranceError != "")
 {
 	tolerance = "";
-	validReceipt = false;
+	validRecept = false;
 }
 
-if(validReceipt == true)
+if(validRecept == true)
 {
-	session.setAttribute("receptNo", receiptNo);
+	session.setAttribute("receptNo", receptNo);
 	session.setAttribute("productNo", productNo);
 	session.setAttribute("productName", productName);
 	session.setAttribute("desiredWeight", desiredWeight);
@@ -170,19 +215,19 @@ if(validReceipt == true)
 }
 
 %>
-	
+		<h2>Ny receptregistrering</h2>	
 		<form method = "GET" action = "inputRecept.jsp">
 			<%
 			if(submitted != null)
 			{
-				out.println(receiptError);
+				out.println("<font color = 'red'>" + receptError + "</font>");
 			}
 			%>
-			Receipt nr: <input type = "text" name = "receptNo" value = "<%= receiptNo %>"><br />
+			Recept nr: <input type = "text" name = "receptNo" value = "<%= receptNo %>"><br />
 			<%
 			if(submitted != null)
 			{
-				out.println(productMatchError);
+				out.println("<font color = 'red'>" + productMatchError + "</font>");
 			}
 			%>
 			Vare nr: <input type = "text" name = "productNo" value = "<%= productNo %>"><br />
@@ -190,14 +235,14 @@ if(validReceipt == true)
 			<%
 			if(submitted != null)
 			{
-				out.println(weightError);
+				out.println("<font color = 'red'>" + weightError + "</font>");
 			}
 			%>
 			Ønsket vægt (i gram): <input type = "text" name = "desiredWeight" value = "<%= desiredWeight %>"><br />
 			<%
 			if(submitted != null)
 			{
-				out.println(toleranceError);
+				out.println("<font color = 'red'>" + toleranceError + "</font>");
 			}
 			%>
 			Tolerance (netto, i %): <input type = "text" name = "tolerance" value = "<%= tolerance %>"><br />
