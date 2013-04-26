@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,10 +23,11 @@
 			String productName = (String)session.getAttribute("productName");
 			String desiredWeight = (String)session.getAttribute("desiredWeight");
 			String tolerance = (String)session.getAttribute("tolerance");
+			Date date = new Date();
 			
 			FileWriter fileWriter = new FileWriter(receptFile, true);
 			BufferedWriter outStream = new BufferedWriter(fileWriter);
-			outStream.write(receiptNo + ";" + productNo + ";" + productName + ";" + desiredWeight + ";" + tolerance + "\n");
+			outStream.write(receiptNo + ";" + productNo + ";" + productName + ";" + desiredWeight + ";" + tolerance + ";"+date.toString()+"\n");
 			outStream.close();
 			fileWriter.close();
 			
@@ -52,7 +53,7 @@
 		// Vis tabel over recepter, hvis der er nogle
 		if(recepts.size() != 0)
 		{
-			String[] categories = {"Receptnummer", "Produktnummer", "Produktnavn", "Desired weight", "Tolerance"};	
+			String[] categories = {"Receptnummer", "Produktnummer", "Produktnavn", "Desired weight", "Tolerance","Dato"};	
 			
 			out.print("<h2>Tabel over recepter</h2>");
 			for(int i = 0; i < recepts.size(); i++)
@@ -77,6 +78,15 @@
 	{
 		out.print("<p>Der kan ikke oprettes kontakt til databasen. Proev venligst igen senere.</p>");
 	}
+	
+	if(request.getMethod().equals("POST"))
+	{
+		response.sendRedirect("inputRecept.jsp");
+	}
 	%>
+	<form method="POST" action="registerRecept.jsp">
+					<input type = "submit" name = "submit" value = "Tilbage">
+	</form>
+	
 </body>
 </html>

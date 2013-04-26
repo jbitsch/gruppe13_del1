@@ -3,14 +3,15 @@
 <%@ page import="java.util.ArrayList" %>
  
 <%
-String receptNo = null;
-String productNo = null;
-String productName = null;
-String desiredWeight = null;
-String tolerance = null;
+String receptNo = "";
+String productNo = "";
+String productName = "";
+String desiredWeight = "";
+String tolerance = "";
 
 String receptError;
-String productMatchError;
+String productNumError;
+String productNameError;
 String weightError;
 String toleranceError;
 
@@ -67,12 +68,22 @@ String validReceptNo(int receptNo, ArrayList<String[]> recepts)
 	}
 	return error;
 }
-
-String validProductMach(String productNo, String productName)
+String validProductNo(int productNum)
 {
-	String error = "Indtast et gyldigt produktnummer<br/>";
+	String error = "Produkt nummeret skal være et heltal (1-99999999)<br/>";
 	
-	if(productNo == null || productName == null)
+	// Heltal mellem 1 og 99999999
+	if(productNum >= 1 && productNum <= 99999999)
+	{
+		return "";
+	}
+	return error;
+}
+String validProductName(String productName)
+{
+	String error = "Prouktnavnet skal have en laengde mellem 2 og 20<br/>";
+	
+	if(productName.length() < 2 || productName.length() > 20)
 	{
 		return error;
 	}
@@ -83,7 +94,7 @@ String validProductMach(String productNo, String productName)
 		// Maa ikke indeholde semikolon
 		if(productName.contains(";"))
 		{
-			error = "Produktnavnet må ikke indeholde semikolon.";
+			error = "Produktnavnet må ikke indeholde semikolon.<br/>";
 		}
 		else
 		{
@@ -165,19 +176,26 @@ double toDouble(String var)
 File receptFile = new File(application.getRealPath("/recepts.txt"));
 ArrayList<String[]> receptArray = getRecepts(receptFile);
 
-String submitted = request.getParameter("submit");
-
-if(submitted != null)
+String submitted =  request.getParameter("submit");
+if(submitted!=null)
 {
-	receptNo = request.getParameter("receptNo");
-	productNo = request.getParameter("productNo");
-	productName = request.getParameter("productName");
-	desiredWeight = request.getParameter("desiredWeight");
-	tolerance = request.getParameter("tolerance");
+	if(submitted.equals("Registrer"))
+	{
+		receptNo = request.getParameter("receptNo");
+		productNo = request.getParameter("productNo");
+		productName = request.getParameter("productName");
+		desiredWeight = request.getParameter("desiredWeight");
+		tolerance = request.getParameter("tolerance");
+	}
+	else if(submitted.equals("Slet recept"))
+	{
+		response.sendRedirect("delete.jsp");
+	}
 }
 
 receptError = validReceptNo(toInt(receptNo), receptArray);
-productMatchError = validProductMach(productNo, productName);
+productNumError = validProductNo(toInt(productNo));
+productNameError = validProductName(productName);
 weightError = validWeight(toDouble(desiredWeight));
 toleranceError = validTolerance(toDouble(tolerance), toDouble(desiredWeight));
 
@@ -186,11 +204,15 @@ if(receptError != "")
 	receptNo = "";
 	validRecept = false;
 }
-if(productMatchError != "")
+if(productNumError != "")
 {
 	productNo = "";
-	productName = "";
 	validRecept = false;
+}
+if(productNameError != "")
+{
+	
+	productName = "";
 }
 if(weightError != "")
 {
@@ -227,10 +249,16 @@ if(validRecept == true)
 			<%
 			if(submitted != null)
 			{
-				out.println("<font color = 'red'>" + productMatchError + "</font>");
+				out.println("<font color = 'red'>" + productNumError + "</font>");
 			}
 			%>
 			Vare nr: <input type = "text" name = "productNo" value = "<%= productNo %>"><br />
+			<%
+			if(submitted != null)
+			{
+				out.println("<font color = 'red'>" + productNameError + "</font>");
+			}
+			%>
 			Vare navn: <input type = "text" name = "productName" value = "<%= productName %>"><br />
 			<%
 			if(submitted != null)
@@ -247,6 +275,7 @@ if(validRecept == true)
 			%>
 			Tolerance (netto, i %): <input type = "text" name = "tolerance" value = "<%= tolerance %>"><br />
 			<input type = "submit" name = "submit" value = "Registrer">
+			<input type = "submit" name = "submit" value = "Slet recept">
 		</form>
 	
 	</body>
