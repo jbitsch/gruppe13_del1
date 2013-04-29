@@ -18,7 +18,7 @@ if (request.getMethod().equals("POST")) {
 	String pw = request.getParameter("password");
 	String id = request.getParameter("id");
 	
-	Boolean loginOK = function.login(pw, id);
+	boolean loginOK = function.login(pw, id);
 	if (loginOK) {
 		session.setAttribute("loginId",id);
 		response.sendRedirect("menu.jsp");
