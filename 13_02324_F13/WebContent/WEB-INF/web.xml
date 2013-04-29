@@ -11,12 +11,12 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>Recept</display-name>
-    <servlet-name>Run</servlet-name>
-    <servlet-class>Run</servlet-class>
+    <display-name>Run2</display-name>
+    <servlet-name>Run2</servlet-name>
+    <servlet-class>Run2</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Run</servlet-name>
-    <url-pattern>/Run</url-pattern>
+    <servlet-name>Run2</servlet-name>
+    <url-pattern>/Run2</url-pattern>
   </servlet-mapping>
 </web-app>
