@@ -1,4 +1,4 @@
-<%@ include file = "loginCheck.jsp" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:useBean id="function" class="funktionalitet.Funktionalitet2" type="funktionalitet.IFunktionalitet2" scope="application" />
 
@@ -87,7 +87,7 @@ if (bruttoError != ""){
 }
 %>
 
-<form method="GET" action="weight3.jsp">
+<form method="GET" action="weight.jsp">
 	<%
 	if ("Udregn".equals(submitted)){
 		out.println("<font color = 'red'>" + taraError + "</font>");
