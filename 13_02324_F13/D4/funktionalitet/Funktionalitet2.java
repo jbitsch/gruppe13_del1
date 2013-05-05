@@ -1,6 +1,9 @@
 package funktionalitet;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import data.IData2;
 import data.OperatoerDTO2;
 
@@ -121,40 +124,53 @@ public class Funktionalitet2 implements IFunktionalitet2 {
 	}
 	
 	//#################Check user information#########################//
+	
+	/**
+	 * Checks whether or not a given INPUT {@link String} matches the Regular
+	 * Expression {@link java.util.regex.Pattern}.
+	 *   
+	 * @param REGEX		the pattern used to check the INPUT String 
+	 * @param INPUT		the String that {@link java.util.regex.Matcher} matches against REGEX
+	 * @return			true if the REGEX matches the INPUT String
+	 */
+	private boolean checkRegex(String REGEX, String INPUT) {
+		Pattern pattern = Pattern.compile(REGEX);
+		Matcher matcher = pattern.matcher(INPUT);
+		
+		return matcher.matches();
+	}
+	
+	
 	@Override
-	/** Operatør navn min. 2 max. 20 karakterer */
+	/** Operatï¿½r navn min. 2 max. 20 karakterer */
 	public boolean checkName(String navn)
 	{
-		if(navn.length() < 2 || navn.length() > 20)
-			return false;
-		return true;
+		String REGEX = "^[a-zA-Z[\\s]]{2,20}$+";
+		return checkRegex(REGEX,navn);
 	}
 	
 	@Override
-	/** Operatør initialer min. 2 max. 3 karakterer */
+	/** Operatï¿½r initialer min. 2 max. 3 karakterer */
 	public boolean checkIni(String ini)
 	{
-		if(ini.length() < 2 || ini.length() > 3)
-			return false;
-		return true;
+		String REGEX ="^[a-zA-Z[\\s]]{2,3}$+";
+		return checkRegex(REGEX, ini);
 	}
 	
 	@Override
-	/** Operatør cpr-nr 10 karakterer */
+	/** Operatï¿½r cpr-nr 10 karakterer */
 	public boolean checkCpr(String cpr)
 	{
-		if(cpr.length()==10)
-			return true;
-		return false;
+		String REGEX = "^[0-9]{10,10}$+";
+		return checkRegex(REGEX, cpr);
 	}
 	
 	@Override
-	/** Operatør password min. 7 max. 8 karakterer */
+	/** Operatï¿½r password min. 7 max. 8 karakterer */
 	public boolean checkPassword(String password)
 	{
-		if(password.length() < 7 || password.length() > 8)
-			return false;
-		return true;
+		String REGEX = "^[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]{7,8}$+";
+		return checkRegex(REGEX, password);
 	}
 	
 
