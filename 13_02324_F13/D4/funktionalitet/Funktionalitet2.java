@@ -142,7 +142,7 @@ public class Funktionalitet2 implements IFunktionalitet2 {
 	
 	
 	@Override
-	/** Operat�r navn min. 2 max. 20 karakterer */
+	/** Operat�r navn min. 2 max.. 20 karakterer */
 	public boolean checkName(String navn)
 	{
 		String REGEX = "^[a-zA-Z[\\s]]{2,20}$+";
