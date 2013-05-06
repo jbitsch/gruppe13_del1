@@ -11,7 +11,7 @@
 </head>
 <body>
 	<h1>Menu</h1>
-	<a href="#">1.Log ud</a><br>
+	<a href="logOut.jsp">1.Log ud</a><br>
 	<a href="weight.jsp">2.Vægt applikation</a><br>
 	<a href="changePw.jsp">3.Skift password</a><br>
 	

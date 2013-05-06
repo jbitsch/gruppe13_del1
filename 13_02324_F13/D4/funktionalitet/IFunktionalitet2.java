@@ -8,7 +8,7 @@ import data.OperatoerDTO2;
 public interface IFunktionalitet2 {
 	ArrayList<OperatoerDTO2> getUsers() ;
 	OperatoerDTO2 getUser(int ID) ;
-	void createUser(String name, String cpr,String password,String ini); 
+	int createUser(String name, String cpr,String password,String ini); 
 	void updateUser(int id, String navn, String ini, String cpr, String password) ;
 	void deleteUser(OperatoerDTO2 user) ;
 	boolean login(String password, String ID); 

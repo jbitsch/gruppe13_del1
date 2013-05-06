@@ -50,11 +50,12 @@ public class Funktionalitet2 implements IFunktionalitet2 {
 	}
 	
 	@Override
-	public void createUser(String name, String cpr,String ini,String password) 
+	public int createUser(String name, String cpr,String ini,String password) 
 	{
 		int id = unusedId(data.getAllOperatoer());
 		OperatoerDTO2 newUser = new OperatoerDTO2(id, name,ini, cpr,password);
 		data.createOperatoer(newUser);
+		return id;
 	}
 	@Override
 	public void updateUser(int id, String navn, String ini, String cpr, String password)
