@@ -14,11 +14,13 @@
 <body>
 
 	<%
+	// tjekker om bruger er logget ind, hvis ikke sendes han/hun tilbage til login siden
 		if (user.getOprNavn() == null) {
 			response.sendRedirect("login.jsp");
 		}
 	%>
 
+	<!-- Formen der bruges til input af nyt og gammelt password -->
 	<form name="input" action="changePw.jsp" method="post">
 		<p>
 			Gammelt password: <input type="password" name="old" />
@@ -34,6 +36,9 @@
 
 	<p>
 		<%
+			// Henter HTML form tjekker for fjel i nyt og gammelt password
+			// Hvis alt stemmer overens ændres password og bruger sendes tilbage til menu
+			// Hvis der er fejl vises de til brugeren på denne side og de kan forsøge igen
 			if (request.getMethod().equals("POST")) {
 				String newPassword = request.getParameter("new");
 				String newPasswordRep = request.getParameter("newRep");
