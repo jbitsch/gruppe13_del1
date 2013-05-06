@@ -21,6 +21,8 @@ if (request.getMethod().equals("POST")) {
 	boolean loginOK = function.login(pw, id);
 	if (loginOK) {
 		session.setAttribute("loginId",id);
+		int numID  = Integer.parseInt(id);
+		session.setAttribute("user", function.getUser(numID));
 		response.sendRedirect("menu.jsp");
 	} 
 	else
