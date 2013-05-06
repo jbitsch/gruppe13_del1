@@ -11,34 +11,24 @@
 </head>
 <body>
 
-<h1>Login</h1>
+<h1>Log ind</h1>
 
-<%
-if (request.getMethod().equals("POST")) {
-	String pw = request.getParameter("password");
-	String id = request.getParameter("id");
-	
-	boolean loginOK = function.login(pw, id);
-	if (loginOK) {
-		session.setAttribute("loginId",id);
-		int numID  = Integer.parseInt(id);
-		session.setAttribute("user", function.getUser(numID));
-		response.sendRedirect("menu.jsp");
-	} 
-	else
-	{
-		%> 	
-			<font color='red'>Bruger findes ikke.</font> 
-		<%
-	}
-}
-%>
-
-<form id=form name=form action=login.jsp method=post>
-
-Indtast ID: <input id=id name=id	value=""/><br>
-Indtast password: <input id=password name=password type = password	value=""/><br>
-            	<input id=submit type=submit value="Loign"/>
+<form method="POST">
+<input type="hidden" name="handling" value="null">
+<table>
+<tr>
+	<td>id:</td>
+	<td><input name="id" type="text"></td>
+</tr>
+<tr>
+	<td>Adgangskode:</td>
+	<td><input type="password" name="password"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" name="handling" value="log ind"></td>
+</tr>
+</table>
 </form>
 
 
