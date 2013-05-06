@@ -1,10 +1,11 @@
+<%@ include file = "loginCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <jsp:useBean id="function" class="funktionalitet.Funktionalitet2"
-	type="funktionalitet.IFunktionalitet2" scope="pplication" />
+	type="funktionalitet.IFunktionalitet2" scope="application" />
 <jsp:useBean id="user" class="data.OperatoerDTO2"
 	type="data.OperatoerDTO2" scope="session" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -12,13 +13,6 @@
 </title>
 </head>
 <body>
-
-	<%
-	// tjekker om bruger er logget ind, hvis ikke sendes han/hun tilbage til login siden
-		if (user.getOprNavn() == null) {
-			response.sendRedirect("login.jsp");
-		}
-	%>
 
 	<!-- Formen der bruges til input af nyt og gammelt password -->
 	<form name="input" action="changePw.jsp" method="post">
@@ -43,9 +37,9 @@
 				String newPassword = request.getParameter("new");
 				String newPasswordRep = request.getParameter("newRep");
 				String error = null;
-				if (user.getPassword() != request.getParameter("old")) {
+				if (!user.getPassword().equals(request.getParameter("old"))) {
 					error = "Old password is incorrect";
-				} else if (newPassword != newPasswordRep) {
+				} else if (!newPassword.equals(newPasswordRep) ) {
 					error = "Didn't repeat the new password correctly";
 				} else if (!function.checkPassword(newPasswordRep)) {
 					error = "New password doesn't follow the rules";
@@ -56,7 +50,7 @@
 
 				// Udskriver fejlmeddelelse
 				out.println("<span style=\"color:#FF0000\">" + error
-						+ "</span>");
+						+ "</span>" + "<br>");
 			}
 		%>
 
