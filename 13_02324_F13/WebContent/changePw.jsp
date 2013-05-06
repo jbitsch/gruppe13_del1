@@ -15,7 +15,7 @@
 <body>
 
 	<!-- Formen der bruges til input af nyt og gammelt password -->
-	<form name="input" action="changePw.jsp" method="post">
+	<form name="input" action="changePw.jsp" method="POST">
 		<p>
 			Gammelt password: <input type="password" name="old" />
 		</p>
