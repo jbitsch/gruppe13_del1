@@ -10,9 +10,9 @@ public class Data2 implements IData2 {
 	{
 		personer = new ArrayList<OperatoerDTO2>();
 
-		// Tilføj personer
+		// Tilfï¿½j personer
 		personer.add(new OperatoerDTO2(11, "Ib Olsen","IB" ,"112233-4455","12"));
-		personer.add(new OperatoerDTO2(10, "Ole Jensen","Oj" ,"112233-4455","12"));
+		personer.add(new OperatoerDTO2(8, "Ole Jensen","Oj" ,"112233-4455","12"));
 		personer.add(new OperatoerDTO2(12, "Eva Hansen","EH" ,"112233-4455","12Qwerty"));
 		personer.add(new OperatoerDTO2(14, "Peter Jensen","PJ" ,"112233-4455","12Qwerty"));
 		personer.add(new OperatoerDTO2(10, "Albert Svanesen","AS" ,"112233-4455",">02324it!<"));
@@ -87,5 +87,5 @@ public class Data2 implements IData2 {
 			}
 		}
 		return loginOk;
-	}
+	}	
 }
