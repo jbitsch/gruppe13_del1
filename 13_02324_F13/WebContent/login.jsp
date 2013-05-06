@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<jsp:useBean id="function" class="funktionalitet.Funktionalitet2" type="funktionalitet.IFunktionalitet2" scope="application"/>
 <jsp:useBean id="user" class="data.OperatoerDTO2" type="data.OperatoerDTO2" scope="session"/>
+<jsp:useBean id="login" class="funktionalitet.Login" type="funktionalitet.Login" scope="session"/>
 
 <html>
 <head>
@@ -17,7 +17,7 @@
 <input type="hidden" name="handling" value="null">
 <table>
 <tr>
-	<td>id:</td>
+	<td>ID:</td>
 	<td><input name="id" type="text"></td>
 </tr>
 <tr>
