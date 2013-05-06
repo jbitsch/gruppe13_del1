@@ -1,4 +1,4 @@
-
+<%@ include file = "loginCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:useBean id="function" class="funktionalitet.Funktionalitet2" type="funktionalitet.IFunktionalitet2" scope="application" />
 
@@ -59,7 +59,7 @@ String validNetto(double netto){
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Nettoudregner</title>
+<title>Vægtapplikation</title>
 </head>
 <body>
 
