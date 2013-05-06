@@ -55,7 +55,6 @@ public class Funktionalitet2 implements IFunktionalitet2 {
 		int id = unusedId(data.getAllOperatoer());
 		OperatoerDTO2 newUser = new OperatoerDTO2(id, name,ini, cpr,password);
 		data.createOperatoer(newUser);
-		
 		return id;
 	}
 	@Override
