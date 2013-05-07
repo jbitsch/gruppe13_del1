@@ -171,7 +171,7 @@ public class Funktionalitet2 implements IFunktionalitet2 {
 	/** Operat�r password min. 7 max. 8 karakterer */
 	public boolean checkPassword(String password)
 	{
-		String REGEX = "^[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]{7,8}$+";
+		String REGEX = "^[0-9[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]]{7,8}$+";
 		return checkRegex(REGEX, password);
 	}
 
