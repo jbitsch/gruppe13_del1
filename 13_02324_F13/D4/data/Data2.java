@@ -15,7 +15,7 @@ public class Data2 implements IData2 {
 		personer.add(new OperatoerDTO2(8, "Ole Jensen","Oj" ,"112233-4455","12"));
 		personer.add(new OperatoerDTO2(12, "Eva Hansen","EH" ,"112233-4455","12Qwerty"));
 		personer.add(new OperatoerDTO2(14, "Peter Jensen","PJ" ,"112233-4455","12Qwerty"));
-		personer.add(new OperatoerDTO2(10, "Albert Svanesen","AS" ,"112233-4455",">02324it!<"));
+		personer.add(new OperatoerDTO2(10, "Albert Svanesen","AS" ,"112233-4455","12"));
 	}
 
 	public OperatoerDTO2 getOperatoer(int oprId) 

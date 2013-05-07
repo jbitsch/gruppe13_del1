@@ -99,6 +99,7 @@ public class Run2 extends HttpServlet {
 		if(!(tarra == null || tarra.isEmpty())){
 			valg.setTarra(tarra);
 		}
+		
 		////////////////////////////Change PW informations///////////////////////////////
 		String old = request.getParameter("old");
 		if(!(old == null || old.isEmpty())){
@@ -113,8 +114,25 @@ public class Run2 extends HttpServlet {
 			valg.setNew2(new2);
 		}
 		valg.setId(login.getId());
-		///////////////////////////////////////////////////////////
 		
+		/////////////////////////Create user//////////////////////////////////
+		String name = request.getParameter("oprName");
+		if(!(name == null || name.isEmpty())){
+			valg.setName(name);
+		}
+		String ini = request.getParameter("ini");
+		if(!(ini == null || ini.isEmpty())){
+			valg.setIni(ini);
+		}
+		String cpr = request.getParameter("cpr");
+		if(!(cpr == null || cpr.isEmpty())){
+			valg.setCpr(cpr);
+		}
+		String newPw = request.getParameter("newPw");
+		if(!(newPw == null || newPw.isEmpty())){
+			valg.setPassword(newPw);
+		}
+		//////////////////////////////////////////////////////////////////////////////////
 		valg.setHandling(handling);
 		if (valg.handling != null) {           // konto er valgt - nogen handlinger?
 			application.log(login.getId()+" udfoerer handling: "+valg.handling);
@@ -139,6 +157,23 @@ public class Run2 extends HttpServlet {
 		else if("admin".equals(session.getAttribute("menu")))
 		{
 			
+			System.out.println("hej");
+			//Hvilken side skal vi lande paa
+			String adminValg = request.getParameter("adminValg");
+			if(adminValg!=null)
+			{
+				session.setAttribute("admin", adminValg);
+			}
+			if("createUser".equals(session.getAttribute("admin")))
+			{
+				request.getRequestDispatcher("userForm.jsp").forward(request,response);
+			}
+			else if("showUsers".equals(session.getAttribute("admin")))
+			{
+				
+			}
+			else
+				request.getRequestDispatcher("adminMenu.jsp").forward(request,response);
 		}
 		else
 		{
@@ -146,7 +181,7 @@ public class Run2 extends HttpServlet {
 		}
 		
 		//clearing the error message..
-		valg.deleteError();
+		valg.delete();
 			
 	}
 

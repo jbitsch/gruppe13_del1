@@ -1,5 +1,6 @@
 package funktionalitet;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +12,7 @@ public class BrugerValg {
 	
 	public String handling;
 	public String error = "";
+	public String succes = "";
 	public IData2 data = null;
 	//Weight
 	public double t = 0.00;
@@ -23,6 +25,12 @@ public class BrugerValg {
 	public String old = "";
 	public int id = 0;
 	
+	//New user
+	public String name = "";
+	public String ini = "";
+	public String cpr ="";
+	public String password ="";
+	
 	public void setData(IData2 data)
 	{
 		this.data = data;
@@ -30,9 +38,13 @@ public class BrugerValg {
 	public void setHandling(String h) {
 		handling = h;
 	}
-	public void deleteError()
+	public void delete()
 	{
 		error = "";
+		name = "";
+		ini = "";
+		cpr = "";
+		password = "";
 	}
 	////////////////////////////////////////////
 	public void setBrutto(String brutto)
@@ -60,7 +72,27 @@ public class BrugerValg {
 	{
 		this.id = id;
 	}
-	public void udfoerHandling() throws BigTaraException
+	
+	///////////////////////////////////////////
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public void setIni(String ini)
+	{
+		this.ini = ini;
+	}
+	public void setCpr(String cpr)
+	{
+		this.cpr = cpr;
+	}
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+	//////////////////////////////////////////////
+	
+	public void udfoerHandling() 
 	{
 
 		try
@@ -72,7 +104,7 @@ public class BrugerValg {
 			else if (handling.equals("weight"))
 			{	
 				netto = b - t;
-				if(netto <= 0)
+				if(netto < 0)
 				{
 					netto =  0;
 					error = "Tarra skal være større end brutto";
@@ -81,9 +113,9 @@ public class BrugerValg {
 				t = 0.00;
 				b = 0.00;
 			}
-			else if (handling.equals("newUser"))
+			else if (handling.equals("createUser"))
 			{
-				//TODO newUser
+				createUser(name, ini, cpr,password);
 			}
 			else if (handling.equals("seeUser"))
 			{
@@ -106,10 +138,10 @@ public class BrugerValg {
 			error+= "Gammelt password stemmer ikke overens.<br> ";
 			OK = false;
 		}
-		String REGEX = "^[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]{7,8}$+";
+		
 		if(new1.equals(new2))
 		{
-			if(!(checkRegex(REGEX, new1)))
+			if(!checkPassword(new1))
 			{
 				error+="De nye passwords overholder ikke reglerne. <br>";
 				OK = false;
@@ -128,6 +160,38 @@ public class BrugerValg {
 		
 	}
 	
+	private void createUser(String name, String ini, String cpr, String password)
+	{
+		boolean ok = true;
+		if(!checkName(name))
+		{
+			ok = false;
+			error+= "Navnet skal være mellem 2 og 20 karaktere.(a-z) <br> ";
+		}
+		if(!checkIni(ini))
+		{
+			ok = false;
+			error+= "Initialer skal være mellem 2 og 3 karaktere. <br> ";
+		}
+		if(!checkCpr(cpr))
+		{
+			ok = false;
+			error+= "Cpr nummer skal være 10 tal. <br> ";
+		}
+		if(!checkPassword(password))
+		{
+			ok = false;
+			error+= "Password skal være mellem 7 og 8 karaktere. Skal indeholder stor og små bogstaver samt tal <br> ";
+		}
+		if(ok)
+		{
+			int id = unusedId();
+			OperatoerDTO2 user = new OperatoerDTO2(id, name, ini, cpr, password);
+			data.createOperatoer(user);
+			succes = "Bruger oprettet med id: "+id;
+		}
+	}
+	
 	//#################Check user information#########################//
 	
 	/**
@@ -144,5 +208,52 @@ public class BrugerValg {
 		
 		return matcher.matches();
 	}
+	
+	/** Operat�r navn min. 2 max.. 20 karakterer */
+	public boolean checkName(String navn)
+	{
+		String REGEX = "^[a-zA-Z[\\s]]{2,20}$+";
+		return checkRegex(REGEX,navn);
+	}
+	
+	/** Operat�r initialer min. 2 max. 3 karakterer */
+	public boolean checkIni(String ini)
+	{
+		String REGEX ="^[a-zA-Z[\\s]]{2,3}$+";
+		return checkRegex(REGEX, ini);
+	}
+	
+	/** Operat�r cpr-nr 10 karakterer */
+	public boolean checkCpr(String cpr)
+	{
+		String REGEX = "^[0-9]{10,10}$+";
+		return checkRegex(REGEX, cpr);
+	}
+	/** Operat�r password min. 7 max. 8 karakterer */
+	public boolean checkPassword(String password)
+	{
+		String REGEX = "^[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]{7,8}$+";
+		return checkRegex(REGEX, password);
+	}
+	private int unusedId() {
+		ArrayList<OperatoerDTO2> personer = data.getAllOperatoer();
+		
+		boolean emptyId;
+		for(int b = 1; b < 999999999; b++) {
+			emptyId = true;
+			for(int c = 0; c < personer.size(); c++) {
+				if(b == personer.get(c).getOprId()) {
+					emptyId = false;
+					break;
+				}
+			}
+			if(emptyId){
+				return b;
+			}
+		}
+		return 0;
+	}
+
+	
 
 }
