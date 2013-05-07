@@ -37,11 +37,14 @@ public class Run2 extends HttpServlet {
 		ServletContext application = request.getSession().getServletContext();
 		HttpSession session = request.getSession();
 		
+		//tjekker om data er oprettet, ellers bliver det oprettet. 
 		d = (IData2) application.getAttribute("data");
 		if(d==null)
 		{
 			d = new Data2();
 		}
+		
+		//Opretter et nyt login objekt til sessionen hvis den ikke allerede findes
 		login = (Login) session.getAttribute("login");
 		if(login == null){
 			login = new Login();
@@ -49,6 +52,7 @@ public class Run2 extends HttpServlet {
 			session.setAttribute("login", login);
 		}	
 
+		//modtager oplysninger fra login siden
 		String id;
 		if((id = request.getParameter("id")) != null){
 			login.setId(Integer.parseInt(id)); 
@@ -58,17 +62,22 @@ public class Run2 extends HttpServlet {
 			login.setAdgangskode(pw);
 		}
 		
+		//Handling der skal udføres
 		String handling = null;
 		String[] params = request.getParameterValues("handling");
 		if(params != null){
 			handling = params[params.length-1];
 		}
+		
+		//Tjekker om der er logget ind eller om der skal logges ud
 		if ("log ind".equals(handling)) { 
 			login.tjekLogin(); 
 		}
 		if ("log_ud".equals(handling)) { 
 			login.setAdgangskode(""); 
 		}
+		
+		//hvis man ikke er logget ind.
 		if (!login.isLoggetInd()) {            // er brugeren logget korrekt ind?
 			application.log("Bruger med "+login.getId()+" skal logge ind.");
 			session.removeAttribute("valg");     // eller evt: session.invalidate()
@@ -76,6 +85,10 @@ public class Run2 extends HttpServlet {
 			return;                              // afslut behandlingen af denne side
 		}
 		
+		
+		////////////////////////////////////Logget ind ///////////////////////////////////////////////////////
+		
+		//Opretter et nyt brugervalg objekt til sessionen hvis den ikke allerede er oprettet
 		valg = (BrugerValg) session.getAttribute("valg");
 		System.out.println("valg: " + valg);
 		if(valg == null){
@@ -123,21 +136,22 @@ public class Run2 extends HttpServlet {
 		String newPw = request.getParameter("newPw");
 		if(!(newPw == null || newPw.isEmpty())){
 			valg.setPassword(newPw);
-		}
-		
+		}	
 		//////////////////Choose user information/////////////////////////////////////////////////////
 		String userID = request.getParameter("brugervalg");
 		if(!(userID == null || userID.isEmpty())){
 			int uId = Integer.parseInt(userID);
 			valg.setUser(uId);
-			session.setAttribute("menu", "createUser");
+			session.setAttribute("menu", "userForm");
 		}
 		//////////////////////////////////////////////////////////////////////////////////
 		
+		
+		//Udfoere handlingen i brugervalg.
 		valg.setHandling(handling);
-		if (valg.handling != null) {           // konto er valgt - nogen handlinger?
+		if (valg.handling != null) {           
 			application.log(login.getId()+" udfoerer handling: "+valg.handling);
-			valg.udfoerHandling();
+			valg.udfoerHandling(); //saetter handlingen igang i brugervalg
 		}	
 		
 		//Hvilken side skal vi lande paa
@@ -155,11 +169,9 @@ public class Run2 extends HttpServlet {
 			valg.setId(login.getId());
 			request.getRequestDispatcher("changePw.jsp").forward(request,response);
 		}
-		else if("createUser".equals(session.getAttribute("menu")))
+		else if("userForm".equals(session.getAttribute("menu")))
 		{
-			
 			request.getRequestDispatcher("userForm.jsp").forward(request,response);
-
 		}
 		else if("showUsers".equals(session.getAttribute("menu")))
 		{

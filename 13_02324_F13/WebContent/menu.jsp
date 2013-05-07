@@ -21,7 +21,7 @@
 	{
 		%>
 			<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>	
-			<input type="radio" name="menuValg" value="createUser">Opret bruger<br>	
+			<input type="radio" name="menuValg" value="userForm">Opret bruger<br>	
 		<%
 	}
 %>

@@ -43,6 +43,8 @@ public class BrugerValg {
 	{
 		return data.getAllOperatoer();
 	}
+	
+	//nulstiller alle parametere
 	public void delete()
 	{
 		t = 0.00;
@@ -59,7 +61,8 @@ public class BrugerValg {
 		cpr = "";
 		password = "";
 	}
-	////////////////////////////////////////////
+	
+	///////////////////////////Weight app/////////////////
 	public void setBrutto(String brutto)
 	{
 		b = Double.parseDouble(brutto);
@@ -69,6 +72,8 @@ public class BrugerValg {
 		t = Double.parseDouble(tarra);
 	}
 	//////////////////////////////////////////
+	
+	///////////////////////////Change password////////////////////////
 	public void setOld(String old)
 	{
 		this.old = old;
@@ -86,7 +91,7 @@ public class BrugerValg {
 		this.id = id;
 	}
 	
-	///////////////////////////////////////////
+	////////////////////////////Change or create user///////////////
 	public void setName(String name)
 	{
 		this.name = name;
@@ -103,7 +108,6 @@ public class BrugerValg {
 	{
 		this.password = password;
 	}
-	//////////////////////////////////////////////
 	public void setUser(int uId)
 	{
 		OperatoerDTO2 user = data.getOperatoer(uId);
@@ -113,8 +117,9 @@ public class BrugerValg {
 		cpr = user.getCpr();
 		id = user.getOprId();
 	}
-	
 	////////////////////////////////////////////////
+	
+	//////////////////////Udfoer handling/////////////////////////
 	public void udfoerHandling() 
 	{
 
@@ -127,20 +132,12 @@ public class BrugerValg {
 				changePassword(old,new1, new2,id);
 			}
 			else if (handling.equals("weight"))
-			{	
-				netto = b - t;
-				if(netto < 0)
-				{
-					netto =  0;
-					error = "Tarra skal være større end brutto";
-					//throw new BigTaraException();
-				}
-				t = 0.00;
-				b = 0.00;
+			{
+				weight(b,t);
 			}
 			else if (handling.equals("Opret bruger") || handling.equals("Ænndre"))
 			{
-				createUser(name, ini, cpr,password);
+				userForm(name, ini, cpr,password);
 			}
 			else if(handling.equals("Slet"))
 			{
@@ -155,6 +152,21 @@ public class BrugerValg {
 			handling = null;
 		}
 	}
+	
+	///////////Hjaelpe metoder////////////////////////////////
+	private void weight(double b, double t)
+	{
+		netto = b - t;
+		if(netto < 0)
+		{
+			netto =  0;
+			error = "Tarra skal være større end brutto";
+			//throw new BigTaraException();
+		}
+		t = 0.00;
+		b = 0.00;
+	}
+	
 	private void changePassword(String old, String new1, String new2,int id)
 	{
 		OperatoerDTO2 user = data.getOperatoer(id);
@@ -186,7 +198,7 @@ public class BrugerValg {
 		
 	}
 	
-	private void createUser(String name, String ini, String cpr, String password)
+	private void userForm(String name, String ini, String cpr, String password)
 	{
 		boolean ok = true;
 		
@@ -212,14 +224,14 @@ public class BrugerValg {
 		}
 		if(ok)
 		{
-			if(id==0)
+			if(id==0) //opret ny bruger
 			{
 				id = unusedId();
 				OperatoerDTO2 user = new OperatoerDTO2(id, name, ini, cpr, password);
 				data.createOperatoer(user);
 				succes = "Bruger oprettet med id: "+id;
 			}
-			else
+			else //Aendre bruger oplysninger
 			{
 				OperatoerDTO2 user = data.getOperatoer(id);
 				user.setOprNavn(name);
@@ -230,7 +242,7 @@ public class BrugerValg {
 				data.updateOperatoer(user);
 			}
 			
-			delete();
+			delete(); //nulstiller alle parametere
 			
 		}
 	}
