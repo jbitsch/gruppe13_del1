@@ -8,13 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import data.Data2;
 import data.IData2;
 import data.OperatoerDTO2;
 import funktionalitet.BrugerValg;
-import funktionalitet.Funktionalitet2;
-import funktionalitet.IFunktionalitet2;
 import funktionalitet.Login;
 
 /**
@@ -24,8 +21,6 @@ public class Run2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BrugerValg valg = null;
 	private IData2 d = null;  // interface reference til datalag
-	private IFunktionalitet2 f = null; // interface reference til funktionalitetslag
-	private OperatoerDTO2 user = null;
 	private Login login = null;
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,11 +37,10 @@ public class Run2 extends HttpServlet {
 		ServletContext application = request.getSession().getServletContext();
 		HttpSession session = request.getSession();
 		
-		f = (IFunktionalitet2) application.getAttribute("function");
-		if(f==null)
+		d = (IData2) application.getAttribute("data");
+		if(d==null)
 		{
 			d = new Data2();
-			f = new Funktionalitet2(d);
 		}
 		login = (Login) session.getAttribute("login");
 		if(login == null){
@@ -73,7 +67,7 @@ public class Run2 extends HttpServlet {
 			login.tjekLogin(); 
 		}
 		if ("log_ud".equals(handling)) { 
-			//TODO
+			login.setAdgangskode(""); 
 		}
 		if (!login.isLoggetInd()) {            // er brugeren logget korrekt ind?
 			application.log("Bruger med "+login.getId()+" skal logge ind.");
@@ -99,7 +93,6 @@ public class Run2 extends HttpServlet {
 		if(!(tarra == null || tarra.isEmpty())){
 			valg.setTarra(tarra);
 		}
-		
 		////////////////////////////Change PW informations///////////////////////////////
 		String old = request.getParameter("old");
 		if(!(old == null || old.isEmpty())){
@@ -113,9 +106,8 @@ public class Run2 extends HttpServlet {
 		if(!(new2 == null || new2.isEmpty())){
 			valg.setNew2(new2);
 		}
-		valg.setId(login.getId());
 		
-		/////////////////////////Create user//////////////////////////////////
+		/////////////////////////Create user informations//////////////////////////////////
 		String name = request.getParameter("oprName");
 		if(!(name == null || name.isEmpty())){
 			valg.setName(name);
@@ -132,13 +124,21 @@ public class Run2 extends HttpServlet {
 		if(!(newPw == null || newPw.isEmpty())){
 			valg.setPassword(newPw);
 		}
+		
+		//////////////////Choose user information/////////////////////////////////////////////////////
+		String userID = request.getParameter("brugervalg");
+		if(!(userID == null || userID.isEmpty())){
+			int uId = Integer.parseInt(userID);
+			valg.setUser(uId);
+			session.setAttribute("menu", "createUser");
+		}
 		//////////////////////////////////////////////////////////////////////////////////
+		
 		valg.setHandling(handling);
 		if (valg.handling != null) {           // konto er valgt - nogen handlinger?
 			application.log(login.getId()+" udfoerer handling: "+valg.handling);
 			valg.udfoerHandling();
-		}
-		
+		}	
 		
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
@@ -152,39 +152,25 @@ public class Run2 extends HttpServlet {
 		}
 		else if("changePassword".equals(session.getAttribute("menu")))
 		{
+			valg.setId(login.getId());
 			request.getRequestDispatcher("changePw.jsp").forward(request,response);
 		}
-		else if("admin".equals(session.getAttribute("menu")))
+		else if("createUser".equals(session.getAttribute("menu")))
 		{
 			
-			System.out.println("hej");
-			//Hvilken side skal vi lande paa
-			String adminValg = request.getParameter("adminValg");
-			if(adminValg!=null)
-			{
-				session.setAttribute("admin", adminValg);
-			}
-			if("createUser".equals(session.getAttribute("admin")))
-			{
-				request.getRequestDispatcher("userForm.jsp").forward(request,response);
-			}
-			else if("showUsers".equals(session.getAttribute("admin")))
-			{
-				
-			}
-			else
-				request.getRequestDispatcher("adminMenu.jsp").forward(request,response);
+			request.getRequestDispatcher("userForm.jsp").forward(request,response);
+
 		}
+		else if("showUsers".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("chooseUser.jsp").forward(request,response);
+		}	
 		else
 		{
+			valg.delete();
 			request.getRequestDispatcher("menu.jsp").forward(request,response);
-		}
-		
-		//clearing the error message..
-		valg.delete();
-			
+		}	
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

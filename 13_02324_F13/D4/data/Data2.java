@@ -31,19 +31,6 @@ public class Data2 implements IData2 {
 		return null;
 	}
 
-	public ArrayList<OperatoerDTO2> getOperatoerList()
-	{
-		ArrayList<OperatoerDTO2> temp = new ArrayList<OperatoerDTO2>();
-		
-		for (int i = 0; personer.size() > i; i++)
-		{
-			if (personer.get(i).getOprId()!=10)
-			{
-				temp.add(personer.get(i));
-			}
-		}
-		return temp;
-	}
 	public ArrayList<OperatoerDTO2> getAllOperatoer()
 	{
 		return personer;

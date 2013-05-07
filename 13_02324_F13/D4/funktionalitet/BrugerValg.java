@@ -10,10 +10,11 @@ import exceptions.BigTaraException;
 
 public class BrugerValg {
 	
-	public String handling;
+	public String handling="";
 	public String error = "";
 	public String succes = "";
 	public IData2 data = null;
+	
 	//Weight
 	public double t = 0.00;
 	public double b = 0.00;
@@ -38,9 +39,21 @@ public class BrugerValg {
 	public void setHandling(String h) {
 		handling = h;
 	}
+	public ArrayList<OperatoerDTO2> getUsers()
+	{
+		return data.getAllOperatoer();
+	}
 	public void delete()
 	{
-		error = "";
+		t = 0.00;
+		b = 0.00;
+		netto = 0.00;
+		
+		new1 = "";
+		new2 = "";
+		old = "";
+		id = 0;
+		
 		name = "";
 		ini = "";
 		cpr = "";
@@ -91,10 +104,22 @@ public class BrugerValg {
 		this.password = password;
 	}
 	//////////////////////////////////////////////
+	public void setUser(int uId)
+	{
+		OperatoerDTO2 user = data.getOperatoer(uId);
+		name = user.getOprNavn();
+		ini = user.getIni();
+		password = user.getPassword();
+		cpr = user.getCpr();
+		id = user.getOprId();
+	}
 	
+	////////////////////////////////////////////////
 	public void udfoerHandling() 
 	{
 
+		succes = "";
+		error ="";
 		try
 		{
 			if (handling.equals("changePw"))
@@ -113,13 +138,14 @@ public class BrugerValg {
 				t = 0.00;
 				b = 0.00;
 			}
-			else if (handling.equals("createUser"))
+			else if (handling.equals("Opret bruger") || handling.equals("Ænndre"))
 			{
 				createUser(name, ini, cpr,password);
 			}
-			else if (handling.equals("seeUser"))
+			else if(handling.equals("Slet"))
 			{
-				//TODO user
+				data.deleteOperatoer(data.getOperatoer(id));
+				delete();
 			}
 			else
 				System.out.println("Ukendt handling: " + handling);
@@ -163,6 +189,7 @@ public class BrugerValg {
 	private void createUser(String name, String ini, String cpr, String password)
 	{
 		boolean ok = true;
+		
 		if(!checkName(name))
 		{
 			ok = false;
@@ -185,10 +212,26 @@ public class BrugerValg {
 		}
 		if(ok)
 		{
-			int id = unusedId();
-			OperatoerDTO2 user = new OperatoerDTO2(id, name, ini, cpr, password);
-			data.createOperatoer(user);
-			succes = "Bruger oprettet med id: "+id;
+			if(id==0)
+			{
+				id = unusedId();
+				OperatoerDTO2 user = new OperatoerDTO2(id, name, ini, cpr, password);
+				data.createOperatoer(user);
+				succes = "Bruger oprettet med id: "+id;
+			}
+			else
+			{
+				OperatoerDTO2 user = data.getOperatoer(id);
+				user.setOprNavn(name);
+				user.setIni(ini);
+				user.setCpr(cpr);
+				user.setPassword(password);
+				
+				data.updateOperatoer(user);
+			}
+			
+			delete();
+			
 		}
 	}
 	
@@ -232,7 +275,7 @@ public class BrugerValg {
 	/** Operat�r password min. 7 max. 8 karakterer */
 	public boolean checkPassword(String password)
 	{
-		String REGEX = "^[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]{7,8}$+";
+		String REGEX = "^[0-9[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]]{7,8}$+";
 		return checkRegex(REGEX, password);
 	}
 	private int unusedId() {

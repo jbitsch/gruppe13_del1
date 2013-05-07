@@ -7,40 +7,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Bruger formular</title>
 </head>
 <body>
 
-<h1>Opret bruger</h1>
+<h1>Bruger formular</h1>
 
 <p><font color="red"><%= valg.error %></font><br>
 <p><font color="green"><%= valg.succes %></font><br>
 
 <form method="POST">
-<input type="hidden" name="handling" value="createUser">
-<table>
-<tr>
-	<td>Operatør navn::</td> <td><input name="oprName" type="text" size = 20 value = "<%= valg.name %>"></td>
-</tr>
-<tr>
-	<td>Initialer:</td>
-	<td><input type="text" name="ini" value = "<%= valg.ini %>"></td>
-</tr>
-<tr>
-	<td>CPR:</td>
-	<td><input type="text" name="cpr" value = "<%= valg.cpr %>"></td>
-</tr>
-<tr>
-	<td>Password:</td>
-	<td><input type="password" name="newPw" value = "<%= valg.password %>"></td>
-</tr>
-<tr>
-	<td></td>
-	<td><input type="submit" name="submit" value="Opret bruger"></td>
-</tr>
-</table>
+	Operatør navn: <input name="oprName" type="text" size = 20 value = "<%= valg.name %>"><br>
+	Initialer: <input type="text" name="ini" value = "<%= valg.ini %>"><br>
+	CPR: <input type="text" name="cpr" value = "<%= valg.cpr %>"><br>
+	Password:<input type="password" name="newPw" value = "<%= valg.password %>"><br>
+
+<%
+	if(valg.id==0)
+	{
+		%>
+			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
+		<%
+	}
+	else
+	{
+		%>
+			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
+			<%
+			if(!(valg.id==login.getId()))
+			{
+				%>
+					<input type = "submit" name="handling" value="Slet">
+				<%
+			}
+			%>
+		<%
+	}
+%>
 </form>
-
-
 </body>
 </html>

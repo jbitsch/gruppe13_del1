@@ -16,7 +16,7 @@ Netto <%= valg.netto %>
 	Tarra: <input type="text" name="tarra" value="<%= valg.t %>"><br /> 
 	Brutto: <input type="text" name="brutto" value="<%= valg.b %>"><br />
 	
-	<input type = "submit" name="submit" value="Tilbage"><input type = "submit" name="submit" value="Udregn">
+	<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="submit" value="Udregn">
 </form>
 
 
