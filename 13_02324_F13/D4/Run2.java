@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import data.Data2;
 import data.IData2;
-import data.OperatoerDTO2;
 import funktionalitet.BrugerValg;
 import funktionalitet.Login;
 
@@ -18,6 +17,7 @@ import funktionalitet.Login;
  * Servlet implementation class BrugerId
  */
 public class Run2 extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private BrugerValg valg = null;
 	private IData2 d = null;  // interface reference til datalag
@@ -42,6 +42,7 @@ public class Run2 extends HttpServlet {
 		if(d==null)
 		{
 			d = new Data2();
+			application.setAttribute("data", d);
 		}
 		
 		//Opretter et nyt login objekt til sessionen hvis den ikke allerede findes
@@ -74,7 +75,7 @@ public class Run2 extends HttpServlet {
 			login.tjekLogin(); 
 		}
 		if ("log_ud".equals(handling)) { 
-			login.setAdgangskode(""); 
+			login.setAdgangskode("");
 		}
 		
 		//hvis man ikke er logget ind.
@@ -86,11 +87,10 @@ public class Run2 extends HttpServlet {
 		}
 		
 		
-		////////////////////////////////////Logget ind ///////////////////////////////////////////////////////
+		////////////////////////////////////Logget ind //////////////////////////////////////////////////
 		
 		//Opretter et nyt brugervalg objekt til sessionen hvis den ikke allerede er oprettet
 		valg = (BrugerValg) session.getAttribute("valg");
-		System.out.println("valg: " + valg);
 		if(valg == null){
 			valg = new BrugerValg();
 			valg.setData(d);
@@ -119,7 +119,6 @@ public class Run2 extends HttpServlet {
 		if(!(new2 == null || new2.isEmpty())){
 			valg.setNew2(new2);
 		}
-		
 		/////////////////////////Create user informations//////////////////////////////////
 		String name = request.getParameter("oprName");
 		if(!(name == null || name.isEmpty())){

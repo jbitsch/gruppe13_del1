@@ -10,7 +10,8 @@
 </head>
 <body>
 <p><font color="red"><%= valg.error %></font><br>
-Netto <%= valg.netto %>
+<p><font color="green"><%= valg.succes %></font><br>
+
 <form method="POST">
 	<input type="hidden" name="handling" value="weight">
 	Tarra: <input type="text" name="tarra" value="<%= valg.t %>"><br /> 

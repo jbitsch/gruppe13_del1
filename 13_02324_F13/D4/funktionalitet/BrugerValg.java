@@ -18,7 +18,6 @@ public class BrugerValg {
 	//Weight
 	public double t = 0.00;
 	public double b = 0.00;
-	public double netto = 0.00;
 	
 	//Change password
 	public String new1 = "";
@@ -46,11 +45,7 @@ public class BrugerValg {
 	
 	//nulstiller alle parametere
 	public void delete()
-	{
-		t = 0.00;
-		b = 0.00;
-		netto = 0.00;
-		
+	{	
 		new1 = "";
 		new2 = "";
 		old = "";
@@ -65,14 +60,26 @@ public class BrugerValg {
 	///////////////////////////Weight app/////////////////
 	public void setBrutto(String brutto)
 	{
-		b = Double.parseDouble(brutto);
+		try
+		{
+			b = Double.parseDouble(brutto);
+		}
+		catch(NumberFormatException e)
+		{
+			b = 0.00;
+		}
 	}
 	public void setTarra(String tarra)
 	{
-		t = Double.parseDouble(tarra);
+		try
+		{
+			t = Double.parseDouble(tarra);
+		}
+		catch(NumberFormatException e)
+		{
+			t = 0.00;
+		}
 	}
-	//////////////////////////////////////////
-	
 	///////////////////////////Change password////////////////////////
 	public void setOld(String old)
 	{
@@ -90,7 +97,6 @@ public class BrugerValg {
 	{
 		this.id = id;
 	}
-	
 	////////////////////////////Change or create user///////////////
 	public void setName(String name)
 	{
@@ -117,7 +123,6 @@ public class BrugerValg {
 		cpr = user.getCpr();
 		id = user.getOprId();
 	}
-	////////////////////////////////////////////////
 	
 	//////////////////////Udfoer handling/////////////////////////
 	public void udfoerHandling() 
@@ -135,7 +140,7 @@ public class BrugerValg {
 			{
 				weight(b,t);
 			}
-			else if (handling.equals("Opret bruger") || handling.equals("Ænndre"))
+			else if (handling.equals("Opret bruger") || handling.equals("Ændre"))
 			{
 				userForm(name, ini, cpr,password);
 			}
@@ -154,15 +159,19 @@ public class BrugerValg {
 	}
 	
 	///////////Hjaelpe metoder////////////////////////////////
-	private void weight(double b, double t)
+	
+	private void weight(double b, double t) 
 	{
-		netto = b - t;
+		double netto = b - t;
 		if(netto < 0)
 		{
 			netto =  0;
 			error = "Tarra skal være større end brutto";
 			//throw new BigTaraException();
 		}
+		else
+			succes = "Netto vaegt er: "+netto;
+		
 		t = 0.00;
 		b = 0.00;
 	}
@@ -240,6 +249,8 @@ public class BrugerValg {
 				user.setPassword(password);
 				
 				data.updateOperatoer(user);
+				
+				succes = "Bruger med id: "+id + " aendret";
 			}
 			
 			delete(); //nulstiller alle parametere
