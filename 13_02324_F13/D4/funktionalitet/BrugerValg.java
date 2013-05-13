@@ -16,8 +16,8 @@ public class BrugerValg {
 	public IData2 data = null;
 	
 	//Weight
-	public double t = 0.00;
-	public double b = 0.00;
+	public String t = "0.00";
+	public String b = "0.00";
 	
 	//Change password
 	public String new1 = "";
@@ -60,25 +60,11 @@ public class BrugerValg {
 	///////////////////////////Weight app/////////////////
 	public void setBrutto(String brutto)
 	{
-		try
-		{
-			b = Double.parseDouble(brutto);
-		}
-		catch(NumberFormatException e)
-		{
-			b = 0.00;
-		}
+		b = brutto;
 	}
 	public void setTarra(String tarra)
 	{
-		try
-		{
-			t = Double.parseDouble(tarra);
-		}
-		catch(NumberFormatException e)
-		{
-			t = 0.00;
-		}
+		t = tarra;
 	}
 	///////////////////////////Change password////////////////////////
 	public void setOld(String old)
@@ -160,20 +146,37 @@ public class BrugerValg {
 	
 	///////////Hjaelpe metoder////////////////////////////////
 	
-	private void weight(double b, double t) 
+	private void weight(String b, String t)
 	{
-		double netto = b - t;
-		if(netto < 0)
-		{
-			netto =  0;
-			error = "Tarra skal være større end brutto";
-			//throw new BigTaraException();
-		}
-		else
-			succes = "Netto vaegt er: "+netto;
+		boolean ok = true;
+		double br = 0.00;
+		double ta = 0.00;
 		
-		t = 0.00;
-		b = 0.00;
+		try
+		{
+			br = Double.parseDouble(b);
+			ta = Double.parseDouble(t);
+		}
+		catch(NumberFormatException e)
+		{
+			ok = false;
+			error  = "Brutto og Tarra skal være tal" ;
+		}
+		if(ok)
+		{
+			double netto = br - ta;
+			if(netto < 0)
+			{
+				netto =  0;
+				error = "Brutto skal være større end tarra";
+			}
+			else
+				succes = "Netto vaegt er: "+netto;
+		}
+
+		
+		t = "0.00";
+		b = "0.00";
 	}
 	
 	private void changePassword(String old, String new1, String new2,int id)

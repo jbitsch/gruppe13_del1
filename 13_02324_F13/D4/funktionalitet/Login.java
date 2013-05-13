@@ -18,10 +18,16 @@ public class Login
 		this.d = d;
 	}
 	
-	public void setId(int id)  
+	public void setId(String idString)  
 	{ 
-		tjek=true; 
-		this.id = id;
+		tjek=true;
+		try{
+			id = Integer.parseInt(idString);
+		}
+		catch(NumberFormatException e){
+			id = 0;
+			meddelelse += "Id skal være et tal <br>";
+		}
 	}
 
 	public int getId()        
@@ -59,13 +65,12 @@ public class Login
 		if (!tjek) return; // er der ikke sket aendringer behoever vi ikke tjekke igen
 		loggetInd = false;
 		tjek = false;
-		meddelelse = "";
 		
 		loggetInd = d.attemptLogin(id, adgangskode);
 		
 		if (!loggetInd)
 		{
-			meddelelse = "Forkert brugernavn eller adgangskode";
+			meddelelse += "Forkert brugernavn eller adgangskode <br>";
 		}
 
 	}

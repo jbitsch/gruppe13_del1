@@ -56,7 +56,7 @@ public class Run2 extends HttpServlet {
 		//modtager oplysninger fra login siden
 		String id;
 		if((id = request.getParameter("id")) != null){
-			login.setId(Integer.parseInt(id)); 
+			login.setId(id); 
 		}
 		String pw;
 		if((pw = request.getParameter("password")) != null){

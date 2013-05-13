@@ -12,7 +12,7 @@
 <body>
 
 <h1>Log ind</h1>
-
+<font color="red"><%= login.getMeddelelse() %></font><br>
 <form method="POST">
 <input type="hidden" name="handling" value="null">
 <table>
