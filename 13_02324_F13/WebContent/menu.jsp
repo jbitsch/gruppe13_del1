@@ -13,7 +13,6 @@
 	
 	
 <form method="POST">
-	<input type="hidden" name="handling" value="null">	
 	<input type="radio" name="menuValg" value="weight">Vægt applikation<br>	
 	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>		
 	

@@ -6,7 +6,6 @@
 <h1>Vælg bruger</h1>
 
 <form method="POST">
-<input type="hidden" name="handling" value=null>
 <%
 	for (int i=0; i<valg.getUsers().size(); i++) {
 		data.OperatoerDTO2 user = (data.OperatoerDTO2) valg.getUsers().get(i);
