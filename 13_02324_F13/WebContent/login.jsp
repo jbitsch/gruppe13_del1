@@ -30,6 +30,9 @@
 </tr>
 </table>
 </form>
+<h2>Login med:</h2>
+	Administrator: ID = 10, password = 12<br>
+	Operatør: ID = 11, password = 12
 
 
 </body>

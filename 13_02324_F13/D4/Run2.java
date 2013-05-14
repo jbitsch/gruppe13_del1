@@ -82,7 +82,7 @@ public class Run2 extends HttpServlet {
 		if (!login.isLoggetInd()) {            // er brugeren logget korrekt ind?
 			application.log("Bruger med "+login.getId()+" skal logge ind.");
 			session.removeAttribute("valg");     // eller evt: session.invalidate()
-			request.getRequestDispatcher("login.jsp?").forward(request,response);
+			request.getRequestDispatcher("login.jsp").forward(request,response);
 			return;                              // afslut behandlingen af denne side
 		}
 		
