@@ -1,3 +1,4 @@
+<%@ include file = "loginCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:useBean id="login" class="funktionalitet.Login" type="funktionalitet.Login" scope="session"/>
 <jsp:useBean id="valg" class="funktionalitet.BrugerValg" type="funktionalitet.BrugerValg" scope="session"/>

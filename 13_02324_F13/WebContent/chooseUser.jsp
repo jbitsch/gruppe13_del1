@@ -1,3 +1,4 @@
+<%@ include file = "adminLoginCheck.jsp" %>
 <jsp:useBean id="valg" class="funktionalitet.BrugerValg" scope="session" />
 <html>
 <head><title>Vælg bruger</title></head>
@@ -5,7 +6,7 @@
 <h1>Vælg bruger</h1>
 
 <form method="POST">
-<input type="hidden" name="handling" value="null">
+<input type="hidden" name="handling" value=null>
 <%
 	for (int i=0; i<valg.getUsers().size(); i++) {
 		data.OperatoerDTO2 user = (data.OperatoerDTO2) valg.getUsers().get(i);

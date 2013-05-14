@@ -1,12 +1,12 @@
 package funktionalitet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import data.IData2;
 import data.OperatoerDTO2;
-import exceptions.BigTaraException;
 
 public class BrugerValg {
 	
@@ -40,7 +40,9 @@ public class BrugerValg {
 	}
 	public ArrayList<OperatoerDTO2> getUsers()
 	{
-		return data.getAllOperatoer();
+		ArrayList<OperatoerDTO2> users =  data.getAllOperatoer();
+		Collections.sort(users);
+		return users; 
 	}
 	
 	//nulstiller alle parametere

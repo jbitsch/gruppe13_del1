@@ -1,20 +1,20 @@
 package data;
 
 /**
- * Operatør Data Transfer Object
+ * Operatï¿½r Data Transfer Object
  */
-public class OperatoerDTO2 {
-	/** Operatør id i området 1-99999999. Vælges af brugerne */
+public class OperatoerDTO2 implements Comparable<OperatoerDTO2>{
+	/** Operatï¿½r id i omrï¿½det 1-99999999. Vï¿½lges af brugerne */
 	int oprId;
-	/** Operatør navn min. 2 max. 20 karakterer */
+	/** Operatï¿½r navn min. 2 max. 20 karakterer */
 	String oprNavn;
-	/** Operatør initialer min. 2 max. 3 karakterer */
+	/** Operatï¿½r initialer min. 2 max. 3 karakterer */
 	String ini;
-	/** Operatør cpr-nr 10 karakterer */
+	/** Operatï¿½r cpr-nr 10 karakterer */
 	String cpr;
-	/** Operatør password min. 7 max. 8 karakterer */
+	/** Operatï¿½r password min. 7 max. 8 karakterer */
 	String password;
-	public OperatoerDTO2(int oprId, String oprNavn, String ini, String cpr, String password) {
+	public OperatoerDTO2(int oprId, String oprNavn, String ini, String cpr, String password)  {
 		super();
 		this.oprId = oprId;
 		this.oprNavn = oprNavn;
@@ -53,6 +53,14 @@ public class OperatoerDTO2 {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	//Metode til at sortere users i faldende ordre
+	public int compareTo(OperatoerDTO2 compareUsers) {
+		 
+		int compareID = ((OperatoerDTO2) compareUsers).getOprId(); 
+		//ascending order
+		return this.oprId - compareID;
+ 
 	}
 }
 
