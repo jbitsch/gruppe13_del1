@@ -27,7 +27,7 @@ public class Controller {
 	
 		try
 		{
-			System.out.println("Lytter p� port "+ portdst);
+			System.out.println("Lytter paa port "+ portdst);
 			data.getCon(portdst);
 		}
 		catch(Exception e)
@@ -41,8 +41,9 @@ public class Controller {
 		try{
 
 			while (true){
+				// Henter input fra den tilsluttede klient
 				inline = data.getInput().toUpperCase();
-				
+
 				if (inline.startsWith("DW")){
 					IndstruktionsDisplay="";
 					wg.writeCommand("DW");
@@ -60,11 +61,11 @@ public class Controller {
 					data.writeTo("DB"+"\r\n");
 				}
 				else if (inline.startsWith("T")){
-					String sTara = brutoFormat.format(tara);
-					data.writeTo("T " + sTara + " kg "+"\r\n");
 					tara = brutto;
 					updateGUI();
 					wg.writeCommand("T");
+					String sTara = brutoFormat.format(tara);
+					data.writeTo("T " + sTara + " kg "+"\r\n");
 
 				}
 				else if (inline.startsWith("S")){
@@ -130,7 +131,7 @@ public class Controller {
 					switch(input)
 					{
 					case 'E':
-						int retur = wg.getAnswer();
+						String retur = wg.getAnswer();
 						try {
 							data.writeTo("RM20 A "+retur+"\r\n");
 

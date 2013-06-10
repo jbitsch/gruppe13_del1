@@ -25,22 +25,22 @@ public class WeightGUI extends JFrame {
 	private JLabel lblStrengModtaget;
 	private Object lock;
 	private JButton btnEnter;
+	private JButton btnYes;
+	private JButton btnNo;
+	private JButton btnQuit;
 	private JButton btnTara;
 	private JButton btnUp;
 	private JButton btnDown;
 	private char choise;
-	private int answer;
+	private String answer;
 	private JLabel lblTaraVgt;
-	
-	
-	
 	
 	public WeightGUI() {
 		
 		lock = new Object();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 532, 283);
+		setBounds(100, 100, 611, 273);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -61,7 +61,7 @@ public class WeightGUI extends JFrame {
 		btnEnter.setEnabled(false);
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				answer = Integer.parseInt(fieldReturn.getText());
+				answer = fieldReturn.getText();
 				choise = 'E';
 				ok();
 			}
@@ -169,12 +169,42 @@ public class WeightGUI extends JFrame {
 		btn3.setBounds(421, 42, 63, 25);
 		contentPane.add(btn3);
 		
-		netto = new JTextField();
-		netto.setEditable(false);
-		netto.setBounds(12, 13, 270, 30);
-		contentPane.add(netto);
-		netto.setColumns(10);
-		netto.setText("0.000 kg");
+		btnYes = new JButton("Yes(Y)");
+		btnYes.setEnabled(false);
+		btnYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				answer = "Y";
+				choise = 'E';
+				ok();
+			}
+		});
+		btnYes.setBounds(492, 42, 93, 25);
+		contentPane.add(btnYes);
+		
+		btnNo = new JButton("No(N)");
+		btnNo.setEnabled(false);
+		btnNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				answer = "N";
+				choise = 'E';
+				ok();
+			}
+		});
+		btnNo.setBounds(492, 67, 93, 25);
+		contentPane.add(btnNo);
+		
+		btnQuit = new JButton("Quit(Q)");
+		btnQuit.setEnabled(false);
+		btnQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				answer = "Q";
+				choise = 'E';
+				ok();
+			}
+		});
+		btnQuit.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnQuit.setBounds(492, 93, 93, 25);
+		contentPane.add(btnQuit);
 		
 		btnTara = new JButton("Tara");
 		btnTara.addActionListener(new ActionListener() {
@@ -199,6 +229,13 @@ public class WeightGUI extends JFrame {
 		contentPane.add(brutto);
 		brutto.setColumns(10);
 		brutto.setText("0.000 kg");
+		
+		netto = new JTextField();
+		netto.setEditable(false);
+		netto.setBounds(12, 13, 270, 30);
+		contentPane.add(netto);
+		netto.setColumns(10);
+		netto.setText("0.000 kg");
 		
 		btnUp = new JButton("");
 		btnUp.addActionListener(new ActionListener() {
@@ -243,7 +280,7 @@ public class WeightGUI extends JFrame {
 		btnClickToQuit.setBounds(12, 200, 139, 25);
 		contentPane.add(btnClickToQuit);
 		
-		lblTaraVgt = new JLabel("Tara v\u00E6gt: 0.000 kg");
+		lblTaraVgt = new JLabel("Tara vaegt: 0.000 kg");
 		lblTaraVgt.setBounds(12, 123, 153, 16);
 		contentPane.add(lblTaraVgt);
 		
@@ -266,7 +303,7 @@ public class WeightGUI extends JFrame {
 		}
 	}
 
-	public int getAnswer()
+	public String getAnswer()
 	{	
 		return answer;
 	}
@@ -282,11 +319,15 @@ public class WeightGUI extends JFrame {
 	{
 		netto.setText(net+" kg");
 		brutto.setText(bru+" kg");
-		lblTaraVgt.setText("Tara v�gt: "+tar+ " kg");
+		lblTaraVgt.setText("Tara vaegt: "+tar+ " kg");
 	}
 	public void setEdit(boolean one, boolean two)
 	{
 		btnEnter.setEnabled(one);
+		btnYes.setEnabled(one);
+		btnNo.setEnabled(one);
+		btnQuit.setEnabled(one);
+		
 		btnTara.setEnabled(two);
 		btnDown.setEnabled(two);
 		btnUp.setEnabled(two);
