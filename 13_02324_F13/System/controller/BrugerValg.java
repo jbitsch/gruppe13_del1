@@ -1,7 +1,6 @@
-package Controller;
+package controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,12 +32,8 @@ public class BrugerValg {
 	private IRaavareDAO raavareDAO;
 	
 	public String handling="";
-	public String error = "";
-	public String succes = "";
-	
-	//Weight
-	public String t = "0.00";
-	public String b = "0.00";
+	private String error = "";
+	private String succes = "";
 	
 	//Change password
 	public String new1 = "";
@@ -51,6 +46,7 @@ public class BrugerValg {
 	public String ini = "";
 	public String cpr ="";
 	public String password ="";
+	public String rolle = "Operatør";
 	
 
 	public BrugerValg()
@@ -63,7 +59,14 @@ public class BrugerValg {
 		raavareBatchDAO = new MySQLRaavareBatchDAO();
 		raavareDAO = new MySQLRaavareDAO();
 	}
-	
+	public String getError()
+	{
+		return error;
+	}
+	public String getSucces()
+	{
+		return succes;
+	}
 	
 	public void setHandling(String h) {
 		handling = h;
@@ -87,16 +90,12 @@ public class BrugerValg {
 		cpr = "";
 		password = "";
 	}
+	public void deleteSucErr()
+	{
+		error = "";
+		succes = "";
+	}
 	
-	///////////////////////////Weight app/////////////////
-	public void setBrutto(String brutto)
-	{
-		b = brutto;
-	}
-	public void setTarra(String tarra)
-	{
-		t = tarra;
-	}
 	///////////////////////////Change password////////////////////////
 	public void setOld(String old)
 	{
@@ -131,31 +130,29 @@ public class BrugerValg {
 	{
 		this.password = password;
 	}
-	public void setUser(int uId)
+	public void setRolle(String rolle)
 	{
-		OperatoerDTO user = data.getOperatoer(uId);
+		this.rolle = rolle;
+	}
+	public void setUser(int uId) throws DALException
+	{
+		OperatoerDTO user = operatoerDAO.getOperatoer(uId);
 		name = user.getOprNavn();
 		ini = user.getIni();
 		password = user.getPassword();
 		cpr = user.getCpr();
 		id = user.getOprId();
+		rolle = user.getRolle();
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
-	public void udfoerHandling() 
+	public void udfoerHandling() throws DALException
 	{
-
-		succes = "";
-		error ="";
 		try
 		{
 			if (handling.equals("changePw"))
 			{
 				changePassword(old,new1, new2,id);
-			}
-			else if (handling.equals("weight"))
-			{
-				weight(b,t);
 			}
 			else if (handling.equals("Opret bruger") || handling.equals("Ændre"))
 			{
@@ -163,8 +160,7 @@ public class BrugerValg {
 			}
 			else if(handling.equals("Slet"))
 			{
-				data.deleteOperatoer(data.getOperatoer(id));
-				delete();
+				//TODO skal der kunne slettes?????
 			}
 			else
 				System.out.println("Ukendt handling: " + handling);
@@ -177,42 +173,9 @@ public class BrugerValg {
 	
 	///////////Hjaelpe metoder////////////////////////////////
 	
-	private void weight(String b, String t)
+	private void changePassword(String old, String new1, String new2,int id) throws DALException
 	{
-		boolean ok = true;
-		double br = 0.00;
-		double ta = 0.00;
-		
-		try
-		{
-			br = Double.parseDouble(b);
-			ta = Double.parseDouble(t);
-		}
-		catch(NumberFormatException e)
-		{
-			ok = false;
-			error  = "Brutto og Tarra skal være tal" ;
-		}
-		if(ok)
-		{
-			double netto = br - ta;
-			if(netto < 0)
-			{
-				netto =  0;
-				error = "Brutto skal være større end tarra";
-			}
-			else
-				succes = "Netto vaegt er: "+netto;
-		}
-
-		
-		t = "0.00";
-		b = "0.00";
-	}
-	
-	private void changePassword(String old, String new1, String new2,int id)
-	{
-		OperatoerDTO2 user = data.getOperatoer(id);
+		OperatoerDTO user = operatoerDAO.getOperatoer(id);
 		boolean OK = true;
 		if(!(user.getPassword().equals(old)))
 		{
@@ -236,12 +199,12 @@ public class BrugerValg {
 		if(OK)
 		{
 			user.setPassword(new1);
-			data.updateOperatoer(user);
+			operatoerDAO.updateOperatoer(user);
 		}
 		
 	}
 	
-	private void userForm(String name, String ini, String cpr, String password)
+	private void userForm(String name, String ini, String cpr, String password) throws DALException
 	{
 		boolean ok = true;
 		
@@ -270,19 +233,19 @@ public class BrugerValg {
 			if(id==0) //opret ny bruger
 			{
 				id = unusedId();
-				OperatoerDTO2 user = new OperatoerDTO2(id, name, ini, cpr, password);
-				data.createOperatoer(user);
+				OperatoerDTO user = new OperatoerDTO(id, name, ini, cpr, password,rolle);
+				operatoerDAO.createOperatoer(user);
 				succes = "Bruger oprettet med id: "+id;
 			}
 			else //Aendre bruger oplysninger
 			{
-				OperatoerDTO2 user = data.getOperatoer(id);
+				OperatoerDTO user = operatoerDAO.getOperatoer(id);
 				user.setOprNavn(name);
 				user.setIni(ini);
 				user.setCpr(cpr);
 				user.setPassword(password);
 				
-				data.updateOperatoer(user);
+				operatoerDAO.updateOperatoer(user);
 				
 				succes = "Bruger med id: "+id + " aendret";
 			}
@@ -335,8 +298,8 @@ public class BrugerValg {
 		String REGEX = "^[0-9[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]]{7,8}$+";
 		return checkRegex(REGEX, password);
 	}
-	private int unusedId() {
-		ArrayList<OperatoerDTO2> personer = data.getAllOperatoer();
+	private int unusedId() throws DALException {
+		ArrayList<OperatoerDTO> personer = operatoerDAO.getOperatoerList();
 		
 		boolean emptyId;
 		for(int b = 1; b < 999999999; b++) {

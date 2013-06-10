@@ -21,6 +21,10 @@ public class OperatoerDTO
 	String password;            
 	String rolle;
 
+	public OperatoerDTO()
+	{
+		
+	}
 	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, String rolle)
 	{
 		this.oprId = oprId;

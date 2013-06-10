@@ -2,6 +2,8 @@ package RUN;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,20 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import connector.Connector;
+import controller.BrugerValg;
+import controller.Login;
+
 import daoimpl.MySQLOperatoerDAO;
+import daointerfaces.DALException;
 import daointerfaces.IOperatoerDAO;
-import Controller.BrugerValg;
-import Controller.Login;
 
 
 /**
  * Servlet implementation class BrugerId
  */
-public class WebInterface extends HttpServlet {
+public class WebInterface extends HttpServlet  {
 	
 	private static final long serialVersionUID = 1L;
 	private BrugerValg valg = null;
 	private IOperatoerDAO d = null;  // interface reference til datalag
+	private Connector c = null;
 	private Login login = null;
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,6 +51,26 @@ public class WebInterface extends HttpServlet {
 		{
 			d = new MySQLOperatoerDAO();
 			application.setAttribute("data", d);
+		}
+		c = (Connector) application.getAttribute("con");
+		if(c==null)
+		{
+			try {
+				c = new Connector();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			application.setAttribute("con", c);
 		}
 		
 		//Opretter et nyt login objekt til sessionen hvis den ikke allerede findes
@@ -74,7 +100,14 @@ public class WebInterface extends HttpServlet {
 		
 		//Tjekker om der er logget ind eller om der skal logges ud
 		if ("log ind".equals(handling)) { 
-			login.tjekLogin(); 
+
+				try {
+					login.tjekLogin();
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 		}
 		if ("log_ud".equals(handling)) { 
 			login.setAdgangskode("");
@@ -98,15 +131,6 @@ public class WebInterface extends HttpServlet {
 			session.setAttribute("valg", valg);
 		}
 		
-		///////////////////////////////Weight App informations//////////////////
-		String brutto = request.getParameter("brutto");
-		if(!(brutto == null || brutto.isEmpty())){
-			valg.setBrutto(brutto);
-		}
-		String tarra = request.getParameter("tarra");
-		if(!(tarra == null || tarra.isEmpty())){
-			valg.setTarra(tarra);
-		}
 		////////////////////////////Change PW informations///////////////////////////////
 		String old = request.getParameter("old");
 		if(!(old == null || old.isEmpty())){
@@ -136,12 +160,21 @@ public class WebInterface extends HttpServlet {
 		String newPw = request.getParameter("newPw");
 		if(!(newPw == null || newPw.isEmpty())){
 			valg.setPassword(newPw);
-		}	
+		}
+		String rolle = request.getParameter("rolle");
+		if(!(rolle == null || rolle.isEmpty())){
+			valg.setRolle(rolle);
+		}
 		//////////////////Choose user information/////////////////////////////////////////////////////
 		String userID = request.getParameter("brugervalg");
 		if(!(userID == null || userID.isEmpty())){
 			int uId = Integer.parseInt(userID);
-			valg.setUser(uId);
+			try {
+				valg.setUser(uId);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			session.setAttribute("menu", "userForm");
 		}
 		//////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +184,12 @@ public class WebInterface extends HttpServlet {
 		valg.setHandling(handling);
 		if (valg.handling != null) {           
 			application.log(login.getId()+" udfoerer handling: "+valg.handling);
-			valg.udfoerHandling(); //saetter handlingen igang i brugervalg
+			try {
+				valg.udfoerHandling();
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} //saetter handlingen igang i brugervalg
 		}	
 		
 		//Hvilken side skal vi lande paa
@@ -160,11 +198,7 @@ public class WebInterface extends HttpServlet {
 		{
 			session.setAttribute("menu", menuValg);
 		}
-		if("weight".equals(session.getAttribute("menu")))
-		{
-			request.getRequestDispatcher("weight.jsp").forward(request,response);
-		}
-		else if("changePassword".equals(session.getAttribute("menu")))
+		if("changePassword".equals(session.getAttribute("menu")))
 		{
 			valg.setId(login.getId());
 			request.getRequestDispatcher("changePw.jsp").forward(request,response);
@@ -180,6 +214,7 @@ public class WebInterface extends HttpServlet {
 		else
 		{
 			valg.delete();
+			valg.deleteSucErr();
 			request.getRequestDispatcher("menu.jsp").forward(request,response);
 		}	
 	}
