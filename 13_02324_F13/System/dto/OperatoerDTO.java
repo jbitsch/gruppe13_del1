@@ -53,4 +53,13 @@ public class OperatoerDTO
 	public String toString() { return oprId + "\t" + oprNavn + "\t" + ini + "\t" + cpr + "\t" + password; }
 	public String getRolle() { return rolle;}
 	public void setRolle(String rolle) { this.rolle = rolle;}
+	
+	public int compareTo(OperatoerDTO compareUsers)
+	{
+		 
+		int compareID = ((OperatoerDTO) compareUsers).getOprId(); 
+		//ascending order
+		return this.oprId - compareID;
+ 
+	}
 }

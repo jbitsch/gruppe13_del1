@@ -3,7 +3,6 @@ package daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import connector.Connector;
 
@@ -25,8 +24,8 @@ public class MySQLRaavareDAO implements IRaavareDAO{
 	}
 
 	@Override
-	public List<RaavareDTO> getRaavareList() throws DALException {
-		List<RaavareDTO> list = new ArrayList<RaavareDTO>();
+	public ArrayList<RaavareDTO> getRaavareList() throws DALException {
+		ArrayList<RaavareDTO> list = new ArrayList<RaavareDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM raavare");
 		try
 		{

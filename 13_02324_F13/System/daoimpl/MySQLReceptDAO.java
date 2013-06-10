@@ -3,7 +3,6 @@ package daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import connector.Connector;
 import daointerfaces.DALException;
@@ -24,8 +23,8 @@ public class MySQLReceptDAO implements IReceptDAO{
 	}
 
 	@Override
-	public List<ReceptDTO> getReceptList() throws DALException {
-		List<ReceptDTO> list = new ArrayList<ReceptDTO>();
+	public ArrayList<ReceptDTO> getReceptList() throws DALException {
+		ArrayList<ReceptDTO> list = new ArrayList<ReceptDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM recept");
 		try
 		{

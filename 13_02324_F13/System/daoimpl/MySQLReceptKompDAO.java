@@ -3,7 +3,6 @@ package daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import connector.Connector;
 import daointerfaces.DALException;
@@ -37,8 +36,8 @@ public class MySQLReceptKompDAO implements IReceptKompDAO {
 				);  
 	}
 	@Override
-	public List<ReceptKompDTO> getReceptKompList() throws DALException {
-		List<ReceptKompDTO> list = new ArrayList<ReceptKompDTO>();
+	public ArrayList<ReceptKompDTO> getReceptKompList() throws DALException {
+		ArrayList<ReceptKompDTO> list = new ArrayList<ReceptKompDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent");
 		try
 		{
@@ -51,8 +50,8 @@ public class MySQLReceptKompDAO implements IReceptKompDAO {
 		return list;
 	}
 	@Override
-	public List<ReceptKompDTO> getReceptKompList(int receptId) throws DALException {
-		List<ReceptKompDTO> list = new ArrayList<ReceptKompDTO>();
+	public ArrayList<ReceptKompDTO> getReceptKompList(int receptId) throws DALException {
+		ArrayList<ReceptKompDTO> list = new ArrayList<ReceptKompDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent WHERE " + receptId);
 		try
 		{

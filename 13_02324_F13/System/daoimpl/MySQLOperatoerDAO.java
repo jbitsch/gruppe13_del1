@@ -2,7 +2,6 @@ package daoimpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
 
 import connector.Connector;
@@ -39,8 +38,8 @@ public class MySQLOperatoerDAO implements IOperatoerDAO {
 		);
 	}
 	@Override
-	public List<OperatoerDTO> getOperatoerList() throws DALException {
-		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
+	public ArrayList<OperatoerDTO> getOperatoerList() throws DALException {
+		ArrayList<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
 		try
 		{
@@ -52,7 +51,6 @@ public class MySQLOperatoerDAO implements IOperatoerDAO {
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
-		
 		
 }
 	

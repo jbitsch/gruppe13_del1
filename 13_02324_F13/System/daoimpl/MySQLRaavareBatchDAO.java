@@ -3,7 +3,6 @@ package daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import connector.Connector;
 import daointerfaces.DALException;
@@ -24,8 +23,8 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 	}
 
 	@Override
-	public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
-		List<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
+	public ArrayList<RaavareBatchDTO> getRaavareBatchList() throws DALException {
+		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM raavarebatch");
 		try
 		{
@@ -41,8 +40,8 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 
 
 	@Override
-	public List<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
-		List<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
+	public ArrayList<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
+		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM raavarebatch WHERE raavare_id = " + raavareId);
 		try
 		{

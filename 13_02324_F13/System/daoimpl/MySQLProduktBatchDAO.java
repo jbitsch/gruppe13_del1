@@ -3,7 +3,6 @@ package daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import connector.Connector;
 import daointerfaces.DALException;
@@ -23,8 +22,8 @@ public class MySQLProduktBatchDAO implements IProduktBatchDAO{
 	}
 
 	@Override
-	public List<ProduktBatchDTO> getProduktBatchList() throws DALException {
-		List<ProduktBatchDTO> list = new ArrayList<ProduktBatchDTO>();
+	public ArrayList<ProduktBatchDTO> getProduktBatchList() throws DALException {
+		ArrayList<ProduktBatchDTO> list = new ArrayList<ProduktBatchDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM produktbatch");
 		try
 		{

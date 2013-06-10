@@ -3,7 +3,6 @@ package daoimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import connector.Connector;
 import daointerfaces.DALException;
@@ -38,8 +37,8 @@ public class MySQLProduktBatchKompDAO implements IProduktBatchKompDAO{
 		);
 	}
 	@Override
-	public List<ProduktBatchKompDTO> getProduktBatchKompList() throws DALException {
-		List<ProduktBatchKompDTO> list = new ArrayList<ProduktBatchKompDTO>();
+	public ArrayList<ProduktBatchKompDTO> getProduktBatchKompList() throws DALException {
+		ArrayList<ProduktBatchKompDTO> list = new ArrayList<ProduktBatchKompDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM produktbatchkomponent");
 		try
 		{
@@ -52,8 +51,8 @@ public class MySQLProduktBatchKompDAO implements IProduktBatchKompDAO{
 		return list;
 	}
 	@Override
-	public List<ProduktBatchKompDTO> getProduktBatchKompList(int pbId) throws DALException {
-		List<ProduktBatchKompDTO> list = new ArrayList<ProduktBatchKompDTO>();
+	public ArrayList<ProduktBatchKompDTO> getProduktBatchKompList(int pbId) throws DALException {
+		ArrayList<ProduktBatchKompDTO> list = new ArrayList<ProduktBatchKompDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM produktbatchkomponent WHERE pb_id " + pbId);
 		try
 		{
