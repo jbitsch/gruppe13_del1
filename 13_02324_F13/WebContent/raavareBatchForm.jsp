@@ -27,7 +27,7 @@
 %>
 		
 	<%
-	if(raavareAdmin.getRaavareId()==0)
+	if(raavareAdmin.getRaavareId()=="")
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavarebatch">

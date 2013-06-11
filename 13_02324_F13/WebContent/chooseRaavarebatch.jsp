@@ -12,8 +12,10 @@
 <form method="POST">
 <%
 	for (int i=0; i<raavareAdmin.getRaavare().size(); i++) {
+		dto.RaavareBatchDTO raavareBatch = (dto.RaavareBatchDTO) raavareAdmin.getRaavarebatch().get(i);
 		%>
-			<input type="radio" name="raavarebatchvalg" value="<%= %>">
+			<input type="radio" name="raavarebatchvalg" value="<%=raavareBatch.getRbId() %>">
+			Batch id:<%=raavareBatch.getRbId() %>
 		<%
 	}
 %>

@@ -161,8 +161,6 @@ public class WebInterface extends HttpServlet  {
 		if(brugerChange)
 				udfoerHandlingUserAdmin(application,handling);
 		
-		
-		
 		//////////////////Raavare information ///////////////////////
 		String raavareId = request.getParameter("raavarevalg");
 		if(!(raavareId == null || raavareId.isEmpty())){
@@ -177,7 +175,6 @@ public class WebInterface extends HttpServlet  {
 		boolean raavareChange = raavareChange(request);
 		if(raavareChange)
 			udfoerHandlingRaavareAdmin(application,handling);
-		
 		
 		//////////////////////////Raavarebatch information ////////////////////////////////////
 		String raavarebatchId = request.getParameter("raavarebatchvalg");
@@ -195,9 +192,9 @@ public class WebInterface extends HttpServlet  {
 			udfoerHandlingRaavareAdmin(application,handling);
 		
 		
-		
 		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
 		//createRecept(request);
+		
 		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
 		
 		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){

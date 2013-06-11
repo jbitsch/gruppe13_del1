@@ -37,8 +37,6 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 		return list;
 	}
 	
-
-
 	@Override
 	public ArrayList<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
 		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
