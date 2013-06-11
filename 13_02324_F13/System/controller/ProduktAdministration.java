@@ -14,6 +14,7 @@ import daointerfaces.IRaavareDAO;
 import daointerfaces.IReceptDAO;
 import daointerfaces.IReceptKompDAO;
 import dto.RaavareDTO;
+import dto.ReceptKompDTO;
 
 public class ProduktAdministration {
 	private IProduktBatchDAO produktBatchDAO;
@@ -27,6 +28,7 @@ public class ProduktAdministration {
 
 	private int receptId = 0;
 	private String receptNavn = "";
+	private ArrayList<ReceptKompDTO> receptKomp = null;
 	
 	public ProduktAdministration()
 	{
@@ -39,6 +41,10 @@ public class ProduktAdministration {
 	public ArrayList<RaavareDTO> getRaavare() throws DALException 
 	{
 		return raavareDAO.getRaavareList();
+	}
+	public ArrayList<ReceptKompDTO> getReceptKomp() throws DALException 
+	{
+		return receptKomp;
 	}
 	public String getError()
 	{
