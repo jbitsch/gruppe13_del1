@@ -6,7 +6,12 @@ public class ReceptKompDTO
 	int raavareId;             // i omr�det 1-99999999
 	double nomNetto;            // skal v�re positiv og passende stor
 	double tolerance;           // skal v�re positiv og passende stor
+
 	
+	public ReceptKompDTO()
+	{
+		
+	}
 	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance)
 	{
 		this.receptId = receptId;
@@ -15,14 +20,30 @@ public class ReceptKompDTO
 		this.tolerance = tolerance;
 	}
 
-	public int getReceptId() { return receptId; }
-	public void setReceptId(int receptId) { this.receptId = receptId; }
-	public int getRaavareId() { return raavareId; }
-	public void setRaavareId(int raavareId) { this.raavareId = raavareId; }
-	public double getNomNetto() { return nomNetto; }
-	public void setNomNetto(double nomNetto) { this.nomNetto = nomNetto; }
-	public double getTolerance() { return tolerance; }
-	public void setTolerance(double tolerance) { this.tolerance = tolerance; }
+	public int getReceptId() { 
+		return receptId; 
+	}
+	public void setReceptId(int receptId) { 
+		this.receptId = receptId; 
+	}
+	public int getRaavareId() { 
+		return raavareId; 
+	}
+	public void setRaavareId(int raavareId) { 
+		this.raavareId = raavareId; 
+	}
+	public double getNomNetto() { 
+		return nomNetto; 
+	}
+	public void setNomNetto(double nomNetto) { 
+		this.nomNetto = nomNetto; 
+	}
+	public double getTolerance() {
+		return tolerance; 
+	}
+	public void setTolerance(double tolerance) {
+		this.tolerance = tolerance; 
+	}
 	public String toString() { 
 		return receptId + "\t" + raavareId + "\t" + nomNetto + "\t" + tolerance; 
 	}
