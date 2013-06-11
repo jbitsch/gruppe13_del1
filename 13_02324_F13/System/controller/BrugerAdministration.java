@@ -5,31 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import daoimpl.MySQLOperatoerDAO;
-import daoimpl.MySQLProduktBatchDAO;
-import daoimpl.MySQLProduktBatchKompDAO;
-import daoimpl.MySQLRaavareBatchDAO;
-import daoimpl.MySQLRaavareDAO;
-import daoimpl.MySQLReceptDAO;
-import daoimpl.MySQLReceptKompDAO;
 import daointerfaces.DALException;
 import daointerfaces.IOperatoerDAO;
-import daointerfaces.IProduktBatchDAO;
-import daointerfaces.IProduktBatchKompDAO;
-import daointerfaces.IRaavareBatchDAO;
-import daointerfaces.IRaavareDAO;
-import daointerfaces.IReceptDAO;
-import daointerfaces.IReceptKompDAO;
+
 import dto.OperatoerDTO;
 
-public class BrugerValg {
+public class BrugerAdministration {
 	
 	private IOperatoerDAO operatoerDAO;
-	private IProduktBatchDAO produktBatchDAO;
-	private IProduktBatchKompDAO produktBatchKomDAO;
-	private IReceptDAO receptDAO;
-	private IReceptKompDAO receptKompDAO;
-	private IRaavareBatchDAO raavareBatchDAO;
-	private IRaavareDAO raavareDAO;
 	
 	public String handling="";
 	private String error = "";
@@ -49,15 +32,9 @@ public class BrugerValg {
 	public String rolle = "Operatør";
 	
 
-	public BrugerValg()
+	public BrugerAdministration()
 	{
 		operatoerDAO = new MySQLOperatoerDAO();
-		produktBatchDAO = new MySQLProduktBatchDAO();
-		produktBatchKomDAO = new MySQLProduktBatchKompDAO();
-		receptDAO = new MySQLReceptDAO();
-		receptKompDAO = new MySQLReceptKompDAO();
-		raavareBatchDAO = new MySQLRaavareBatchDAO();
-		raavareDAO = new MySQLRaavareDAO();
 	}
 	public String getError()
 	{

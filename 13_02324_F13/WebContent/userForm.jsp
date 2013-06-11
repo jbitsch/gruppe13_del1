@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean id="login" class="controller.Login" type="controller.Login" scope="session"/>
-<jsp:useBean id="valg" class="controller.BrugerValg" type="controller.BrugerValg" scope="session"/>
+<jsp:useBean id="valg" class="controller.BrugerAdministration" type="controller.BrugerAdministration" scope="session"/>
 
 <html>
 <head>

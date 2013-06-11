@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import connector.Connector;
-import controller.BrugerValg;
+import controller.BrugerAdministration;
 import controller.Login;
+import controller.ProduktAdministration;
+import controller.RaavareAdministration;
 
 import daoimpl.MySQLOperatoerDAO;
 import daointerfaces.DALException;
@@ -26,7 +28,9 @@ import daointerfaces.IOperatoerDAO;
 public class WebInterface extends HttpServlet  {
 	
 	private static final long serialVersionUID = 1L;
-	private BrugerValg valg = null;
+	private BrugerAdministration brugerAdmin = null;
+	private RaavareAdministration raavareAdmin = null;
+	private ProduktAdministration produktAdmin = null;
 	private IOperatoerDAO d = null;  // interface reference til datalag
 	private Connector c = null;
 	private Login login = null;
@@ -125,52 +129,34 @@ public class WebInterface extends HttpServlet  {
 		////////////////////////////////////Logget ind //////////////////////////////////////////////////
 		
 		//Opretter et nyt brugervalg objekt til sessionen hvis den ikke allerede er oprettet
-		valg = (BrugerValg) session.getAttribute("valg");
-		if(valg == null){
-			valg = new BrugerValg();
-			session.setAttribute("valg", valg);
+		brugerAdmin = (BrugerAdministration) session.getAttribute("brugerAdmin");
+		if(brugerAdmin == null){
+			brugerAdmin = new BrugerAdministration();
+			session.setAttribute("brugerAdmin", brugerAdmin);
+		}
+		produktAdmin = (ProduktAdministration) session.getAttribute("produktAdmin");
+		if(produktAdmin == null){
+			produktAdmin = new ProduktAdministration();
+			session.setAttribute("produktAdmin", produktAdmin);
+		}
+		raavareAdmin = (RaavareAdministration) session.getAttribute("raavareAdmin");
+		if(raavareAdmin == null){
+			raavareAdmin = new RaavareAdministration();
+			session.setAttribute("raavareAdmin", raavareAdmin);
 		}
 		
-		////////////////////////////Change PW informations///////////////////////////////
-		String old = request.getParameter("old");
-		if(!(old == null || old.isEmpty())){
-			valg.setOld(old);
-		}
-		String new1 = request.getParameter("new1");
-		if(!(new1 == null || new1.isEmpty())){
-			valg.setNew1(new1);
-		}
-		String new2 = request.getParameter("new2");
-		if(!(new2 == null || new2.isEmpty())){
-			valg.setNew2(new2);
-		}
-		/////////////////////////Create user informations//////////////////////////////////
-		String name = request.getParameter("oprName");
-		if(!(name == null || name.isEmpty())){
-			valg.setName(name);
-		}
-		String ini = request.getParameter("ini");
-		if(!(ini == null || ini.isEmpty())){
-			valg.setIni(ini);
-		}
-		String cpr = request.getParameter("cpr");
-		if(!(cpr == null || cpr.isEmpty())){
-			valg.setCpr(cpr);
-		}
-		String newPw = request.getParameter("newPw");
-		if(!(newPw == null || newPw.isEmpty())){
-			valg.setPassword(newPw);
-		}
-		String rolle = request.getParameter("rolle");
-		if(!(rolle == null || rolle.isEmpty())){
-			valg.setRolle(rolle);
-		}
-		//////////////////Choose user information/////////////////////////////////////////////////////
+		////////////////////////////Change user information///////////////////////////////
+		boolean userAdmin = changePW(request);
+		userAdmin = createUserInformation(request);
+		if(userAdmin)
+			udfoerHandlingUserAdmin(application, handling);
+		
+		//////////////////User selected information/////////////////////////////////////////////////////
 		String userID = request.getParameter("brugervalg");
 		if(!(userID == null || userID.isEmpty())){
 			int uId = Integer.parseInt(userID);
 			try {
-				valg.setUser(uId);
+				brugerAdmin.setUser(uId);
 			} catch (DALException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -180,17 +166,39 @@ public class WebInterface extends HttpServlet  {
 		//////////////////////////////////////////////////////////////////////////////////
 		
 		
-		//Udfoere handlingen i brugervalg.
-		valg.setHandling(handling);
-		if (valg.handling != null) {           
-			application.log(login.getId()+" udfoerer handling: "+valg.handling);
-			try {
-				valg.udfoerHandling();
-			} catch (DALException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} //saetter handlingen igang i brugervalg
-		}	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
@@ -200,7 +208,7 @@ public class WebInterface extends HttpServlet  {
 		}
 		if("changePassword".equals(session.getAttribute("menu")))
 		{
-			valg.setId(login.getId());
+			brugerAdmin.setId(login.getId());
 			request.getRequestDispatcher("changePw.jsp").forward(request,response);
 		}
 		else if("userForm".equals(session.getAttribute("menu")))
@@ -213,8 +221,8 @@ public class WebInterface extends HttpServlet  {
 		}	
 		else
 		{
-			valg.delete();
-			valg.deleteSucErr();
+			brugerAdmin.delete();
+			brugerAdmin.deleteSucErr();
 			request.getRequestDispatcher("menu.jsp").forward(request,response);
 		}	
 	}
@@ -223,5 +231,70 @@ public class WebInterface extends HttpServlet  {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request,response);
+	}
+
+	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
+		//Udfoere handlingen i brugervalg.
+		brugerAdmin.setHandling(handling);
+		if (brugerAdmin.handling != null) {           
+			application.log(login.getId()+" udfoerer handling: "+brugerAdmin.handling);
+			try {
+				brugerAdmin.udfoerHandling();
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} //saetter handlingen igang i brugervalg
+		}
+	}
+	private boolean createUserInformation(HttpServletRequest request) {
+		boolean dataExcist = false;
+		
+		/////////////////////////Create user informations//////////////////////////////////
+		String name = request.getParameter("oprName");
+		if(!(name == null || name.isEmpty())){
+			brugerAdmin.setName(name);
+			dataExcist = true;
+		}
+		String ini = request.getParameter("ini");
+		if(!(ini == null || ini.isEmpty())){
+			brugerAdmin.setIni(ini);
+			dataExcist = true;
+		}
+		String cpr = request.getParameter("cpr");
+		if(!(cpr == null || cpr.isEmpty())){
+			brugerAdmin.setCpr(cpr);
+			dataExcist = true;
+		}
+		String newPw = request.getParameter("newPw");
+		if(!(newPw == null || newPw.isEmpty())){
+			brugerAdmin.setPassword(newPw);
+			dataExcist = true;
+		}
+		String rolle = request.getParameter("rolle");
+		if(!(rolle == null || rolle.isEmpty())){
+			brugerAdmin.setRolle(rolle);
+			dataExcist = true;
+		}
+		return dataExcist;
+	}
+	private boolean changePW(HttpServletRequest request) {
+		boolean dataExcist = false;
+		
+		String old = request.getParameter("old");
+		if(!(old == null || old.isEmpty())){
+			dataExcist = true;
+			brugerAdmin.setOld(old);
+		}
+		String new1 = request.getParameter("new1");
+		if(!(new1 == null || new1.isEmpty())){
+			dataExcist = true;
+			brugerAdmin.setNew1(new1);
+		}
+		String new2 = request.getParameter("new2");
+		if(!(new2 == null || new2.isEmpty())){
+			dataExcist = true;
+			brugerAdmin.setNew2(new2);
+		}
+		return dataExcist;
 	}
 }

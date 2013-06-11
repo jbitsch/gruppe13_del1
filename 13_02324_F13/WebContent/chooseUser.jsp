@@ -1,4 +1,4 @@
-<jsp:useBean id="valg" class="controller.BrugerValg" scope="session" />
+<jsp:useBean id="valg" class="controller.BrugerAdministration" scope="session" />
 <html>
 <head><title>Vælg bruger</title></head>
 <body>
