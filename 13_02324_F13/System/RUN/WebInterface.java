@@ -164,7 +164,7 @@ public class WebInterface extends HttpServlet  {
 		
 		
 		
-		
+		createRecept(request);
 		
 		
 		
@@ -232,6 +232,7 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.setReceptNavn(receptNavn);
 			dataExcist = true;
 		}
+		System.out.println(request.getParameter("raavareValg"));
 		
 		return dataExcist;
 	}
