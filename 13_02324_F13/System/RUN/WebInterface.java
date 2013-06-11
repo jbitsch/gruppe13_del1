@@ -162,9 +162,11 @@ public class WebInterface extends HttpServlet  {
 				udfoerHandlingUserAdmin(application,handling);
 		
 		
+		boolean raavareChange = raavareChange(request);
+		if(raavareChange)
+			udfoerHandlingUserAdmin(application,handling);
 		
-		
-		createRecept(request);
+		//createRecept(request);
 		
 		
 		
@@ -205,6 +207,10 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("receptForm.jsp").forward(request,response);
 		}
+		else if("raavareForm".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("raavareForm.jsp").forward(request,response);
+		}
 		else
 		{
 			brugerAdmin.delete();
@@ -219,6 +225,36 @@ public class WebInterface extends HttpServlet  {
 		doGet(request,response);
 	}
 	
+	////////////////////////////////////////Raavare////////////////////////////////////////////////
+	private boolean raavareChange(HttpServletRequest request)
+	{
+		boolean dataExcist = false;
+		
+		String raavareId = request.getParameter("raavareId");
+		if(!(raavareId == null || raavareId.isEmpty())){
+			raavareAdmin.setRaavareId(Integer.parseInt(raavareId));
+			dataExcist = true;
+		}
+		String raavareNavn = request.getParameter("raavareNavn");
+		if(!(raavareNavn == null || raavareNavn.isEmpty())){
+			raavareAdmin.setRaavareNavn(raavareNavn);
+			dataExcist = true;
+		}
+		String leverandoer = request.getParameter("leverandoer");
+		if(!(leverandoer == null || leverandoer.isEmpty())){
+			raavareAdmin.setLeverandoer(leverandoer);
+			dataExcist = true;
+		}
+		
+		
+		
+		return dataExcist;
+	}
+	
+	
+	
+	
+	/////////////////////////////////Recept///////////////////////////////////////////////////////
 	private boolean createRecept(HttpServletRequest request) {
 		boolean dataExcist = false;
 		
@@ -232,8 +268,6 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.setReceptNavn(receptNavn);
 			dataExcist = true;
 		}
-		System.out.println(request.getParameter("raavareValg"));
-		
 		return dataExcist;
 	}
 	
