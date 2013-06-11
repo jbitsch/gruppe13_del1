@@ -14,7 +14,7 @@
 <h1>Bruger formular</h1>
 
 <p><font color="red"><%=userValg.getError() %></font><font color="green"><%= userValg.getSucces() %></font><br>
-
+ID er <%=userValg.id %>
 <form method="POST">
 	Operatør navn: <input name="oprName" type="text" size = 20 value = "<%= userValg.name %>"><br>
 	Initialer: <input type="text" name="ini" value = "<%= userValg.ini %>"><br>
