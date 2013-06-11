@@ -57,15 +57,7 @@ public class BrugerAdministration {
 	//nulstiller alle parametere
 	public void delete()
 	{	
-		new1 = "";
-		new2 = "";
-		old = "";
-		id = 0;
-		
-		name = "";
-		ini = "";
-		cpr = "";
-		password = "";
+
 	}
 	public void deleteSucErr()
 	{
