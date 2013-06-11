@@ -1,10 +1,13 @@
 package controller;
 
+import java.util.ArrayList;
+
 import daoimpl.MySQLRaavareBatchDAO;
 import daoimpl.MySQLRaavareDAO;
 import daointerfaces.DALException;
 import daointerfaces.IRaavareBatchDAO;
 import daointerfaces.IRaavareDAO;
+import dto.RaavareDTO;
 
 
 public class RaavareAdministration {
@@ -18,11 +21,17 @@ public class RaavareAdministration {
 	private String succes = "";
 	private String error = "";
 	private String handling="";
+	private ArrayList<RaavareDTO> raavare = null;
 	
 	public RaavareAdministration()
 	{		
 		raavareBatchDAO = new MySQLRaavareBatchDAO();
 		raavareDAO = new MySQLRaavareDAO();
+	}
+	
+	public ArrayList<RaavareDTO> getRaavare() throws DALException
+	{
+		return raavareDAO.getRaavareList();
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
