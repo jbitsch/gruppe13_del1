@@ -11,15 +11,14 @@
 
 <form method="POST">
 <%
-	for (int i=0; i<raavareAdmin.getRaavare().size(); i++) {
+	for (int i=0; i<raavareAdmin.getRaavarebatch().size(); i++) {
 		dto.RaavareBatchDTO raavareBatch = (dto.RaavareBatchDTO) raavareAdmin.getRaavarebatch().get(i);
 		%>
-			<input type="radio" name="raavarebatchvalg" value="<%=raavareBatch.getRbId() %>">
-			Batch id:<%=raavareBatch.getRbId() %>
+			Råvare: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getRaavare().getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %> <br>
 		<%
 	}
 %>
-<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg raavarebatch">
+<input type = "submit" name="menuValg" value="Tilbage">
 </form>
 </body>
 </html>

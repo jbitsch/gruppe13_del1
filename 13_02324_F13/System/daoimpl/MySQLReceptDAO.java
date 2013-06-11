@@ -10,7 +10,7 @@ import daointerfaces.IReceptDAO;
 import dto.ReceptDTO;
 
 public class MySQLReceptDAO implements IReceptDAO{
-	
+
 	@Override
 	public ReceptDTO getRecept(int receptId) throws DALException {
 		ResultSet rs = Connector.doQuery("SELECT * FROM recept WHERE recept_id = " + receptId);

@@ -27,20 +27,30 @@ public class RaavareAdministration {
 	private String succes = "";
 	private String error = "";
 	private String handling="";
-	private ArrayList<RaavareDTO> raavare = null;
 	
+	private boolean isNew =true;
+		
 	public RaavareAdministration()
 	{		
 		raavareBatchDAO = new MySQLRaavareBatchDAO();
 		raavareDAO = new MySQLRaavareDAO();
 	}
-	
-	public void setRaavarebatch(int id) throws DALException
+	public void delete()
 	{
-		RaavareBatchDTO raavarebatch = raavareBatchDAO.getRaavareBatch(id);
-		raavareBatchId = raavarebatch.getRbId()+"";
-		batchRaavareId = raavarebatch.getRaavareId()+"";
-		maengde = raavarebatch.getMaengde()+"";
+		raavareId = "";
+		raavareNavn  = "";
+		leverandoer ="";
+		
+		raavareBatchId = "";
+		batchRaavareId = ""; 
+		maengde = "";
+		
+		isNew =true;
+	}
+	public void deleteSucErr()
+	{
+		succes = "";
+		error = "";
 	}
 	
 	public ArrayList<RaavareBatchDTO> getRaavarebatch() throws DALException
@@ -60,6 +70,7 @@ public class RaavareAdministration {
 			raavareId = id+"";
 			raavareNavn = raavare.getRaavareNavn();
 			leverandoer = raavare.getLeverandoer();
+			isNew = false;
 		}
 	}
 	
@@ -78,6 +89,7 @@ public class RaavareAdministration {
 					
 					raavareDAO.createRaavare(nyRaavare);
 					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " ved navn " + nyRaavare.getRaavareNavn() + " fra leverandøren " + nyRaavare.getLeverandoer() + " er nu oprettet!";
+					delete();
 				}
 			}
 			else if (handling.equals("Ændre Raavare"))
@@ -88,33 +100,22 @@ public class RaavareAdministration {
 					
 					raavareDAO.updateRaavare(nyRaavare);
 					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " blev opdateret!";
+					delete();
 				}
 			}
 			else if (handling.equals("Opret Raavarebatch"))
 			{
-				if(okRaavareBatchId() && okMaengde())
+				if(okRaavareBatchId() && okMaengde() && okBatchRaavareId())
 				{
 					double talMaengde = Double.parseDouble(maengde);
 					talMaengde = Math.round(talMaengde*10000)/10000.0d;
-					java.util.Date date= new java.util.Date();
-					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), Integer.parseInt(batchRaavareId), talMaengde, new Timestamp(date.getTime()));
+					java.util.Date date= new java.util.Date();					
+					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), raavareDAO.getRaavare(Integer.parseInt(batchRaavareId)), talMaengde, new Timestamp(date.getTime()));
 					
 					raavareBatchDAO.createRaavareBatch(nytRaavareBatch);
 					succes = "Råvarebatch nr." + nytRaavareBatch.getRbId() + " er nu oprettet!";
-				}
-			}
-			else if (handling.equals("Ændre Raavarebatch"))
-			{
-				if(okRaavareBatchId() && okMaengde())
-				{
-					double talMaengde = Double.parseDouble(maengde);
-					talMaengde = Math.round(talMaengde*10000)/10000.0d;
-					RaavareBatchDTO gammeltBatch = raavareBatchDAO.getRaavareBatch(Integer.parseInt(raavareBatchId));
-					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), Integer.parseInt(batchRaavareId), talMaengde, gammeltBatch.getDato());
-					
-					raavareBatchDAO.createRaavareBatch(nytRaavareBatch);
-					succes = "Råvarebatch nr." + nytRaavareBatch.getRbId() + " er nu opdateret!";
-				}				
+					delete();
+				}			
 			}
 			else
 				System.out.println("Ukendt handling: " + handling);
@@ -172,15 +173,30 @@ public class RaavareAdministration {
 		}
 		return true;
 	}
+	public boolean okBatchRaavareId()
+	{
+		try
+		{
+			// Tjek at id er en int
+			int id = Integer.parseInt(batchRaavareId);
+			
+			return true;
+
+		}
+		catch(NumberFormatException e)
+		{
+			error += "Du skal vaelge en raavare\n";
+		}
+		
+		return false;
+	}
 
 	public boolean okRaavareBatchId()
 	{
 		try
-		{
-			// Kommatal?
-			
+		{	
 			// Tjek at id er en int
-			int id = Integer.parseInt(batchRaavareId);
+			int id = Integer.parseInt(raavareBatchId);
 			
 			// Id i intervallet 1-99999999
 			if(id < 1 || id > 99999999)
@@ -190,6 +206,7 @@ public class RaavareAdministration {
 			else
 			{
 				// Findes id'et i forvejen?
+				System.out.println(id);
 				try
 				{
 					raavareBatchDAO.getRaavareBatch(id);
@@ -224,66 +241,49 @@ public class RaavareAdministration {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-
+	public boolean getIsnew()
+	{
+		return isNew;
+	}
 	public String getRaavareId() {
 		return raavareId;
 	}
-
 	public void setRaavareId(String raavareId) {
 		this.raavareId = raavareId;
 	}
-
 	public String getRaavareNavn() {
 		return raavareNavn;
 	}
-
 	public void setRaavareNavn(String raavareNavn) {
 		this.raavareNavn = raavareNavn;
 	}
-
 	public String getLeverandoer() {
 		return leverandoer;
 	}
-
 	public void setLeverandoer(String leverandoer) {
 		this.leverandoer = leverandoer;
 	}
-
 	public String getRaavareBatchId() {
 		return raavareBatchId;
 	}
-
 	public void setRaavareBatchId(String raavareBatchId) {
 		this.raavareBatchId = raavareBatchId;
 	}
-
 	public String getBatchRaavareId() {
 		return batchRaavareId;
 	}
-
 	public void setBatchRaavareId(String batchRaavareId) {
 		this.batchRaavareId = batchRaavareId;
 	}
-
 	public String getMaengde() {
 		return maengde;
 	}
-
 	public void setMaengde(String maengde) {
 		this.maengde = maengde;
 	}
-
 	public String getSucces() {
 		return succes;
 	}
-
 	public String getError() {
 		return error;
 	}

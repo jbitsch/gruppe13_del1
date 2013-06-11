@@ -177,16 +177,6 @@ public class WebInterface extends HttpServlet  {
 			udfoerHandlingRaavareAdmin(application,handling);
 		
 		//////////////////////////Raavarebatch information ////////////////////////////////////
-		String raavarebatchId = request.getParameter("raavarebatchvalg");
-		if(!(raavarebatchId == null || raavarebatchId.isEmpty())){
-			try {
-				raavareAdmin.setRaavare(Integer.parseInt(raavarebatchId));
-			} catch (DALException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			session.setAttribute("menu", "raavarebatchForm");
-		}
 		boolean raavarebatchChange = raavarebatchChange(request);
 		if(raavarebatchChange)
 			udfoerHandlingRaavareAdmin(application,handling);
@@ -252,10 +242,21 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("produktbatchForm.jsp").forward(request,response);
 		}
+		else if("showProduktBatch".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("chooseProduktbatch.jsp").forward(request,response);
+		}
 		else
 		{
 			brugerAdmin.delete();
 			brugerAdmin.deleteSucErr();
+			
+			raavareAdmin.delete();
+			raavareAdmin.deleteSucErr();
+			
+			produktAdmin.delete();
+			produktAdmin.deleteSucErr();
+			
 			request.getRequestDispatcher("menu.jsp").forward(request,response);
 		}	
 	}

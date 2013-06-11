@@ -17,7 +17,7 @@
 	Leverandør: <input name="leverandoer" type="text" size = 20 value = "<%= raavareAdmin.getLeverandoer() %>"><br>
 	
 	<%
-	if(raavareAdmin.getRaavareId()=="")
+	if(raavareAdmin.getIsnew())
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">

@@ -25,21 +25,8 @@
 		<%
 	}
 %>
-		
-	<%
-	if(raavareAdmin.getRaavareId()=="")
-	{
-		%>
-			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavarebatch">
-		<%
-	}
-	else
-	{
-		%>
-			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavarebatch">
-		<%
-	}
-%>
+<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavarebatch">
+
 </form>
 
 

@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import daoimpl.MySQLProduktBatchDAO;
@@ -13,6 +14,7 @@ import daointerfaces.IProduktBatchKompDAO;
 import daointerfaces.IRaavareDAO;
 import daointerfaces.IReceptDAO;
 import daointerfaces.IReceptKompDAO;
+import dto.OperatoerDTO;
 import dto.ProduktBatchDTO;
 import dto.RaavareDTO;
 import dto.ReceptDTO;
@@ -44,6 +46,17 @@ public class ProduktAdministration {
 		receptKompDAO = new MySQLReceptKompDAO();
 		raavareDAO = new MySQLRaavareDAO();
 	}
+	public void deleteSucErr()
+	{
+		succes = "";
+		error = "";
+		handling = "";
+	}
+	public void delete()
+	{
+		produktbatchId = "";
+	}
+	
 	//////////////////////Udfoer handling/////////////////////////
 	public void udfoerHandling() throws DALException
 	{
@@ -67,9 +80,10 @@ public class ProduktAdministration {
 	
 	private void createProduktbatch(String id) throws DALException
 	{
+		//int pbId, int status, ReceptDTO recept, Timestamp datoStart, Timestamp datoSlut,OperatoerDTO opr
 		int receptId = Integer.parseInt(id);
 		int batchId = unusedId();
-		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,0,receptId,null,null,0);
+		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,0,receptDAO.getRecept(receptId),null,null,null);
 		produktBatchDAO.createProduktBatch(produktBatch);
 		
 		succes = "Produktbatch med id: "+batchId+ " er nu oprettet.";

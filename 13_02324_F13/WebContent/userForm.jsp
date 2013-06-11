@@ -24,7 +24,7 @@
 			<option value="Farmaceut">Farmaceut</option>
 			<option value="Værkfører">Værkfører</option>
 			<option value="Operatør" selected="selected">Operatør</option>
-			</select>
+			</select><br>
 <%
 	if(brugerAdmin.id==0)
 	{

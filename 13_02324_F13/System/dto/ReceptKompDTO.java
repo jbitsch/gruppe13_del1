@@ -3,7 +3,7 @@ package dto;
 public class ReceptKompDTO
 {
 	int receptId;                  // auto genereres fra 1..n   
-	int raavareId;             // i omr�det 1-99999999
+	RaavareDTO raavare;             // i omr�det 1-99999999
 	double nomNetto;            // skal v�re positiv og passende stor
 	double tolerance;           // skal v�re positiv og passende stor
 
@@ -12,10 +12,10 @@ public class ReceptKompDTO
 	{
 		
 	}
-	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance)
+	public ReceptKompDTO(int receptId, RaavareDTO raavare, double nomNetto, double tolerance)
 	{
 		this.receptId = receptId;
-		this.raavareId = raavareId;
+		this.raavare = raavare;
 		this.nomNetto = nomNetto;
 		this.tolerance = tolerance;
 	}
@@ -26,11 +26,11 @@ public class ReceptKompDTO
 	public void setReceptId(int receptId) { 
 		this.receptId = receptId; 
 	}
-	public int getRaavareId() { 
-		return raavareId; 
+	public RaavareDTO getRaavare() { 
+		return raavare; 
 	}
-	public void setRaavareId(int raavareId) { 
-		this.raavareId = raavareId; 
+	public void setRaavare(RaavareDTO raavare) { 
+		this.raavare = raavare; 
 	}
 	public double getNomNetto() { 
 		return nomNetto; 
@@ -45,6 +45,6 @@ public class ReceptKompDTO
 		this.tolerance = tolerance; 
 	}
 	public String toString() { 
-		return receptId + "\t" + raavareId + "\t" + nomNetto + "\t" + tolerance; 
+		return receptId + "\t" + raavare + "\t" + nomNetto + "\t" + tolerance; 
 	}
 }

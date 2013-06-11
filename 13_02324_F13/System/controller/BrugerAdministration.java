@@ -126,6 +126,8 @@ public class BrugerAdministration {
 	//////////////////////Udfoer handling/////////////////////////
 	public void udfoerHandling() throws DALException
 	{
+		succes = "";
+		error = "";
 		try
 		{
 			if (handling.equals("changePw"))
