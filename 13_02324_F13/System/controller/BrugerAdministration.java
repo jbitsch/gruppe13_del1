@@ -119,6 +119,7 @@ public class BrugerAdministration {
 		password = user.getPassword();
 		cpr = user.getCpr();
 		id = user.getOprId();
+		
 		rolle = user.getRolle();
 	}
 	

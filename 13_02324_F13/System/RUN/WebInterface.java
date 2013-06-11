@@ -134,23 +134,48 @@ public class WebInterface extends HttpServlet  {
 			brugerAdmin = new BrugerAdministration();
 			session.setAttribute("brugerAdmin", brugerAdmin);
 		}
-		produktAdmin = (ProduktAdministration) session.getAttribute("produktAdmin");
-		if(produktAdmin == null){
-			produktAdmin = new ProduktAdministration();
-			session.setAttribute("produktAdmin", produktAdmin);
+//		produktAdmin = (ProduktAdministration) session.getAttribute("produktAdmin");
+//		if(produktAdmin == null){
+//			produktAdmin = new ProduktAdministration();
+//			session.setAttribute("produktAdmin", produktAdmin);
+//		}
+//		raavareAdmin = (RaavareAdministration) session.getAttribute("raavareAdmin");
+//		if(raavareAdmin == null){
+//			raavareAdmin = new RaavareAdministration();
+//			session.setAttribute("raavareAdmin", raavareAdmin);
+//		}
+
+		////////////////////////////Change PW informations///////////////////////////////
+		String old = request.getParameter("old");
+		if(!(old == null || old.isEmpty())){
+			brugerAdmin.setOld(old);
 		}
-		raavareAdmin = (RaavareAdministration) session.getAttribute("raavareAdmin");
-		if(raavareAdmin == null){
-			raavareAdmin = new RaavareAdministration();
-			session.setAttribute("raavareAdmin", raavareAdmin);
+		String new1 = request.getParameter("new1");
+		if(!(new1 == null || new1.isEmpty())){
+			brugerAdmin.setNew1(new1);
 		}
-		
-		////////////////////////////Change user information///////////////////////////////
-		boolean userAdmin = changePW(request);
-		userAdmin = createUserInformation(request);
-		
-		
-		//////////////////User selected information/////////////////////////////////////////////////////
+		String new2 = request.getParameter("new2");
+		if(!(new2 == null || new2.isEmpty())){
+			brugerAdmin.setNew2(new2);
+		}
+		/////////////////////////Create user informations//////////////////////////////////
+		String name = request.getParameter("oprName");
+		if(!(name == null || name.isEmpty())){
+			brugerAdmin.setName(name);
+		}
+		String ini = request.getParameter("ini");
+		if(!(ini == null || ini.isEmpty())){
+			brugerAdmin.setIni(ini);
+		}
+		String cpr = request.getParameter("cpr");
+		if(!(cpr == null || cpr.isEmpty())){
+			brugerAdmin.setCpr(cpr);
+		}
+		String newPw = request.getParameter("newPw");
+		if(!(newPw == null || newPw.isEmpty())){
+			brugerAdmin.setPassword(newPw);
+		}	
+		//////////////////Choose user information/////////////////////////////////////////////////////
 		String userID = request.getParameter("brugervalg");
 		if(!(userID == null || userID.isEmpty())){
 			int uId = Integer.parseInt(userID);
@@ -164,8 +189,18 @@ public class WebInterface extends HttpServlet  {
 		}
 		//////////////////////////////////////////////////////////////////////////////////
 		
-		if(userAdmin)
-			udfoerHandlingUserAdmin(application, handling);
+		
+		//Udfoere handlingen i brugervalg.
+		brugerAdmin.setHandling(handling);
+		if (brugerAdmin.handling != null) {           
+			application.log(login.getId()+" udfoerer handling: "+brugerAdmin.handling);
+			try {
+				brugerAdmin.udfoerHandling();
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} //saetter handlingen igang i brugervalg
+		}	
 		
 
 	
