@@ -33,6 +33,16 @@ public class RaavareAdministration {
 	{
 		return raavareDAO.getRaavareList();
 	}
+	public void setRaavare(int id) throws DALException
+	{
+		RaavareDTO raavare = raavareDAO.getRaavare(id);
+		if(raavare!=null)
+		{
+			raavareId = id;
+			raavareNavn = raavare.getRaavareNavn();
+			leverandoer = raavare.getLeverandoer();
+		}
+	}
 	
 	//////////////////////Udfoer handling/////////////////////////
 	public void udfoerHandling() throws DALException
