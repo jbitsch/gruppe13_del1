@@ -33,7 +33,7 @@ public class Validation {
 		connection.sendToServer("RM20 8 \"Indtast oprId\" \"\" \"\"");
 		
 		MySQLOperatoerDAO oprDAO = new MySQLOperatoerDAO();
-		OperatoerDTO opr;
+		OperatoerDTO opr = null;
 		try {
 			String oprTemp = connection.recieveFromServer();
 			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(8, oprTemp.length() - 1)));
@@ -64,15 +64,16 @@ public class Validation {
 		return opr.getOprId();
 	}
 	
-	public void validateProductBatch(Connector mySQLCon, MySocket2 scaleCon) {
+	public int validateProductBatch(Connector mySQLCon, MySocket2 scaleCon) {
+		Integer PBId = null;
 		scaleCon.sendToServer("RM20 8 \"Indtast ProduktBatchId\" \"\" \"\"");
 		try {
 			String PBIdTemp = scaleCon.recieveFromServer();
-			String PBId = PBIdTemp.substring(8, PBIdTemp.length() - 1);
+			PBId = Integer.parseInt(PBIdTemp.substring(8, PBIdTemp.length() - 1));
 			
 			MySQLProduktBatchDAO PBDAO = new MySQLProduktBatchDAO();
 			MySQLReceptDAO RDAO = new MySQLReceptDAO();
-			ProduktBatchDTO PBDTO = PBDAO.getProduktBatch(Integer.parseInt(PBId));
+			ProduktBatchDTO PBDTO = PBDAO.getProduktBatch(PBId);
 			if(PBDTO.getStatus() == 0) {
 				PBDTO.setStatus(1);
 				PBDAO.updateProduktBatch(PBDTO);
@@ -93,6 +94,8 @@ public class Validation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return PBId;
 		
 	}
 	
