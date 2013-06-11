@@ -162,28 +162,25 @@ public class WebInterface extends HttpServlet  {
 				udfoerHandlingUserAdmin(application,handling);
 		
 		
+		
+		//////////////////Raavare information ///////////////////////
+		String raavareId = request.getParameter("raavarevalg");
+		if(!(raavareId == null || raavareId.isEmpty())){
+			int raavareID = Integer.parseInt(raavareId);
+			try {
+				raavareAdmin.setRaavare(raavareID);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			session.setAttribute("menu", "raavareForm");
+		}
 		boolean raavareChange = raavareChange(request);
 		if(raavareChange)
 			udfoerHandlingUserAdmin(application,handling);
 		
 		//createRecept(request);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
 		if(menuValg!=null)
