@@ -115,8 +115,11 @@ public class BrugerAdministration {
 	{
 		OperatoerDTO user = operatoerDAO.getOperatoer(uId);
 		name = user.getOprNavn();
+		System.out.println(name);
 		ini = user.getIni();
+		System.out.println(ini);
 		password = user.getPassword();
+		System.out.println(password);
 		cpr = user.getCpr();
 		id = user.getOprId();
 		rolle = user.getRolle();
