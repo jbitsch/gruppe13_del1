@@ -82,7 +82,7 @@ public class RaavareAdministration {
 			}
 			else if (handling.equals("Ændre Raavare"))
 			{
-				if(okRaavareId() && okNavn(raavareNavn) && okNavn(leverandoer))
+				if(okNavn(raavareNavn) && okNavn(leverandoer))
 				{
 					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn, leverandoer);
 					

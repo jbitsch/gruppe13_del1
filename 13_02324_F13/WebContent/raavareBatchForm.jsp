@@ -13,9 +13,9 @@
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
 <form method="POST">
-	Råvarebatch id: <input name="raavarebatchId" type="text" size = 8 value = "<%=  %>"><br>
-	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%=  %>"><br>
-	Vælg råvare:
+	Råvarebatch id: <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"><br>
+	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br>
+	Vælg råvare:<br>
 	<%
 	for (int i=0; i<raavareAdmin.getRaavare().size(); i++) {
 		RaavareDTO raavare = (dto.RaavareDTO) raavareAdmin.getRaavare().get(i);

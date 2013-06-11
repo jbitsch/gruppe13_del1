@@ -19,7 +19,7 @@
 	<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
 	<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
 	<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
-	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvare<br>
+	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
 	<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>
 	<input type="submit" value="Vælg menu punkt">
 </form>

@@ -14,10 +14,10 @@
 <form method="POST">
 	Råvare id: <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"><br>
 	Råvare navn: <input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
-	Leverandør: <input name="leverandoer" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
+	Leverandør: <input name="leverandoer" type="text" size = 20 value = "<%= raavareAdmin.getLeverandoer() %>"><br>
 	
 	<%
-	if(raavareAdmin.getRaavareId()==0)
+	if(raavareAdmin.getRaavareId()=="")
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
