@@ -2,6 +2,7 @@ package seq;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import connector.Connector;
 import daoimpl.MySQLOperatoerDAO;
@@ -76,6 +77,7 @@ public class Validation {
 			ProduktBatchDTO PBDTO = PBDAO.getProduktBatch(PBId);
 			if(PBDTO.getStatus() == 0) {
 				PBDTO.setStatus(1);
+				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
 				PBDAO.updateProduktBatch(PBDTO);
 				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getReceptId());
 				scaleCon.sendToServer("D \"" + RDTO.getReceptNavn() + "\"");
