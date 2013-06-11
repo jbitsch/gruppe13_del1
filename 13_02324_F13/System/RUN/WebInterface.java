@@ -148,8 +148,7 @@ public class WebInterface extends HttpServlet  {
 		////////////////////////////Change user information///////////////////////////////
 		boolean userAdmin = changePW(request);
 		userAdmin = createUserInformation(request);
-		if(userAdmin)
-			udfoerHandlingUserAdmin(application, handling);
+		
 		
 		//////////////////User selected information/////////////////////////////////////////////////////
 		String userID = request.getParameter("brugervalg");
@@ -165,41 +164,12 @@ public class WebInterface extends HttpServlet  {
 		}
 		//////////////////////////////////////////////////////////////////////////////////
 		
+		if(userAdmin)
+			udfoerHandlingUserAdmin(application, handling);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+	
+				
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
 		if(menuValg!=null)
