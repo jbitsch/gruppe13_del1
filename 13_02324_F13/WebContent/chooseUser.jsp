@@ -1,4 +1,3 @@
-<%@ include file = "adminLoginCheck.jsp" %>
 <jsp:useBean id="valg" class="controller.BrugerValg" scope="session" />
 <html>
 <head><title>Vælg bruger</title></head>

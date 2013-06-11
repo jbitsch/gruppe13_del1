@@ -1,4 +1,3 @@
-<%@ include file = "loginCheck.jsp" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:useBean id="user" class="dto.OperatoerDTO" type="dto.OperatoerDTO" scope="session"/>
 <jsp:useBean id="login" class="controller.Login" type="controller.Login" scope="session"/>
@@ -14,16 +13,8 @@
 	
 <form method="POST">
 	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>		
-	
-<%
-	if(login.getId()==10)
-	{
-		%>
-			<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>	
-			<input type="radio" name="menuValg" value="userForm">Opret bruger<br>	
-		<%
-	}
-%>
+	<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>	
+	<input type="radio" name="menuValg" value="userForm">Opret bruger<br>	
 	<input type="submit" value="Vælg menu punkt">
 </form>
 
