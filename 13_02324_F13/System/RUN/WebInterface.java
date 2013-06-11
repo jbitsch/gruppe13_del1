@@ -160,7 +160,6 @@ public class WebInterface extends HttpServlet  {
 		//////////////////////////////////////////////////////////////////////////////////
 
 		boolean brugerChange = createUserInformation(request);
-		brugerChange = changePW(request);
 		if(brugerChange)
 				udfoerHandlingUserAdmin(application,handling);
 				
@@ -239,11 +238,6 @@ public class WebInterface extends HttpServlet  {
 			brugerAdmin.setRolle(rolle);
 			dataExcist = true;
 		}
-		return dataExcist;
-	}
-	private boolean changePW(HttpServletRequest request) {
-		boolean dataExcist = false;
-		
 		String old = request.getParameter("old");
 		if(!(old == null || old.isEmpty())){
 			dataExcist = true;
