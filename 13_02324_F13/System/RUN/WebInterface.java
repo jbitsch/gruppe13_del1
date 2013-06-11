@@ -208,6 +208,10 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("raavareForm.jsp").forward(request,response);
 		}
+		else if("showRaavare".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("chooseRaavare.jsp").forward(request,response);
+		}
 		else
 		{
 			brugerAdmin.delete();
@@ -242,15 +246,8 @@ public class WebInterface extends HttpServlet  {
 			raavareAdmin.setLeverandoer(leverandoer);
 			dataExcist = true;
 		}
-		
-		
-		
 		return dataExcist;
 	}
-	
-	
-	
-	
 	/////////////////////////////////Recept///////////////////////////////////////////////////////
 	private boolean createRecept(HttpServletRequest request) {
 		boolean dataExcist = false;
@@ -267,8 +264,6 @@ public class WebInterface extends HttpServlet  {
 		}
 		return dataExcist;
 	}
-	
-	
 	/////////////////////////Create user informations//////////////////////////////////
 	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
 		//Udfoere handlingen i brugervalg.
