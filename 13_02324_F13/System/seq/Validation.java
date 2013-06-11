@@ -15,20 +15,20 @@ import dto.ReceptDTO;
 public class Validation {
 
 	public int validateUser(MySocket2 connection) {
-		Connector mySQLCon = null;
-		try {mySQLCon =  new Connector();}
-		catch (SQLException e) {
-			System.out.println("fejl");
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Connector mySQLCon = null;
+//		try {mySQLCon =  new Connector();}
+//		catch (SQLException e) {
+//			System.out.println("fejl");
+//		} catch (InstantiationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		connection.sendToServer("RM20 8 \"Indtast oprId\" \"\" \"\"");
 		
@@ -64,7 +64,7 @@ public class Validation {
 		return opr.getOprId();
 	}
 	
-	public int validateProductBatch(Connector mySQLCon, MySocket2 scaleCon) {
+	public int validateProductBatch(/*Connector mySQLCon, */MySocket2 scaleCon) {
 		Integer PBId = null;
 		scaleCon.sendToServer("RM20 8 \"Indtast ProduktBatchId\" \"\" \"\"");
 		try {
