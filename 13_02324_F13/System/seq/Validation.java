@@ -79,7 +79,7 @@ public class Validation {
 				PBDTO.setStatus(1);
 				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
 				PBDAO.updateProduktBatch(PBDTO);
-				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getReceptId());
+				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
 				scaleCon.sendToServer("D \"" + RDTO.getReceptNavn() + "\"");
 			}
 			else {
