@@ -15,7 +15,21 @@
 	Råvare id: <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"><br>
 	Råvare navn: <input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
 	Leverandør: <input name="leverandoer" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
-	<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
+	
+	<%
+	if(raavareAdmin.getRaavareId()==0)
+	{
+		%>
+			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
+		<%
+	}
+	else
+	{
+		%>
+			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
+		<%
+	}
+%>
 </form>
 
 

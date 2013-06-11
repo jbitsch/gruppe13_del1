@@ -20,8 +20,8 @@ public class RaavareAdministration {
 	private String raavareNavn  = "";
 	private String leverandoer ="";
 	
-	private String raavareBatchId = "";
-	private String batchRaavareId = "";
+	private String raavareBatchId = ""; //rbid
+	private String batchRaavareId = ""; // raavareid i en raavarebatch
 	private String maengde = "";
 	
 	private String succes = "";
@@ -33,8 +33,14 @@ public class RaavareAdministration {
 	{		
 		raavareBatchDAO = new MySQLRaavareBatchDAO();
 		raavareDAO = new MySQLRaavareDAO();
-		
-		
+	}
+	
+	public void setRaavarebatch(int id) throws DALException
+	{
+		RaavareBatchDTO raavarebatch = raavareBatchDAO.getRaavareBatch(id);
+		raavareBatchId = raavarebatch.getRbId()+"";
+		batchRaavareId = raavarebatch.getRaavareId()+"";
+		maengde = raavarebatch.getMaengde()+"";
 	}
 	
 	public ArrayList<RaavareBatchDTO> getRaavarebatch() throws DALException

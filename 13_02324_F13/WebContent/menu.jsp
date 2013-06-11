@@ -14,10 +14,13 @@
 <form method="POST">
 	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>		
 	<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>
-	<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>	
+	<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
+	<input type="radio" name="menuValg" value="showRaavarebatch">Administrer råvarebatch<br>
 	<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
 	<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
-	<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>		
+	<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
+	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvare<br>
+	<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>
 	<input type="submit" value="Vælg menu punkt">
 </form>
 

@@ -13,7 +13,9 @@ import daointerfaces.IProduktBatchKompDAO;
 import daointerfaces.IRaavareDAO;
 import daointerfaces.IReceptDAO;
 import daointerfaces.IReceptKompDAO;
+import dto.ProduktBatchDTO;
 import dto.RaavareDTO;
+import dto.ReceptDTO;
 import dto.ReceptKompDTO;
 
 public class ProduktAdministration {
@@ -25,10 +27,14 @@ public class ProduktAdministration {
 	
 	private String error ="";
 	private String succes = "";
+	private String handling ="";
 
 	private int receptId = 0;
 	private String receptNavn = "";
 	private ArrayList<ReceptKompDTO> receptKomp = null;
+	
+	private String produktbatchId = "";
+	
 	
 	public ProduktAdministration()
 	{
@@ -38,10 +44,63 @@ public class ProduktAdministration {
 		receptKompDAO = new MySQLReceptKompDAO();
 		raavareDAO = new MySQLRaavareDAO();
 	}
+	//////////////////////Udfoer handling/////////////////////////
+	public void udfoerHandling() throws DALException
+	{
+		succes = "";
+		error = "";
+		
+		try
+		{
+			if (handling.equals("Opret produktbatch"))
+			{
+				createProduktbatch(produktbatchId);
+			}
+			else
+				System.out.println("Ukendt handling: " + handling);
+		}
+		finally
+		{
+			handling = null;
+		}
+	}
+	
+	private void createProduktbatch(String id) throws DALException
+	{
+		int receptId = Integer.parseInt(id);
+		int batchId = unusedId();
+		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,0,receptId,null,null,0);
+		produktBatchDAO.createProduktBatch(produktBatch);
+		
+		succes = "Produktbatch med id: "+batchId+ " er nu oprettet.";
+	}
+	private int unusedId() throws DALException {
+		ArrayList<ProduktBatchDTO> produktBatch = produktBatchDAO.getProduktBatchList();
+		boolean emptyId;
+		for(int b = 1; b < 999999999; b++) {
+			emptyId = true;
+			for(int c = 0; c < produktBatch.size(); c++) {
+				if(b == produktBatch.get(c).getPbId()) {
+					emptyId = false;
+					break;
+				}
+			}
+			if(emptyId){
+				return b;
+			}
+		}
+		return 0;
+	}
+	
 	public ArrayList<RaavareDTO> getRaavare() throws DALException 
 	{
 		return raavareDAO.getRaavareList();
 	}
+	public ArrayList<ReceptDTO> getRecepter() throws DALException 
+	{
+		return receptDAO.getReceptList();
+	}
+	
 	public ArrayList<ReceptKompDTO> getReceptKomp() throws DALException 
 	{
 		return receptKomp;
@@ -65,5 +124,12 @@ public class ProduktAdministration {
 	}
 	public void setReceptNavn(String receptNavn) {
 		this.receptNavn = receptNavn;
+	}
+	public void setHandling(String handling)
+	{
+		this.handling = handling;
+	}
+	public void setProduktbatchId(String produktbatchId) {
+		this.produktbatchId = produktbatchId;
 	}
 }

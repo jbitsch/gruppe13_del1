@@ -170,17 +170,48 @@ public class WebInterface extends HttpServlet  {
 			try {
 				raavareAdmin.setRaavare(raavareID);
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			session.setAttribute("menu", "raavareForm");
 		}
 		boolean raavareChange = raavareChange(request);
 		if(raavareChange)
-			udfoerHandlingUserAdmin(application,handling);
+			udfoerHandlingRaavareAdmin(application,handling);
 		
+		
+		//////////////////////////Raavarebatch information ////////////////////////////////////
+		String raavarebatchId = request.getParameter("raavarebatchvalg");
+		if(!(raavarebatchId == null || raavarebatchId.isEmpty())){
+			try {
+				raavareAdmin.setRaavare(Integer.parseInt(raavarebatchId));
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			session.setAttribute("menu", "raavarebatchForm");
+		}
+		boolean raavarebatchChange = raavarebatchChange(request);
+		if(raavarebatchChange)
+			udfoerHandlingRaavareAdmin(application,handling);
+		
+		
+		
+		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
 		//createRecept(request);
-				
+		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
+		
+		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){
+			produktAdmin.setProduktbatchId(produktbatchReceptId);
+			produktAdmin.setHandling(handling);
+			try {
+				produktAdmin.udfoerHandling();
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+		
+	
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
 		if(menuValg!=null)
@@ -212,6 +243,18 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("chooseRaavare.jsp").forward(request,response);
 		}
+		else if("raavarebatchForm".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("raavareBatchForm.jsp").forward(request,response);
+		}
+		else if("showRaavarebatch".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("chooseRaavarebatch.jsp").forward(request,response);
+		}
+		else if("produktbatch".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("produktbatchForm.jsp").forward(request,response);
+		}
 		else
 		{
 			brugerAdmin.delete();
@@ -233,7 +276,7 @@ public class WebInterface extends HttpServlet  {
 		
 		String raavareId = request.getParameter("raavareId");
 		if(!(raavareId == null || raavareId.isEmpty())){
-			raavareAdmin.setRaavareId(Integer.parseInt(raavareId));
+			raavareAdmin.setRaavareId(raavareId);
 			dataExcist = true;
 		}
 		String raavareNavn = request.getParameter("raavareNavn");
@@ -247,6 +290,40 @@ public class WebInterface extends HttpServlet  {
 			dataExcist = true;
 		}
 		return dataExcist;
+	}	
+	private boolean raavarebatchChange(HttpServletRequest request)
+	{
+		boolean dataExcist = false;
+		
+		String raavarebatchId = request.getParameter("raavarebatchId");
+		if(!(raavarebatchId == null || raavarebatchId.isEmpty())){
+			raavareAdmin.setRaavareBatchId(raavarebatchId);
+			dataExcist = true;
+		}
+		String raavareMaengde = request.getParameter("raavareMaengde");
+		if(!(raavareMaengde == null || raavareMaengde.isEmpty())){
+			raavareAdmin.setMaengde(raavareMaengde);
+			dataExcist = true;
+		}
+		String raavarevalgBatch = request.getParameter("raavarevalgBatch");
+		if(!(raavarevalgBatch == null || raavarevalgBatch.isEmpty())){
+			raavareAdmin.setBatchRaavareId(raavarevalgBatch);
+			dataExcist = true;
+		}
+		return dataExcist;
+	}
+	private void udfoerHandlingRaavareAdmin(ServletContext application,String handling) {
+		//Udfoere handlingen i brugervalg.
+		raavareAdmin.setHandling(handling);
+		if (raavareAdmin.getHandling() != null) {           
+			application.log(login.getId()+" udfoerer handling: "+raavareAdmin.getHandling());
+			try {
+				raavareAdmin.udfoerHandling();
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
 	}
 	/////////////////////////////////Recept///////////////////////////////////////////////////////
 	private boolean createRecept(HttpServletRequest request) {
@@ -264,6 +341,7 @@ public class WebInterface extends HttpServlet  {
 		}
 		return dataExcist;
 	}
+	
 	/////////////////////////Create user informations//////////////////////////////////
 	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
 		//Udfoere handlingen i brugervalg.
