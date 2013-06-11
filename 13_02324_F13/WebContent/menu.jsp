@@ -14,7 +14,8 @@
 <form method="POST">
 	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>		
 	<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>	
-	<input type="radio" name="menuValg" value="userForm">Opret bruger<br>	
+	<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
+	<input type="radio" name="menuValg" value="Opret recept">Opret recpet<br>		
 	<input type="submit" value="Vælg menu punkt">
 </form>
 

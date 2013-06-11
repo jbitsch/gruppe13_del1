@@ -157,12 +157,31 @@ public class WebInterface extends HttpServlet  {
 			}
 			session.setAttribute("menu", "userForm");
 		}
-		//////////////////////////////////////////////////////////////////////////////////
-
 		boolean brugerChange = createUserInformation(request);
 		if(brugerChange)
 				udfoerHandlingUserAdmin(application,handling);
-				
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
 		if(menuValg!=null)
@@ -181,7 +200,11 @@ public class WebInterface extends HttpServlet  {
 		else if("showUsers".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("chooseUser.jsp").forward(request,response);
-		}	
+		}
+		else if("receptForm".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("receptForm.jsp").forward(request,response);
+		}
 		else
 		{
 			brugerAdmin.delete();
@@ -195,7 +218,26 @@ public class WebInterface extends HttpServlet  {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request,response);
 	}
-
+	
+	private boolean createRecept(HttpServletRequest request) {
+		boolean dataExcist = false;
+		
+		String receptId = request.getParameter("receptId");
+		if(!(receptId == null || receptId.isEmpty())){
+			produktAdmin.setReceptId(Integer.parseInt(receptId));
+			dataExcist = true;
+		}
+		String receptNavn = request.getParameter("receptNavn");
+		if(!(receptNavn == null || receptNavn.isEmpty())){
+			produktAdmin.setReceptNavn(receptNavn);
+			dataExcist = true;
+		}
+		
+		return dataExcist;
+	}
+	
+	
+	/////////////////////////Create user informations//////////////////////////////////
 	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
 		//Udfoere handlingen i brugervalg.
 		brugerAdmin.setHandling(handling);
@@ -211,8 +253,7 @@ public class WebInterface extends HttpServlet  {
 	}
 	private boolean createUserInformation(HttpServletRequest request) {
 		boolean dataExcist = false;
-		
-		/////////////////////////Create user informations//////////////////////////////////
+
 		String name = request.getParameter("oprName");
 		if(!(name == null || name.isEmpty())){
 			brugerAdmin.setName(name);
