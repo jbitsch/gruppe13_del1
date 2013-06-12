@@ -30,8 +30,9 @@ public class Test {
 		try {
 			b.connect("localhost", 4567);
 //			b.connect("localhost", 8000);
-			System.out.println(a.validateUser(b));
-			System.out.println(a.validateProductBatch(b));
+//			b.connect("169.254.2.2", 8000);
+			a.recieveUserId(b, 0);
+			a.recieveProductBatchId(b, 0);
 			System.out.println("done");
 		} catch (IOException e) {
 			System.out.println("noget galt");
