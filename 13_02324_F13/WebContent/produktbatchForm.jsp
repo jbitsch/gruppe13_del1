@@ -21,7 +21,9 @@
 		%>
 			<input type="radio" name="produktbatchReceptId" value="<%= recept.getReceptId() %>">
 			Receptnavn: <%= recept.getReceptNavn() %><br>
+			
 		<%
+		//getReceptKomp(int id)
 	}
 %>
 <input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret produktbatch">

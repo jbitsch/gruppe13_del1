@@ -33,7 +33,6 @@ public class ProduktAdministration {
 
 	private int receptId = 0;
 	private String receptNavn = "";
-	private ArrayList<ReceptKompDTO> receptKomp = null;
 	
 	private String produktbatchReceptId = "";
 	
@@ -116,9 +115,9 @@ public class ProduktAdministration {
 		return receptDAO.getReceptList();
 	}
 	
-	public ArrayList<ReceptKompDTO> getReceptKomp() throws DALException 
+	public ArrayList<ReceptKompDTO> getReceptKomp(int id) throws DALException 
 	{
-		return receptKomp;
+		return receptKompDAO.getReceptKompList(id);
 	}
 	public String getError()
 	{
