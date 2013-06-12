@@ -119,7 +119,7 @@ public class WebInterface extends HttpServlet  {
 		if (!login.isLoggetInd()) {            // er brugeren logget korrekt ind?
 			application.log("Bruger med "+login.getId()+" skal logge ind.");
 			session.removeAttribute("valg");   
-			request.getRequestDispatcher("login.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/login.jsp").forward(request,response);
 			return;                              // afslut behandlingen af denne side
 		}
 		
@@ -215,47 +215,47 @@ public class WebInterface extends HttpServlet  {
 		if("changePassword".equals(session.getAttribute("menu")))
 		{
 			brugerAdmin.setId(login.getId());
-			request.getRequestDispatcher("changePw.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/changePw.jsp").forward(request,response);
 		}
 		else if("userForm".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("userForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/userForm.jsp").forward(request,response);
 		}
 		else if("showUsers".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("chooseUser.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/chooseUser.jsp").forward(request,response);
 		}
 		else if("receptForm".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("receptForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm.jsp").forward(request,response);
 		}
 		else if("raavareForm".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("raavareForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/raavareForm.jsp").forward(request,response);
 		}
 		else if("showRaavare".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("chooseRaavare.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/chooseRaavare.jsp").forward(request,response);
 		}
 		else if("raavarebatchForm".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("raavareBatchForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/raavareBatchForm.jsp").forward(request,response);
 		}
 		else if("showRaavarebatch".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("chooseRaavarebatch.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/chooseRaavarebatch.jsp").forward(request,response);
 		}
 		else if("produktbatch".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("produktbatchForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/produktbatchForm.jsp").forward(request,response);
 		}
 		else if("showProduktBatch".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("chooseProduktbatch.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/chooseProduktbatch.jsp").forward(request,response);
 		}
 		else if("showProduktbatch".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("showProduktbatch.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/showProduktbatch.jsp").forward(request,response);
 		}
 		else
 		{
@@ -268,7 +268,7 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.delete();
 			produktAdmin.deleteSucErr();
 			
-			request.getRequestDispatcher("menu.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
 		}	
 	}
 	/**
