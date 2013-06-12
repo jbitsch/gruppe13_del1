@@ -8,4 +8,5 @@ public interface IOperatoerDAO {
 	ArrayList<OperatoerDTO> getOperatoerList() throws DALException;
 	void createOperatoer(OperatoerDTO opr) throws DALException;
 	void updateOperatoer(OperatoerDTO opr) throws DALException;
+	void deleteOperatoer(int opr_id) throws DALException;
 }

@@ -5,6 +5,7 @@
 <h1>Vælg bruger</h1>
 
 <form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 <%
 	for (int i=0; i<brugerAdmin.getUsers().size(); i++) {
 		dto.OperatoerDTO user = (dto.OperatoerDTO) brugerAdmin.getUsers().get(i);

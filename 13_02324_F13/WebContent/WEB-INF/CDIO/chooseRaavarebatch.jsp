@@ -10,6 +10,7 @@
 <h1>Vælg råvarebatch</h1>
 
 <form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 <%
 	for (int i=0; i<raavareAdmin.getRaavarebatch().size(); i++) {
 		dto.RaavareBatchDTO raavareBatch = (dto.RaavareBatchDTO) raavareAdmin.getRaavarebatch().get(i);

@@ -12,6 +12,7 @@
 <body>
 <font color="red"><%=produktAdmin.getError() %></font><font color="green"><%= produktAdmin.getSucces() %></font><br>
 <form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	Recept id: <input name="receptId" type="text" size = 8 value = "<%= produktAdmin.getReceptId() %>"><br>
 	Recept navn: <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"><br>
 	

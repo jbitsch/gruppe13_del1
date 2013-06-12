@@ -35,12 +35,14 @@
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
+			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 		<%
 	}
 	else
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
+			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseRaavare.jsp" />	
 		<%
 	}
 %>

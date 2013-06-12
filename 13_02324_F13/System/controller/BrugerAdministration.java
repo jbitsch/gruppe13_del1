@@ -99,7 +99,9 @@ public class BrugerAdministration {
 			}
 			else if(handling.equals("Slet"))
 			{
-				//TODO skal der kunne slettes?????
+				operatoerDAO.deleteOperatoer(id);
+				delete();
+				succes = "Bruger med id "+ id + " er blevet slettet";
 			}
 			else
 				System.out.println("Ukendt handling: " + handling);
@@ -121,7 +123,6 @@ public class BrugerAdministration {
 			error+= "Gammelt password stemmer ikke overens.<br> ";
 			OK = false;
 		}
-		
 		if(new1.equals(new2))
 		{
 			if(!checkPassword(new1))
@@ -139,8 +140,7 @@ public class BrugerAdministration {
 		{
 			user.setPassword(new1);
 			operatoerDAO.updateOperatoer(user);
-		}
-		
+		}		
 	}
 	
 	private void userForm(String name, String ini, String cpr, String password) throws DALException
@@ -172,7 +172,7 @@ public class BrugerAdministration {
 			if(id==0) //opret ny bruger
 			{
 				id = unusedId();
-				OperatoerDTO user = new OperatoerDTO(id, name, ini, cpr, password,rolle);
+				OperatoerDTO user = new OperatoerDTO(id, name, ini, cpr, replaceChar(password),rolle);
 				operatoerDAO.createOperatoer(user);
 				succes = "Bruger oprettet med id: "+id;
 			}
@@ -182,7 +182,7 @@ public class BrugerAdministration {
 				user.setOprNavn(name);
 				user.setIni(ini);
 				user.setCpr(cpr);
-				user.setPassword(password);
+				user.setPassword(replaceChar(password));
 				user.setRolle(rolle);
 				
 				operatoerDAO.updateOperatoer(user);
@@ -327,6 +327,16 @@ public class BrugerAdministration {
 	{
 		error = "";
 		succes = "";
+	}
+	public String replaceChar(String toReplace)
+	{
+		toReplace = toReplace.replace("&", "&amp;");   // erstat & med HTML-koden for &
+		toReplace = toReplace.replace("<", "&lt;");    // erstat < med HTML-koden for <
+		toReplace = toReplace.replace(">", "&gt;");    // erstat > med HTML-koden for >
+		toReplace = toReplace.replace("\"","&quot;");  // erstat " med HTML-koden for "
+		toReplace = toReplace.replace("'", "&lsquo;"); // erstat ' med HTML-koden for '
+		
+		return toReplace;
 	}
 
 	

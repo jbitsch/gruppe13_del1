@@ -12,23 +12,22 @@
 	
 	
 <form method="POST">
-	
+<input type="hidden" name="namePage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 		String rolle = login.getRolle();
+	%>
+	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>
 	
-		if("Værkfører".equals(rolle) || "Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
-		{
-			%>
-					<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>
-					<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
-					<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>					
-					<input type="radio" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
-					<input type="radio" name="menuValg" value="showProduktBatch">Vis produktbatch<br>
-			<%
-		}
+	<h3>Værkfører opgaver:</h3>	
+	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
+	<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>					
+	<input type="radio" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
+	<input type="radio" name="menuValg" value="showProduktBatch">Vis produktbatch<br>
+	<%
 		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
 		{
 			%>
+					<h3>Farmaceut opgaver:</h3>
 					<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
 					<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
 					<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
@@ -38,6 +37,7 @@
 		if("Administrator".equals(rolle) )
 		{
 			%>
+					<h3>Administrator opgaver::</h3>
 					<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
 					<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>
 			<%

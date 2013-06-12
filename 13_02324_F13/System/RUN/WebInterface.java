@@ -31,7 +31,7 @@ public class WebInterface extends HttpServlet  {
 	private BrugerAdministration brugerAdmin = null;
 	private RaavareAdministration raavareAdmin = null;
 	private ProduktAdministration produktAdmin = null;
-	private IOperatoerDAO d = null;  // interface reference til datalag
+	private IOperatoerDAO d = null;  
 	private Connector c = null;
 	private Login login = null;
     /**
@@ -115,33 +115,18 @@ public class WebInterface extends HttpServlet  {
 			login.setAdgangskode("");
 		}
 		
-		//hvis man ikke er logget ind.
-		if (!login.isLoggetInd()) {            // er brugeren logget korrekt ind?
+		 // er brugeren logget korrekt ind?
+		if (!login.isLoggetInd()) {           
 			application.log("Bruger med "+login.getId()+" skal logge ind.");
 			session.removeAttribute("valg");   
 			request.getRequestDispatcher("/WEB-INF/CDIO/login.jsp").forward(request,response);
 			return;                              // afslut behandlingen af denne side
 		}
-		
-		
 		////////////////////////////////////Logget ind //////////////////////////////////////////////////
 		
-		//Opretter et nyt brugervalg objekt til sessionen hvis den ikke allerede er oprettet
-		brugerAdmin = (BrugerAdministration) session.getAttribute("brugerAdmin");
-		if(brugerAdmin == null){
-			brugerAdmin = new BrugerAdministration();
-			session.setAttribute("brugerAdmin", brugerAdmin);
-		}
-		produktAdmin = (ProduktAdministration) session.getAttribute("produktAdmin");
-		if(produktAdmin == null){
-			produktAdmin = new ProduktAdministration();
-			session.setAttribute("produktAdmin", produktAdmin);
-		}
-		raavareAdmin = (RaavareAdministration) session.getAttribute("raavareAdmin");
-		if(raavareAdmin == null){
-			raavareAdmin = new RaavareAdministration();
-			session.setAttribute("raavareAdmin", raavareAdmin);
-		}
+		
+		//Opretter et nye administrations objekter til sessionen hvis de ikke allerede er oprettet
+		createAdminObjekts(session);
 
 		//////////////////Choose user information/////////////////////////////////////////////////////
 		String userID = request.getParameter("brugervalg");
@@ -207,7 +192,10 @@ public class WebInterface extends HttpServlet  {
 		}
 			
 		//Hvilken side skal vi lande paa
+		
+		
 		String menuValg = request.getParameter("menuValg");
+		
 		if(menuValg!=null)
 		{
 			session.setAttribute("menu", menuValg);
@@ -257,17 +245,18 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/showProduktbatch.jsp").forward(request,response);
 		}
+		else if("Tilbage".equals(session.getAttribute("menu")))
+		{
+			String page = request.getParameter("backpage");
+			delete();
+			if(page!=null)
+				request.getRequestDispatcher(page).forward(request,response);
+			else
+				request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
+		}
 		else
 		{
-			brugerAdmin.delete();
-			brugerAdmin.deleteSucErr();
-			
-			raavareAdmin.delete();
-			raavareAdmin.deleteSucErr();
-			
-			produktAdmin.delete();
-			produktAdmin.deleteSucErr();
-			
+			delete();
 			request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
 		}	
 	}
@@ -362,7 +351,7 @@ public class WebInterface extends HttpServlet  {
 			} catch (DALException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} //saetter handlingen igang i brugervalg
+			} 
 		}
 	}
 	private boolean createUserInformation(HttpServletRequest request) {
@@ -409,5 +398,32 @@ public class WebInterface extends HttpServlet  {
 			brugerAdmin.setNew2(new2);
 		}
 		return dataExcist;
+	}
+	private void createAdminObjekts(HttpSession session) {
+		brugerAdmin = (BrugerAdministration) session.getAttribute("brugerAdmin");
+		if(brugerAdmin == null){
+			brugerAdmin = new BrugerAdministration();
+			session.setAttribute("brugerAdmin", brugerAdmin);
+		}
+		produktAdmin = (ProduktAdministration) session.getAttribute("produktAdmin");
+		if(produktAdmin == null){
+			produktAdmin = new ProduktAdministration();
+			session.setAttribute("produktAdmin", produktAdmin);
+		}
+		raavareAdmin = (RaavareAdministration) session.getAttribute("raavareAdmin");
+		if(raavareAdmin == null){
+			raavareAdmin = new RaavareAdministration();
+			session.setAttribute("raavareAdmin", raavareAdmin);
+		}
+	}
+	private void delete() {
+		brugerAdmin.delete();
+		brugerAdmin.deleteSucErr();
+		
+		raavareAdmin.delete();
+		raavareAdmin.deleteSucErr();
+		
+		produktAdmin.delete();
+		produktAdmin.deleteSucErr();
 	}
 }

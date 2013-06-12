@@ -13,6 +13,7 @@
 
 <form method="POST">
 	<input type="hidden" name="handling" value="changePw">
+	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	Gammelt password: <input type="password" name="old"><br /> 
 	Indtast nyt password: <input type="password" name="new1"><br />
 	Gentag nyt password: <input type="password" name="new2"><br />

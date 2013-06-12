@@ -15,6 +15,7 @@
 <p><font color="red"><%=produktAdmin.getError() %></font><font color="green"><%= produktAdmin.getSucces() %></font><br>
 
 <form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 <%
 	for (int i=0; i<produktAdmin.getRecepter().size(); i++) {
 		ReceptDTO recept = (dto.ReceptDTO) produktAdmin.getRecepter().get(i);

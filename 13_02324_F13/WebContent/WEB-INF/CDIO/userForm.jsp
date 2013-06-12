@@ -53,12 +53,14 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 	{
 	%>		
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
+			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 	}
 	else
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
+			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp" />	
 			<%
 			if(!(brugerAdmin.getId()==login.getId()) && !("Operatør".equals(brugerAdmin.getRolle())))
 			{

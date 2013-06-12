@@ -10,6 +10,7 @@
 <body>
 <h1>Vælg produktbatch</h1>
 <form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 	for (int i=0; i<produktAdmin.getProduktbatch().size(); i++) {
 		

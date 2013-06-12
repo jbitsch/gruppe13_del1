@@ -85,8 +85,10 @@ public class RaavareAdministration {
 			{
 				if(okRaavareId() && okNavn(raavareNavn) && okNavn(leverandoer))
 				{
-					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn, leverandoer);
 					
+					raavareNavn = replaceChar(raavareNavn);
+					leverandoer = replaceChar(leverandoer);
+					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn, leverandoer);
 					raavareDAO.createRaavare(nyRaavare);
 					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " ved navn " + nyRaavare.getRaavareNavn() + " fra leverandøren " + nyRaavare.getLeverandoer() + " er nu oprettet!";
 					delete();
@@ -96,6 +98,8 @@ public class RaavareAdministration {
 			{
 				if(okNavn(raavareNavn) && okNavn(leverandoer))
 				{
+					raavareNavn = replaceChar(raavareNavn);
+					leverandoer = replaceChar(leverandoer);
 					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn, leverandoer);
 					
 					raavareDAO.updateRaavare(nyRaavare);
@@ -294,6 +298,16 @@ public class RaavareAdministration {
 	public String getHandling()
 	{
 		return handling;
+	}
+	public String replaceChar(String toReplace)
+	{
+		toReplace = toReplace.replace("&", "&amp;");   // erstat & med HTML-koden for &
+		toReplace = toReplace.replace("<", "&lt;");    // erstat < med HTML-koden for <
+		toReplace = toReplace.replace(">", "&gt;");    // erstat > med HTML-koden for >
+		toReplace = toReplace.replace("\"","&quot;");  // erstat " med HTML-koden for "
+		toReplace = toReplace.replace("'", "&lsquo;"); // erstat ' med HTML-koden for '
+		
+		return toReplace;
 	}
 	
 	

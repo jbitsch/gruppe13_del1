@@ -51,6 +51,12 @@ public class MySQLOperatoerDAO implements IOperatoerDAO {
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
+	
+	@Override
+	public void deleteOperatoer(int opr_id) throws DALException
+	{
+		Connector.doUpdate("DELETE FROM operatoer WHERE opr_id ="+opr_id);
+	}
 		
 }
 	

@@ -6,6 +6,7 @@
 <h1>Vælg råvare</h1>
 
 <form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 <%
 	for (int i=0; i<raavareAdmin.getRaavare().size(); i++) {
 		RaavareDTO raavare = (dto.RaavareDTO) raavareAdmin.getRaavare().get(i);
