@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import daoimpl.MySQLProduktBatchDAO;
@@ -14,8 +13,8 @@ import daointerfaces.IProduktBatchKompDAO;
 import daointerfaces.IRaavareDAO;
 import daointerfaces.IReceptDAO;
 import daointerfaces.IReceptKompDAO;
-import dto.OperatoerDTO;
 import dto.ProduktBatchDTO;
+import dto.ProduktBatchKompDTO;
 import dto.RaavareDTO;
 import dto.ReceptDTO;
 import dto.ReceptKompDTO;
@@ -35,6 +34,7 @@ public class ProduktAdministration {
 	private String receptNavn = "";
 	
 	private String produktbatchReceptId = "";
+	private int produktbatchId = 0;
 	
 	
 	public ProduktAdministration()
@@ -54,6 +54,7 @@ public class ProduktAdministration {
 	public void delete()
 	{
 		produktbatchReceptId = "";
+		produktbatchId = 0;
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
@@ -119,6 +120,14 @@ public class ProduktAdministration {
 	{
 		return receptKompDAO.getReceptKompList(id);
 	}
+	public ArrayList<ProduktBatchKompDTO> getproduktbatchKomp()throws DALException
+	{
+		return produktBatchKomDAO.getProduktBatchKompList(produktbatchId);
+	}
+	public ProduktBatchDTO getProduktBatch() throws DALException
+	{
+		return produktBatchDAO.getProduktBatch(produktbatchId);
+	}
 	public String getError()
 	{
 		return error;
@@ -146,4 +155,13 @@ public class ProduktAdministration {
 	public void setProduktbatchReceptId(String produktbatchReceptId) {
 		this.produktbatchReceptId = produktbatchReceptId;
 	}
+	public ArrayList<ProduktBatchDTO> getProduktbatch()throws DALException
+	{
+		return produktBatchDAO.getProduktBatchList();
+	}
+	public void setProduktbatchId(int produktbatchId)
+	{
+		this.produktbatchId = produktbatchId;
+	}
+
 }

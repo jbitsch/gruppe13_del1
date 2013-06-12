@@ -185,6 +185,8 @@ public class WebInterface extends HttpServlet  {
 		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
 		//createRecept(request);
 		
+		
+		//////////////////////////////////////////////Create produktbatch///////////////////////////////////////
 		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
 		
 		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){
@@ -198,7 +200,14 @@ public class WebInterface extends HttpServlet  {
 			}
 		}		
 		
-	
+		/////////////////////////////////////////show produktbatch/////////////////////////////////
+		String produktvatchValg = request.getParameter("produktvatchValg");
+		if(!(produktvatchValg == null || produktvatchValg.isEmpty())){
+			int produktvatchValgID = Integer.parseInt(produktvatchValg);
+			produktAdmin.setProduktbatchId(produktvatchValgID);
+			session.setAttribute("menu", "showProduktbatch");
+		}
+			
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
 		if(menuValg!=null)
@@ -245,6 +254,10 @@ public class WebInterface extends HttpServlet  {
 		else if("showProduktBatch".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("chooseProduktbatch.jsp").forward(request,response);
+		}
+		else if("showProduktbatch".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("showProduktbatch.jsp").forward(request,response);
 		}
 		else
 		{

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:useBean id="login" class="controller.Login" type="controller.Login" scope="session"/>
-<jsp:useBean id="valg" class="controller.BrugerAdministration" type="controller.BrugerAdministration" scope="session"/>
+<jsp:useBean id="brugerAdmin" class="controller.BrugerAdministration" type="controller.BrugerAdministration" scope="session"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,7 +9,7 @@
 <title>Skift password</title>
 </head>
 <body>
-<p><font color="red"><%= valg.getError() %></font><br>
+<p><font color="red"><%= brugerAdmin.getError() %></font><br>
 
 <form method="POST">
 	<input type="hidden" name="handling" value="changePw">

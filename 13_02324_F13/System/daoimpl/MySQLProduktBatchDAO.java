@@ -2,6 +2,7 @@ package daoimpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -16,12 +17,30 @@ public class MySQLProduktBatchDAO implements IProduktBatchDAO{
 	
 	@Override
 	public ProduktBatchDTO getProduktBatch(int pbId) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT pb.*,r.*, o.* FROM recept r, produktbatch pb LEFT JOIN operatoer o ON pb.opr_id = o.opr_id WHERE r.recept_id=pb.recept_id AND pb_id = " + pbId);
+		ResultSet rs = Connector.doQuery("SELECT pb.*,r.*, o.* FROM recept r, produktbatch pb LEFT JOIN operatoer o ON pb.opr_id = o.opr_id WHERE r.recept_id=pb.recept_id AND pb_id = " + pbId+" ORDER BY pb.status ASC");
 		try {
 			if (!rs.first()) throw new DALException("Produktbatch " + pbId + " findes ikke"); 
+			
+			Timestamp start;
+			Timestamp slut;
+			try
+			{
+				start = rs.getTimestamp(4);
+			}catch(java.sql.SQLException e)
+			{
+				start = null;
+			}
+			try
+			{
+				slut = rs.getTimestamp(5);
+			}catch(java.sql.SQLException e)
+			{
+				slut = null;
+			}
+			
 			ReceptDTO recept = new ReceptDTO(rs.getInt(7),rs.getString(8)); 
 			OperatoerDTO opr = new OperatoerDTO(rs.getInt(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14));
-			return new ProduktBatchDTO (rs.getInt(1),recept, rs.getInt(3), rs.getTimestamp(4), rs.getTimestamp(5),opr);
+			return new ProduktBatchDTO (rs.getInt(1),recept, rs.getInt(3), start, slut,opr);
 		} catch (SQLException e) {
 			throw new DALException(e); 
 		}
@@ -30,14 +49,32 @@ public class MySQLProduktBatchDAO implements IProduktBatchDAO{
 	@Override
 	public ArrayList<ProduktBatchDTO> getProduktBatchList() throws DALException {
 		ArrayList<ProduktBatchDTO> list = new ArrayList<ProduktBatchDTO>();
-		ResultSet rs = Connector.doQuery("SELECT pb.*,r.*, o.* FROM recept r, produktbatch pb LEFT JOIN operatoer o ON pb.opr_id = o.opr_id WHERE r.recept_id=pb.recept_id");
+		ResultSet rs = Connector.doQuery("SELECT pb.*,r.*, o.* FROM recept r, produktbatch pb LEFT JOIN operatoer o ON pb.opr_id = o.opr_id WHERE r.recept_id=pb.recept_id ORDER BY pb.status ASC");
 		try
 		{
 			while (rs.next()) 
 			{
 				OperatoerDTO opr = new OperatoerDTO(rs.getInt(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14));
 				ReceptDTO recept = new ReceptDTO(rs.getInt(7),rs.getString(8)); 
-				list.add(new ProduktBatchDTO(rs.getInt(1),recept, rs.getInt(3),rs.getTimestamp(4), rs.getTimestamp(5),opr));
+				
+				Timestamp start;
+				Timestamp slut;
+				try
+				{
+					start = rs.getTimestamp(4);
+				}catch(java.sql.SQLException e)
+				{
+					start = null;
+				}
+				try
+				{
+					slut = rs.getTimestamp(5);
+				}catch(java.sql.SQLException e)
+				{
+					slut = null;
+				}
+				
+				list.add(new ProduktBatchDTO(rs.getInt(1),recept, rs.getInt(3),start, slut,opr));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
