@@ -11,6 +11,11 @@
 </head>
 <body>
 
+<%!
+
+String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør"};
+%>
+
 <h1>Bruger formular</h1>
 
 <p><font color="red"><%=brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
@@ -20,10 +25,19 @@
 	CPR: <input type="text" name="cpr" value = "<%= brugerAdmin.cpr %>"><br>
 	Password:<input type="password" name="newPw" value = "<%= brugerAdmin.password %>"><br>
 	Rolle: <select name="rolle">
-			<option value="Administrator">Administrator</option>
-			<option value="Farmaceut">Farmaceut</option>
-			<option value="Værkfører">Værkfører</option>
-			<option value="Operatør" selected="selected">Operatør</option>
+				<option value="<%=brugerAdmin.rolle%>" selected="selected"><%=brugerAdmin.rolle%></option>
+				<%
+				for(int i = 0; i < roller.length; i++)
+				{
+					if(!roller[i].equals(brugerAdmin.rolle))
+					{
+						%>
+							<option value="<%=roller[i]%>"><%=roller[i] %></option>
+						<%
+						
+					}
+				}
+				%>
 			</select><br>
 <%
 	if(brugerAdmin.id==0)
