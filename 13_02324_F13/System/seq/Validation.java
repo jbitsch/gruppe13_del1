@@ -15,7 +15,7 @@ import dto.ReceptDTO;
 
 public class Validation {
 	
-	private char obsoleteChar = '"';
+	private OperatoerDTO Opr_PB = null;
 
 
 
@@ -68,14 +68,14 @@ public class Validation {
 		try {
 			if(message == 0){
 				if(opr.getOprNavn().length() > 14) {
-				connection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&2\" "); 
+				connection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&1\" "); 
 			}
 				else {
-					connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&2\" ");
+					connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&1\" ");
 				}
 			}
 			else {
-				connection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&2\" ");
+				connection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&1\" ");
 			}
 			System.out.println(connection.recieveFromServer());
 			String responseTemp;
@@ -84,10 +84,10 @@ public class Validation {
 			System.out.println(responseTemp);
 			String response = responseTemp.substring(7, responseTemp.length());
 
-			if(response.equals("n")) {
+			if(response.equals("N")) {
 				recieveUserId(connection, 0);
 			}
-			else if(!response.equals("y"))  {
+			else if(!response.equals("Y"))  {
 				validateName(connection, 1, opr);
 			}
 		} catch (IOException e) {
@@ -109,6 +109,7 @@ public class Validation {
 			oprTemp = oprTemp.replaceAll("\"", "");
 			System.out.println(oprTemp);
 			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(7, oprTemp.length())));
+			Opr_PB = opr;
 			System.out.println(opr);
 
 			connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \" \" "); 
@@ -203,6 +204,7 @@ public class Validation {
 			if(PBDTO.getStatus() == 0) {
 				PBDTO.setStatus(1);
 				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
+				PBDTO.setOpr(Opr_PB);
 				PBDAO.updateProduktBatch(PBDTO);
 				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
 				scaleCon.sendToServer("D \"" + RDTO.getReceptNavn() + "\" ");
