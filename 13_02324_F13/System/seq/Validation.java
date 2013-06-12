@@ -31,18 +31,23 @@ public class Validation {
 //			e.printStackTrace();
 //		}
 		
-		connection.sendToServer("RM20 8 \"Indtast oprId\" \"\" \"\"");
+		connection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \" \" ");
 		
 		MySQLOperatoerDAO oprDAO = new MySQLOperatoerDAO();
 		OperatoerDTO opr = null;
 		try {
+			System.out.println(connection.recieveFromServer());
 			String oprTemp = connection.recieveFromServer();
-			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(8, oprTemp.length() - 1)));
+			System.out.println(oprTemp);
+			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(7, oprTemp.length())));
+			System.out.println(opr);
 			
-			connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + "\" \"\" \"\""); 
+			connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + "\" \" \" \" \" "); 
 			
+			System.out.println(connection.recieveFromServer());
 			String responseTemp = connection.recieveFromServer();
-			String response = responseTemp.substring(8, responseTemp.length() - 1);
+			System.out.println(responseTemp);
+			String response = responseTemp.substring(7, responseTemp.length());
 			
 			if(response.equals("y")) {
 				return opr.getOprId();
@@ -67,14 +72,16 @@ public class Validation {
 	
 	public int validateProductBatch(/*Connector mySQLCon, */MySocket2 scaleCon) {
 		Integer PBId = null;
-		scaleCon.sendToServer("RM20 8 \"Indtast ProduktBatchId\" \"\" \"\"");
+		scaleCon.sendToServer("RM20 8 \"Indtast ProduktBatchId\" \" \" \" \" ");
 		try {
+			scaleCon.recieveFromServer();
 			String PBIdTemp = scaleCon.recieveFromServer();
-			PBId = Integer.parseInt(PBIdTemp.substring(8, PBIdTemp.length() - 1));
+			PBId = Integer.parseInt(PBIdTemp.substring(7, PBIdTemp.length()));
 			
 			MySQLProduktBatchDAO PBDAO = new MySQLProduktBatchDAO();
 			MySQLReceptDAO RDAO = new MySQLReceptDAO();
 			ProduktBatchDTO PBDTO = PBDAO.getProduktBatch(PBId);
+			System.out.println(PBDTO.getStatus());
 			if(PBDTO.getStatus() == 0) {
 				PBDTO.setStatus(1);
 				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
@@ -83,7 +90,7 @@ public class Validation {
 				scaleCon.sendToServer("D \"" + RDTO.getReceptNavn() + "\"");
 			}
 			else {
-				throw new DALException("Produktbatch ikke tilgængelig"); 
+				throw new DALException("Produktbatch ikke tilgÃ¦ngelig"); 
 			}
 			
 		} catch (IOException e) {

@@ -10,7 +10,7 @@ public class ProduktBatchDTO
 	Timestamp datoStart;
 	Timestamp datoSlut;
 	
-	public ProduktBatchDTO(int pbId, int status, ReceptDTO recept, Timestamp datoStart, Timestamp datoSlut,OperatoerDTO opr)
+	public ProduktBatchDTO(int pbId, ReceptDTO recept, int status, Timestamp datoStart, Timestamp datoSlut,OperatoerDTO opr)
 	{
 		this.pbId = pbId;
 		this.status = status;
