@@ -13,7 +13,7 @@ import dto.OperatoerDTO;
 public class MySQLOperatoerDAO implements IOperatoerDAO {
 	@Override
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId);
+		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId+" ORDER BY opr_id ASC");
 	    try {
 	    	if (!rs.first()) throw new DALException("Operat�ren " + oprId + " findes ikke"); 
 	    	return new OperatoerDTO (rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
@@ -40,7 +40,7 @@ public class MySQLOperatoerDAO implements IOperatoerDAO {
 	@Override
 	public ArrayList<OperatoerDTO> getOperatoerList() throws DALException {
 		ArrayList<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
+		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer ORDER BY opr_id ASC");
 		try
 		{
 			while (rs.next()) 

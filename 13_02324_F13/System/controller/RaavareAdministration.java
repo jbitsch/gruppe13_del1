@@ -168,7 +168,7 @@ public class RaavareAdministration {
 	{
 		if(navn.length() < 2 || navn.length() > 20)
 		{
-			error += "Råvarenavnet skal være på 2-20 karakterer\n";
+			error += "Længde på raavarenavn og leverandør skal være på 2-20 karakterer\n";
 			return false;
 		}
 		return true;
@@ -177,9 +177,7 @@ public class RaavareAdministration {
 	{
 		try
 		{
-			// Tjek at id er en int
 			int id = Integer.parseInt(batchRaavareId);
-			
 			return true;
 
 		}

@@ -65,7 +65,7 @@ public class ProduktAdministration {
 		
 		try
 		{
-			if (handling.equals("Opret produktbatch"))
+			if ("Opret produktbatch".equals(handling))
 			{
 				createProduktbatch(produktbatchReceptId);
 			}

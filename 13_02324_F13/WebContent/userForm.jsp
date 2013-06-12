@@ -24,7 +24,11 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 	Initialer: <input type="text" name="ini" value = "<%= brugerAdmin.ini %>"><br>
 	CPR: <input type="text" name="cpr" value = "<%= brugerAdmin.cpr %>"><br>
 	Password:<input type="password" name="newPw" value = "<%= brugerAdmin.password %>"><br>
-	Rolle: <select name="rolle">
+<%
+	if(brugerAdmin.id==0 || !("Operatør").equals(brugerAdmin.rolle))
+	{
+		%>
+				Rolle: <select name="rolle">
 				<option value="<%=brugerAdmin.rolle%>" selected="selected"><%=brugerAdmin.rolle%></option>
 				<%
 				for(int i = 0; i < roller.length; i++)
@@ -38,20 +42,25 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 					}
 				}
 				%>
-			</select><br>
-<%
+				</select><br>
+				<%
+	}else
+	{
+		out.println("Rolle: "+brugerAdmin.rolle+"<br>");
+	}
+	
 	if(brugerAdmin.id==0)
 	{
-		%>
+	%>		
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
-		<%
+	<%
 	}
 	else
 	{
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
 			<%
-			if(!(brugerAdmin.id==login.getId()))
+			if(!(brugerAdmin.id==login.getId()) && !("Operatør".equals(brugerAdmin.rolle)))
 			{
 				%>
 					<input type = "submit" name="handling" value="Slet">

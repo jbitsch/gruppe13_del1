@@ -12,16 +12,36 @@
 	
 	
 <form method="POST">
-	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>		
-	<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
-	<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
-	<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
-	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
-	<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>
-	<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>
-	<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
-	<input type="radio" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
-	<input type="radio" name="menuValg" value="showProduktBatch">Vis produktbatch<br>
+	
+	<%
+		String rolle = login.getRolle();
+	
+		if("Værkfører".equals(rolle) || "Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
+		{
+			%>
+					<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>
+					<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
+					<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>					
+					<input type="radio" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
+					<input type="radio" name="menuValg" value="showProduktBatch">Vis produktbatch<br>
+			<%
+		}
+		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
+		{
+			%>
+					<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
+					<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
+					<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
+			<%
+		}
+		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
+		{
+			%>
+					<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
+					<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>
+			<%
+		}
+	%>
 	<input type="submit" value="Vælg menu punkt">
 </form>
 
