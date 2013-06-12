@@ -97,86 +97,86 @@ public class Validation {
 		return opr.getOprId();
 	}
 
-	public int validateUser(MySocket2 connection) {
+//	public int validateUser(MySocket2 connection) {
+//
+//		connection.sendToServer("RM20 8 \"Indtast OprId\" \"&3\" \" \" ");
+//
+//		MySQLOperatoerDAO oprDAO = new MySQLOperatoerDAO();
+//		OperatoerDTO opr = null;
+//		try {
+//			System.out.println(connection.recieveFromServer());
+//			String oprTemp = connection.recieveFromServer();
+//			oprTemp = oprTemp.replaceAll("\"", "");
+//			System.out.println(oprTemp);
+//			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(7, oprTemp.length())));
+//			Opr_PB = opr;
+//			System.out.println(opr);
+//
+//			connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \" \" "); 
+//
+//			System.out.println(connection.recieveFromServer());
+//			String responseTemp = connection.recieveFromServer();
+//			System.out.println(responseTemp);
+//			String response = responseTemp.substring(7, responseTemp.length());
+//
+//			if(response.equals("y")) {
+//				return opr.getOprId();
+//				//				validateProductBatch(mySQLCon, connection);
+//			}
+//			else  {
+//				validateUser(connection);
+//			}
+//
+//		} catch (DALException e) {
+//
+//		} catch (NumberFormatException e) {
+//			validateUser(connection);
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return opr.getOprId();
+//	}
 
-		connection.sendToServer("RM20 8 \"Indtast OprId\" \"&3\" \" \" ");
-
-		MySQLOperatoerDAO oprDAO = new MySQLOperatoerDAO();
-		OperatoerDTO opr = null;
-		try {
-			System.out.println(connection.recieveFromServer());
-			String oprTemp = connection.recieveFromServer();
-			oprTemp = oprTemp.replaceAll("\"", "");
-			System.out.println(oprTemp);
-			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(7, oprTemp.length())));
-			Opr_PB = opr;
-			System.out.println(opr);
-
-			connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \" \" "); 
-
-			System.out.println(connection.recieveFromServer());
-			String responseTemp = connection.recieveFromServer();
-			System.out.println(responseTemp);
-			String response = responseTemp.substring(7, responseTemp.length());
-
-			if(response.equals("y")) {
-				return opr.getOprId();
-				//				validateProductBatch(mySQLCon, connection);
-			}
-			else  {
-				validateUser(connection);
-			}
-
-		} catch (DALException e) {
-
-		} catch (NumberFormatException e) {
-			validateUser(connection);
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return opr.getOprId();
-	}
-
-	public int validateProductBatch(MySocket2 scaleCon) {
-		Integer PBId = null;
-		scaleCon.sendToServer("RM20 8 \"Indtast ProduktBatchId\" \" \" \" \" ");
-		try {
-			scaleCon.recieveFromServer();
-			String PBIdTemp = scaleCon.recieveFromServer();
-			PBId = Integer.parseInt(PBIdTemp.substring(7, PBIdTemp.length()));
-
-			MySQLProduktBatchDAO PBDAO = new MySQLProduktBatchDAO();
-			MySQLReceptDAO RDAO = new MySQLReceptDAO();
-			ProduktBatchDTO PBDTO = PBDAO.getProduktBatch(PBId);
-			System.out.println(PBDTO.getStatus());
-			if(PBDTO.getStatus() == 0) {
-				PBDTO.setStatus(1);
-				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
-				PBDAO.updateProduktBatch(PBDTO);
-				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
-				scaleCon.sendToServer("D " + RDTO.getReceptNavn());
-			}
-			else {
-				throw new DALException("Produktbatch i prod"); 
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return PBId;
-
-	}
+//	public int validateProductBatch(MySocket2 scaleCon) {
+//		Integer PBId = null;
+//		scaleCon.sendToServer("RM20 8 \"Indtast ProduktBatchId\" \" \" \" \" ");
+//		try {
+//			scaleCon.recieveFromServer();
+//			String PBIdTemp = scaleCon.recieveFromServer();
+//			PBId = Integer.parseInt(PBIdTemp.substring(7, PBIdTemp.length()));
+//
+//			MySQLProduktBatchDAO PBDAO = new MySQLProduktBatchDAO();
+//			MySQLReceptDAO RDAO = new MySQLReceptDAO();
+//			ProduktBatchDTO PBDTO = PBDAO.getProduktBatch(PBId);
+//			System.out.println(PBDTO.getStatus());
+//			if(PBDTO.getStatus() == 0) {
+//				PBDTO.setStatus(1);
+//				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
+//				PBDAO.updateProduktBatch(PBDTO);
+//				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
+//				scaleCon.sendToServer("D " + RDTO.getReceptNavn());
+//			}
+//			else {
+//				throw new DALException("Produktbatch i prod"); 
+//			}
+//
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NumberFormatException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (DALException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return PBId;
+//
+//	}
 
 	public int recieveProductBatchId(MySocket2 scaleCon, int message) {
 		Integer PBId = null;
