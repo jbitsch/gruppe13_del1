@@ -84,7 +84,7 @@ public class ProduktAdministration {
 		int receptId = Integer.parseInt(id);
 		int batchId = unusedId();
 		System.out.println(batchId);
-		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,0,receptDAO.getRecept(receptId),null,null,null);
+		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,receptDAO.getRecept(receptId),0,null,null,null);
 		produktBatchDAO.createProduktBatch(produktBatch);
 		
 		succes = "Produktbatch med id: "+batchId+ " er nu oprettet.";
