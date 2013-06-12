@@ -1,9 +1,11 @@
 package daoimpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import connector.Connector;
 import daointerfaces.DALException;
+import dto.ProduktBatchDTO;
 
 public class TEST {
 
@@ -28,22 +30,43 @@ public class TEST {
 			e.printStackTrace();
 		}
 		
-		MySQLProduktBatchKompDAO ll = new MySQLProduktBatchKompDAO();
+//		MySQLProduktBatchKompDAO ll = new MySQLProduktBatchKompDAO();
+//		try {
+//			System.out.println(ll.getProduktBatchKomp(1, 1));
+//		} catch (DALException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+		MySQLProduktBatchDAO ll = new MySQLProduktBatchDAO();
 		try {
-			System.out.println(ll.getProduktBatchKomp(1, 1));
+			System.out.println(ll.getProduktBatch(1).getDatoStart());
+//			ArrayList<ProduktBatchDTO> produktBatch = ll.getProduktBatchList();
+//			for(int cc = 0; cc < produktBatch.size(); cc++) {
+//				System.out.println(produktBatch.get(cc).getPbId());
+//				System.out.println(produktBatch.get(cc).getDatoStart());
+//			}
+//			boolean emptyId;
+//			for(int b = 1; b < 10; b++) {
+//				emptyId = true;
+//				for(int cc = 0; cc < produktBatch.size(); cc++) {
+//					if(b == produktBatch.get(cc).getPbId()) {
+//						emptyId = false;
+//						break;
+//					}
+//				}
+//				if(emptyId){
+//					System.out.println(b);
+//				}
+//			}
+			
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
-//		MySQLProduktBatchDAO ll = new MySQLProduktBatchDAO();
-//		try {
-//			System.out.println(ll.getProduktBatchList().get(0).toString());
-//		} catch (DALException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 //		MySQLReceptKompDAO ll = new MySQLReceptKompDAO();
 //		try {
 //			System.out.println(ll.getReceptKomp(3, 1).toString());
