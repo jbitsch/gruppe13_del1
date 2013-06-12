@@ -10,6 +10,9 @@
 </head>
 <body>
 
+
+<h1>Indtast råvare</h1>
+
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
 <form method="POST">

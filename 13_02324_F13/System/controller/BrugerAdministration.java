@@ -224,6 +224,7 @@ public class BrugerAdministration {
 				user.setIni(ini);
 				user.setCpr(cpr);
 				user.setPassword(password);
+				user.setRolle(rolle);
 				
 				operatoerDAO.updateOperatoer(user);
 				

@@ -10,6 +10,7 @@ public class Login
 {
 	private int id = 0;
 	private String adgangskode = "";
+	private String rolle="";
 	private String meddelelse = "";       // fejlmeddelelse til brugeren
 
 	private boolean tjek = false;         // om adgangskode skal tjekkes
@@ -78,8 +79,15 @@ public class Login
 			meddelelse += "Forkert brugernavn eller adgangskode <br>";
 		}
 		else
+		{
 			loggetInd = true;
+			rolle = operatoer.getRolle();
+		}
 
+	}
+	public String getRolle()
+	{
+		return rolle;
 	}
 
 

@@ -15,7 +15,7 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 	@Override
 	public RaavareBatchDTO getRaavareBatch(int raavareBatchId) throws DALException {
 		
-		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND rb_id=" + raavareBatchId +"ORDER BY r.raavare_navn DESC");
+		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND rb_id=" + raavareBatchId +" ORDER BY r.raavare_navn ASC");
 		try {
 			if (!rs.first()) throw new DALException("Raavarebatchen " + raavareBatchId + " findes ikke"); 
 			RaavareDTO raavare = new RaavareDTO(rs.getInt(1),rs.getString(2),rs.getString(3));
@@ -28,7 +28,7 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 	@Override
 	public ArrayList<RaavareBatchDTO> getRaavareBatchList() throws DALException {
 		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
-		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id ORDER BY r.raavare_navn DESC");
+		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id ORDER BY r.raavare_navn ASC");
 		try
 		{
 			while (rs.next()) 
@@ -43,7 +43,7 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 	@Override
 	public ArrayList<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
 		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
-		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND rb.raavare_id=" + raavareId +" ORDER BY r.raavare_navn DESC");
+		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND rb.raavare_id=" + raavareId +" ORDER BY r.raavare_navn ASC");
 		try
 		{
 			while (rs.next()) 

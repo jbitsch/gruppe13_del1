@@ -9,10 +9,24 @@
 </head>
 <body>
 
+<h1>Indtast råvare information</h1>
+
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
 <form method="POST">
+	
+	<%
+	if(raavareAdmin.getIsnew())
+	{
+	%>
 	Råvare id: <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"><br>
+	<%
+	}
+	else
+	{
+		out.println("Råvare id: "+raavareAdmin.getRaavareId()+"<br>");	
+	}
+	%>
 	Råvare navn: <input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
 	Leverandør: <input name="leverandoer" type="text" size = 20 value = "<%= raavareAdmin.getLeverandoer() %>"><br>
 	
