@@ -87,10 +87,10 @@ public class Validation {
 				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
 				PBDAO.updateProduktBatch(PBDTO);
 				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
-				scaleCon.sendToServer("D \"" + RDTO.getReceptNavn() + "\"");
+				scaleCon.sendToServer("D " + RDTO.getReceptNavn());
 			}
 			else {
-				throw new DALException("Produktbatch ikke tilgÃ¦ngelig"); 
+				throw new DALException("Produktbatch i prod"); 
 			}
 			
 		} catch (IOException e) {
