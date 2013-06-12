@@ -26,7 +26,6 @@ public class Controller {
 	private MySQLProduktBatchDAO produktBatchDB = new MySQLProduktBatchDAO();
 	private MySQLReceptKompDAO receptKompDB = new MySQLReceptKompDAO();
 	private List<ReceptKompDTO> receptKompDBList;
-	private int pbId = 4;
 
 	public Controller(){
 	}
@@ -287,7 +286,18 @@ public class Controller {
 
 	private void sekvens()
 	{
+		int pbId = 0;
 		try {
+			//ADD STEP 1 - 6 her
+			// update pbId som bruges af step 7-15
+			/////////////
+			
+			
+			
+			
+			
+			
+			
 			receptKompDBList = receptKompDB.getReceptKompList(produktBatchDB.getProduktBatch(pbId).getRecept().getReceptId());
 			System.out.println("size: " + receptKompDBList.size());
 			for(int i = 0; i < receptKompDBList.size(); i++) {
