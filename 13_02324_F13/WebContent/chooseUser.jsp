@@ -1,4 +1,4 @@
-<jsp:useBean id="valg" class="controller.BrugerAdministration" scope="session" />
+<jsp:useBean id="brugerAdmin" class="controller.BrugerAdministration" scope="session" />
 <html>
 <head><title>Vælg bruger</title></head>
 <body>
@@ -6,8 +6,8 @@
 
 <form method="POST">
 <%
-	for (int i=0; i<valg.getUsers().size(); i++) {
-		dto.OperatoerDTO user = (dto.OperatoerDTO) valg.getUsers().get(i);
+	for (int i=0; i<brugerAdmin.getUsers().size(); i++) {
+		dto.OperatoerDTO user = (dto.OperatoerDTO) brugerAdmin.getUsers().get(i);
 		%>
 			<input type="radio" name="brugervalg" value="<%= user.getOprId() %>">
 			Bruger: <%= user.getOprId() %> Navn <%= user.getOprNavn() %><br>

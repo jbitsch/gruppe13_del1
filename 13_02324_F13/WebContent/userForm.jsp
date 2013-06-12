@@ -20,20 +20,20 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 
 <p><font color="red"><%=brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
 <form method="POST">
-	Operatør navn: <input name="oprName" type="text" size = 20 value = "<%= brugerAdmin.name %>"><br>
-	Initialer: <input type="text" name="ini" value = "<%= brugerAdmin.ini %>"><br>
-	CPR: <input type="text" name="cpr" value = "<%= brugerAdmin.cpr %>"><br>
-	Password:<input type="password" name="newPw" value = "<%= brugerAdmin.password %>"><br>
+	Operatør navn: <input name="oprName" type="text" size = 20 value = "<%=brugerAdmin.getName() %>"><br>
+	Initialer: <input type="text" name="ini" value = "<%= brugerAdmin.getIni() %>"><br>
+	CPR: <input type="text" name="cpr" value = "<%= brugerAdmin.getCpr() %>"><br>
+	Password:<input type="password" name="newPw" value = "<%= brugerAdmin.getPassword() %>"><br>
 <%
-	if(brugerAdmin.id==0 || !("Operatør").equals(brugerAdmin.rolle))
+	if(brugerAdmin.getId()==0 || !("Operatør").equals(brugerAdmin.getRolle()))
 	{
 		%>
 				Rolle: <select name="rolle">
-				<option value="<%=brugerAdmin.rolle%>" selected="selected"><%=brugerAdmin.rolle%></option>
+				<option value="<%=brugerAdmin.getRolle()%>" selected="selected"><%=brugerAdmin.getRolle()%></option>
 				<%
 				for(int i = 0; i < roller.length; i++)
 				{
-					if(!roller[i].equals(brugerAdmin.rolle))
+					if(!roller[i].equals(brugerAdmin.getRolle()))
 					{
 						%>
 							<option value="<%=roller[i]%>"><%=roller[i] %></option>
@@ -46,10 +46,10 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 				<%
 	}else
 	{
-		out.println("Rolle: "+brugerAdmin.rolle+"<br>");
+		out.println("Rolle: "+brugerAdmin.getRolle()+"<br>");
 	}
 	
-	if(brugerAdmin.id==0)
+	if(brugerAdmin.getId()==0)
 	{
 	%>		
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
@@ -60,7 +60,7 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
 			<%
-			if(!(brugerAdmin.id==login.getId()) && !("Operatør".equals(brugerAdmin.rolle)))
+			if(!(brugerAdmin.getId()==login.getId()) && !("Operatør".equals(brugerAdmin.getRolle())))
 			{
 				%>
 					<input type = "submit" name="handling" value="Slet">

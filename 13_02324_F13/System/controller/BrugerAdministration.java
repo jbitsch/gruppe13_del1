@@ -14,64 +14,23 @@ public class BrugerAdministration {
 	
 	private IOperatoerDAO operatoerDAO;
 	
-	public String handling="";
+	private String handling="";
 	private String error = "";
 	private String succes = "";
 	
 	//Change password
-	public String new1 = "";
-	public String new2 = "";
-	public String old = "";
-	public int id = 0;
+	private String new1 = "";
+	private String new2 = "";
+	private String old = "";
+	private int id = 0;
 	
 	//New user
-	public String name = "";
-	public String ini = "";
-	public String cpr ="";
-	public String password ="";
-	public String rolle = "Operatør";
+	private String name = "";
+	private String ini = "";
+	private String cpr ="";
+	private String password ="";
+	private String rolle = "Operatør";
 	
-
-	public BrugerAdministration()
-	{
-		operatoerDAO = new MySQLOperatoerDAO();
-	}
-	public String getError()
-	{
-		return error;
-	}
-	public String getSucces()
-	{
-		return succes;
-	}
-	
-	public void setHandling(String h) {
-		handling = h;
-	}
-	public ArrayList<OperatoerDTO> getUsers() throws DALException
-	{
-		ArrayList<OperatoerDTO> users =  operatoerDAO.getOperatoerList();
-		return users; 
-	}
-	
-	//nulstiller alle parametere
-	public void delete()
-	{	
-		new1 = "";
-		new2 = "";
-		old = "";
-		id = 0;
-		
-		name = "";
-		ini = "";
-		cpr = "";
-		password = "";
-	}
-	public void deleteSucErr()
-	{
-		error = "";
-		succes = "";
-	}
 	
 	///////////////////////////Change password////////////////////////
 	public void setOld(String old)
@@ -296,6 +255,78 @@ public class BrugerAdministration {
 			}
 		}
 		return 0;
+	}
+	
+	
+	public String getHandling() {
+		return handling;
+	}
+	public String getNew1() {
+		return new1;
+	}
+	public String getNew2() {
+		return new2;
+	}
+	public String getOld() {
+		return old;
+	}
+	public int getId() {
+		return id;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getIni() {
+		return ini;
+	}
+	public String getCpr() {
+		return cpr;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public String getRolle() {
+		return rolle;
+	}
+	public BrugerAdministration()
+	{
+		operatoerDAO = new MySQLOperatoerDAO();
+	}
+	public String getError()
+	{
+		return error;
+	}
+	public String getSucces()
+	{
+		return succes;
+	}
+	
+	public void setHandling(String h) {
+		handling = h;
+	}
+	public ArrayList<OperatoerDTO> getUsers() throws DALException
+	{
+		ArrayList<OperatoerDTO> users =  operatoerDAO.getOperatoerList();
+		return users; 
+	}
+	
+	//nulstiller alle parametere
+	public void delete()
+	{	
+		new1 = "";
+		new2 = "";
+		old = "";
+		id = 0;
+		
+		name = "";
+		ini = "";
+		cpr = "";
+		password = "";
+	}
+	public void deleteSucErr()
+	{
+		error = "";
+		succes = "";
 	}
 
 	
