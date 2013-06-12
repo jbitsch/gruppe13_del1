@@ -188,7 +188,7 @@ public class WebInterface extends HttpServlet  {
 		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
 		
 		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){
-			produktAdmin.setProduktbatchId(produktbatchReceptId);
+			produktAdmin.setProduktbatchReceptId(produktbatchReceptId);
 			produktAdmin.setHandling(handling);
 			try {
 				produktAdmin.udfoerHandling();

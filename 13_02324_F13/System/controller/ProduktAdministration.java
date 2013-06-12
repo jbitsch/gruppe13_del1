@@ -35,7 +35,7 @@ public class ProduktAdministration {
 	private String receptNavn = "";
 	private ArrayList<ReceptKompDTO> receptKomp = null;
 	
-	private String produktbatchId = "";
+	private String produktbatchReceptId = "";
 	
 	
 	public ProduktAdministration()
@@ -54,7 +54,7 @@ public class ProduktAdministration {
 	}
 	public void delete()
 	{
-		produktbatchId = "";
+		produktbatchReceptId = "";
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
@@ -67,7 +67,7 @@ public class ProduktAdministration {
 		{
 			if (handling.equals("Opret produktbatch"))
 			{
-				createProduktbatch(produktbatchId);
+				createProduktbatch(produktbatchReceptId);
 			}
 			else
 				System.out.println("Ukendt handling: " + handling);
@@ -83,6 +83,7 @@ public class ProduktAdministration {
 		//int pbId, int status, ReceptDTO recept, Timestamp datoStart, Timestamp datoSlut,OperatoerDTO opr
 		int receptId = Integer.parseInt(id);
 		int batchId = unusedId();
+		System.out.println(batchId);
 		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,0,receptDAO.getRecept(receptId),null,null,null);
 		produktBatchDAO.createProduktBatch(produktBatch);
 		
@@ -143,7 +144,7 @@ public class ProduktAdministration {
 	{
 		this.handling = handling;
 	}
-	public void setProduktbatchId(String produktbatchId) {
-		this.produktbatchId = produktbatchId;
+	public void setProduktbatchReceptId(String produktbatchReceptId) {
+		this.produktbatchReceptId = produktbatchReceptId;
 	}
 }
