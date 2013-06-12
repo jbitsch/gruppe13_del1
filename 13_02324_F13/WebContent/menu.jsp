@@ -32,9 +32,10 @@
 					<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
 					<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
 					<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
+					<input type="radio" name="menuValg" value="">Vis recept<br>
 			<%
 		}
-		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
+		if("Administrator".equals(rolle) )
 		{
 			%>
 					<input type="radio" name="menuValg" value="userForm">Opret bruger<br>

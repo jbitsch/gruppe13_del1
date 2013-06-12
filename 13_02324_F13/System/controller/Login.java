@@ -78,6 +78,10 @@ public class Login
 		{
 			meddelelse += "Forkert brugernavn eller adgangskode <br>";
 		}
+		else if("Operatør".equals(operatoer.getRolle()))
+		{
+			meddelelse += "Du er operatør, og kan derfor ikke logge ind <br>";
+		}
 		else
 		{
 			loggetInd = true;
@@ -89,6 +93,7 @@ public class Login
 	{
 		return rolle;
 	}
+	
 
 
 }

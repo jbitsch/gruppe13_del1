@@ -104,14 +104,12 @@ public class WebInterface extends HttpServlet  {
 		
 		//Tjekker om der er logget ind eller om der skal logges ud
 		if ("log ind".equals(handling)) { 
-
 				try {
 					login.tjekLogin();
 				} catch (DALException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 		}
 		if ("log_ud".equals(handling)) { 
 			login.setAdgangskode("");
@@ -120,7 +118,7 @@ public class WebInterface extends HttpServlet  {
 		//hvis man ikke er logget ind.
 		if (!login.isLoggetInd()) {            // er brugeren logget korrekt ind?
 			application.log("Bruger med "+login.getId()+" skal logge ind.");
-			session.removeAttribute("valg");     // eller evt: session.invalidate()
+			session.removeAttribute("valg");   
 			request.getRequestDispatcher("login.jsp").forward(request,response);
 			return;                              // afslut behandlingen af denne side
 		}
@@ -357,8 +355,8 @@ public class WebInterface extends HttpServlet  {
 	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
 		//Udfoere handlingen i brugervalg.
 		brugerAdmin.setHandling(handling);
-		if (brugerAdmin.handling != null) {           
-			application.log(login.getId()+" udfoerer handling: "+brugerAdmin.handling);
+		if (brugerAdmin.getHandling() != null) {           
+			application.log(login.getId()+" udfoerer handling: "+brugerAdmin.getHandling());
 			try {
 				brugerAdmin.udfoerHandling();
 			} catch (DALException e) {
