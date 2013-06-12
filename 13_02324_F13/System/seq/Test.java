@@ -28,9 +28,9 @@ public class Test {
 		
 		MySocket2 b = new MySocket2();
 		try {
-			b.connect("localhost", 4567);
+//			b.connect("localhost", 4567);
 //			b.connect("localhost", 8000);
-//			b.connect("169.254.2.2", 8000);
+			b.connect("169.254.2.2", 8000);
 			a.recieveUserId(b, 0);
 			a.recieveProductBatchId(b, 0);
 			System.out.println("done");

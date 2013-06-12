@@ -67,9 +67,12 @@ public class Validation {
 
 		try {
 			if(message == 0){
-
-				//TODO: se på opr-nanvn længde
-				connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&2\" "); 
+				if(opr.getOprNavn().length() > 14) {
+				connection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&2\" "); 
+			}
+				else {
+					connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&2\" ");
+				}
 			}
 			else {
 				connection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&2\" ");
