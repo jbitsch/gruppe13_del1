@@ -20,7 +20,6 @@ import controller.RaavareAdministration;
 import daointerfaces.DALException;
 
 
-
 /**
  * Servlet implementation class BrugerId
  */
@@ -150,10 +149,31 @@ public class WebInterface extends HttpServlet  {
 		if(raavarebatchChange)
 			udfoerHandlingRaavareAdmin(application,handling);
 		
+		String searchRB = request.getParameter("searchRB"); 
+		if(!(searchRB == null || searchRB.isEmpty())){
+			String searchName =request.getParameter("searchRBatch");
+			raavareAdmin.setRaavareNavn(searchName);
+		}
+		
 		
 		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
-		//createRecept(request);
-		
+		try {
+			createRecept(request);
+		} catch (DALException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String receptValg = request.getParameter("receptValg");
+		if(!(receptValg == null || receptValg.isEmpty())){
+			int receptValgID = Integer.parseInt(receptValg);
+			try {
+				produktAdmin.setReceptKomp(receptValgID);
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+			produktAdmin.setReceptId(receptValgID);
+			session.setAttribute("menu", "showRecept");
+		}
 		
 		//////////////////////////////////////////////Create produktbatch///////////////////////////////////////
 		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
@@ -191,6 +211,12 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.setProduktbatchId(produktvatchValgID);
 			session.setAttribute("menu", "showProduktbatch");
 		}
+		String searchProduktBatch = request.getParameter("searchProduktB"); 
+		if(!(searchProduktBatch == null || searchProduktBatch.isEmpty())){
+			String searchName =request.getParameter("searchProduktBatch");
+			produktAdmin.setReceptNavn(searchName);
+		}
+		
 			
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
@@ -214,7 +240,7 @@ public class WebInterface extends HttpServlet  {
 		}
 		else if("receptForm".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm1.jsp").forward(request,response);
 		}
 		else if("raavareForm".equals(session.getAttribute("menu")))
 		{
@@ -243,6 +269,14 @@ public class WebInterface extends HttpServlet  {
 		else if("showProduktbatch".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/showProduktbatch.jsp").forward(request,response);
+		}
+		else if("showRecept".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("/WEB-INF/CDIO/showRecept.jsp").forward(request,response);
+		}
+		else if("chooseRecept".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("/WEB-INF/CDIO/chooseRecept.jsp").forward(request,response);
 		}
 		else if("Tilbage".equals(session.getAttribute("menu")))
 		{
@@ -322,7 +356,7 @@ public class WebInterface extends HttpServlet  {
 		}
 	}
 	/////////////////////////////////Recept///////////////////////////////////////////////////////
-	private boolean createRecept(HttpServletRequest request) {
+	private boolean createRecept(HttpServletRequest request) throws DALException {
 		boolean dataExcist = false;
 		
 		String receptId = request.getParameter("receptId");
@@ -335,6 +369,13 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.setReceptNavn(receptNavn);
 			dataExcist = true;
 		}
+		String select[] = request.getParameterValues("raavareToAdd"); 
+		 if (select != null && select.length != 0) {
+		 
+			 for (int i = 0; i < select.length; i++) {
+				 produktAdmin.addToRaavareList(Integer.parseInt(select[i]));
+			 }
+		 }
 		return dataExcist;
 	}
 	

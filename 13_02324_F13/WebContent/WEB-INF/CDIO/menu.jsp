@@ -31,7 +31,7 @@
 					<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
 					<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
 					<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
-					<input type="radio" name="menuValg" value="">Vis recept<br>
+					<input type="radio" name="menuValg" value="chooseRecept">Vis recept<br>
 			<%
 		}
 		if("Administrator".equals(rolle) )
