@@ -1,4 +1,6 @@
-<%@page import="dto.ReceptDTO"%>
+<%@page import="dto.ReceptDTO" %>
+<%@page import="java.util.ArrayList" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,25 +12,51 @@
 </head>
 <body>
 
-<h1>Vælg recept der skal oprettes som produktbatch</h1>
+<h1>Vaelg recept der skal oprettes som produktbatch</h1>
 
 <p><font color="red"><%=produktAdmin.getError() %></font><font color="green"><%= produktAdmin.getSucces() %></font><br>
 
-<form method="POST">
-<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
-<%
-	for (int i=0; i<produktAdmin.getRecepter().size(); i++) {
-		ReceptDTO recept = (dto.ReceptDTO) produktAdmin.getRecepter().get(i);
-		%>
-			<input type="radio" name="produktbatchReceptId" value="<%= recept.getReceptId() %>">
-			Receptnavn: <%= recept.getReceptNavn() %><br>
-			
+<div style="width: 100%;">
+   <div style="float:left; width: 40%">
+   <form method="POST">
 		<%
-		//getReceptKomp(int id)
-	}
-%>
-<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret produktbatch">
-</form>
+			ArrayList<ReceptDTO>recepter =  produktAdmin.getRecepter();
+	
+			for (int i=0; i<recepter.size(); i++) {
+		
+			ReceptDTO recept = recepter.get(i);
+			int id = recept.getReceptId();
+		%>
+			<input type="radio" name="produktbatchReceptId" value="<%=id %>" style="display:inline"/>
+			
+			<input type="submit" name="visInfo" value="<%=id%>"/>Receptnavn: <%= recept.getReceptNavn() %>
+			<br>
+		<%
+			}
+		%>
+			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret produktbatch">
+	</form>
+   
+   </div>
+   <div style="float:left">
+	<%
+		ArrayList<dto.ReceptKompDTO> recepterKomp = produktAdmin.getReceptKomp();
+		if(recepterKomp!=null)
+		{
+			out.println("<h2>Raavare:</h2>");
+			if(recepterKomp.size()==0)
+				out.println("Indeholder ingen raavare");
+			for(int i=0; i<recepterKomp.size(); i++)
+			{
+				out.print("Varenavn: "+recepterKomp.get(i).getRaavare().getRaavareNavn()+"<br>");
+				out.print("Netto: "+recepterKomp.get(i).getNomNetto()+"<br>");
+				out.print("<br>");
+			}
+		}	
+	%>   
+   </div>
+</div>
+<div style="clear:both"></div>
 
 
 
