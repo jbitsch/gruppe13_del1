@@ -22,7 +22,7 @@
 	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
 	<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>					
 	<input type="radio" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
-	<input type="radio" name="menuValg" value="showProduktBatch">Vis produktbatch<br>
+	<input type="radio" name="menuValg" value="chooseProduktBatch">Vis produktbatch<br>
 	<%
 		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
 		{

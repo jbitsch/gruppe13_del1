@@ -15,7 +15,7 @@
 	for (int i=0; i<raavareAdmin.getRaavarebatch().size(); i++) {
 		dto.RaavareBatchDTO raavareBatch = (dto.RaavareBatchDTO) raavareAdmin.getRaavarebatch().get(i);
 		%>
-			Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getRaavare().getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %> <br>
+			Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %> <br>
 		<%
 	}
 %>

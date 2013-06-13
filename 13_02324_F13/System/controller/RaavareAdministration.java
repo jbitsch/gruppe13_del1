@@ -82,7 +82,7 @@ public class RaavareAdministration {
 		{
 			if (handling.equals("Opret Raavare"))
 			{
-				if(okRaavareId() && okNavn(raavareNavn) && okNavn(leverandoer))
+				if(okRaavareId() && okNavn(raavareNavn))
 				{
 					
 					raavareNavn = replaceChar(raavareNavn);
@@ -95,7 +95,7 @@ public class RaavareAdministration {
 			}
 			else if (handling.equals("Ændre Raavare"))
 			{
-				if(okNavn(raavareNavn) && okNavn(leverandoer))
+				if(okNavn(raavareNavn))
 				{
 					raavareNavn = replaceChar(raavareNavn);
 					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn);
@@ -107,7 +107,7 @@ public class RaavareAdministration {
 			}
 			else if (handling.equals("Opret Raavarebatch"))
 			{
-				if(okRaavareBatchId() && okMaengde() && okBatchRaavareId())
+				if(okRaavareBatchId() && okMaengde() && okBatchRaavareId()&& okLeverandoer(leverandoer))
 				{
 					double talMaengde = Double.parseDouble(maengde);
 					talMaengde = Math.round(talMaengde*10000)/10000.0d;
@@ -116,7 +116,7 @@ public class RaavareAdministration {
 					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), raavareDAO.getRaavare(Integer.parseInt(batchRaavareId)), talMaengde, new Timestamp(date.getTime()),leverandoer);
 					
 					raavareBatchDAO.createRaavareBatch(nytRaavareBatch);
-					succes = "Råvarebatch nr." + nytRaavareBatch.getRbId() + " er nu oprettet!";
+					succes = "Råvarebatch nr." + nytRaavareBatch.getRbId() +"fra "+leverandoer +" er nu oprettet!";
 					delete();
 				}			
 			}
@@ -171,7 +171,16 @@ public class RaavareAdministration {
 	{
 		if(navn.length() < 2 || navn.length() > 20)
 		{
-			error += "Længde på raavarenavn og leverandør skal være på 2-20 karakterer\n";
+			error += "Længde på raavarenavn skal være på 2-20 karakterer\n";
+			return false;
+		}
+		return true;
+	}
+	public boolean okLeverandoer(String navn)
+	{
+		if(navn.length() < 2 || navn.length() > 20)
+		{
+			error += "Længde på leverandoer skal være på 2-20 karakterer\n";
 			return false;
 		}
 		return true;
@@ -180,7 +189,7 @@ public class RaavareAdministration {
 	{
 		try
 		{
-			int id = Integer.parseInt(batchRaavareId);
+			Integer.parseInt(batchRaavareId);
 			return true;
 
 		}

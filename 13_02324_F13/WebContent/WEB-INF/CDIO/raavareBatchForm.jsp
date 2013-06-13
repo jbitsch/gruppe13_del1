@@ -18,14 +18,16 @@
 <form method="POST">
 <input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	Råvarebatch id: <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"><br>
+	Leverandøer: <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"><br>
 	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br>
+	
 	Vælg råvare:<br>
 	<%
 	for (int i=0; i<raavareAdmin.getRaavare().size(); i++) {
 		RaavareDTO raavare = (dto.RaavareDTO) raavareAdmin.getRaavare().get(i);
 		%>
 			<input type="radio" name="raavarevalgBatch" value="<%= raavare.getRaavareId() %>">
-			Råvare: <%= raavare.getRaavareNavn() %> Leverandør <%= raavare.getLeverandoer() %><br>
+			Råvare: <%= raavare.getRaavareNavn() %><br>
 		<%
 	}
 %>

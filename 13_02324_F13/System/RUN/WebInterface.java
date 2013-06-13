@@ -17,9 +17,8 @@ import controller.Login;
 import controller.ProduktAdministration;
 import controller.RaavareAdministration;
 
-import daoimpl.MySQLOperatoerDAO;
 import daointerfaces.DALException;
-import daointerfaces.IOperatoerDAO;
+
 
 
 /**
@@ -38,7 +37,6 @@ public class WebInterface extends HttpServlet  {
      */
     public WebInterface() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -98,7 +96,6 @@ public class WebInterface extends HttpServlet  {
 				try {
 					login.tjekLogin();
 				} catch (DALException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}
@@ -125,7 +122,6 @@ public class WebInterface extends HttpServlet  {
 			try {
 				brugerAdmin.setUser(uId);
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			session.setAttribute("menu", "userForm");
@@ -134,7 +130,7 @@ public class WebInterface extends HttpServlet  {
 		if(brugerChange)
 				udfoerHandlingUserAdmin(application,handling);
 		
-		//////////////////Raavare information ///////////////////////
+		//////////////////Raavare information /////////////////////////////////////////////////////////////
 		String raavareId = request.getParameter("raavarevalg");
 		if(!(raavareId == null || raavareId.isEmpty())){
 			int raavareID = Integer.parseInt(raavareId);
@@ -169,19 +165,16 @@ public class WebInterface extends HttpServlet  {
 					produktAdmin.setHandling(handling);
 					produktAdmin.udfoerHandling();
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		String visInfo = request.getParameter("visInfo");
-		String test = request.getParameter("test");
-		System.out.println(test);
+
 		if(!(visInfo  == null || visInfo.isEmpty())){
 			
 			try {
 				produktAdmin.setReceptKomp(Integer.parseInt(visInfo ));
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -190,11 +183,15 @@ public class WebInterface extends HttpServlet  {
 		String produktvatchValg = request.getParameter("produktvatchValg");
 		if(!(produktvatchValg == null || produktvatchValg.isEmpty())){
 			int produktvatchValgID = Integer.parseInt(produktvatchValg);
+			try {
+				produktAdmin.setReceptKomp(produktvatchValgID);
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
 			produktAdmin.setProduktbatchId(produktvatchValgID);
 			session.setAttribute("menu", "showProduktbatch");
 		}
 			
-		
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
 		
@@ -239,7 +236,7 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/produktbatchForm.jsp").forward(request,response);
 		}
-		else if("showProduktBatch".equals(session.getAttribute("menu")))
+		else if("chooseProduktBatch".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseProduktbatch.jsp").forward(request,response);
 		}
@@ -253,11 +250,13 @@ public class WebInterface extends HttpServlet  {
 			delete();
 			if(page!=null)
 				request.getRequestDispatcher(page).forward(request,response);
+			else
+				request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
 		}
 		else
 		{	
-		delete();
-		request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);	
+			delete();
+			request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);	
 		}
 	}
 	/**
@@ -282,11 +281,6 @@ public class WebInterface extends HttpServlet  {
 			raavareAdmin.setRaavareNavn(raavareNavn);
 			dataExcist = true;
 		}
-		String leverandoer = request.getParameter("leverandoer");
-		if(!(leverandoer == null || leverandoer.isEmpty())){
-			raavareAdmin.setLeverandoer(leverandoer);
-			dataExcist = true;
-		}
 		return dataExcist;
 	}	
 	private boolean raavarebatchChange(HttpServletRequest request)
@@ -308,6 +302,11 @@ public class WebInterface extends HttpServlet  {
 			raavareAdmin.setBatchRaavareId(raavarevalgBatch);
 			dataExcist = true;
 		}
+		String leverandoer = request.getParameter("leverandoer");
+		if(!(leverandoer == null || leverandoer.isEmpty())){
+			raavareAdmin.setLeverandoer(leverandoer);
+			dataExcist = true;
+		}
 		return dataExcist;
 	}
 	private void udfoerHandlingRaavareAdmin(ServletContext application,String handling) {
@@ -318,7 +317,6 @@ public class WebInterface extends HttpServlet  {
 			try {
 				raavareAdmin.udfoerHandling();
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}
@@ -349,7 +347,6 @@ public class WebInterface extends HttpServlet  {
 			try {
 				brugerAdmin.udfoerHandling();
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}

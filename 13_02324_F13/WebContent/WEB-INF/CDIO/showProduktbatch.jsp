@@ -34,12 +34,12 @@ else if(produktBatch.getStatus()==2)
 <p><b>Receptkomoponeneter:</b></p>
 <%
 
-int id = produktBatch.getRecept().getReceptId();
-for (int i=0; i<produktAdmin.getReceptKomp(id).size(); i++) {
+
+for (int i=0; i<produktAdmin.getReceptKomp().size(); i++) {
 		
-		ReceptKompDTO receptKomp = (dto.ReceptKompDTO) produktAdmin.getReceptKomp(id).get(i);
+		ReceptKompDTO receptKomp = (dto.ReceptKompDTO) produktAdmin.getReceptKomp().get(i);
 		%>
-		<b><%=i+1 %> Raavarenavn:</b> <%=receptKomp.getRaavare().getRaavareNavn() %>, leverandør <%=receptKomp.getRaavare().getLeverandoer() %><br>
+		<b><%=i+1 %> Raavarenavn:</b> <%=receptKomp.getRaavare().getRaavareNavn() %><br>
 		Netto: <%=receptKomp.getNomNetto() %> <br>
 		Tolerance <%=receptKomp.getTolerance() %><br>
 		<%

@@ -12,7 +12,7 @@
 		RaavareDTO raavare = (dto.RaavareDTO) raavareAdmin.getRaavare().get(i);
 		%>
 			<input type="radio" name="raavarevalg" value="<%= raavare.getRaavareId() %>">
-			Råvare: <%= raavare.getRaavareNavn() %> Leverandør <%= raavare.getLeverandoer() %><br>
+			Råvare: <%= raavare.getRaavareNavn() %> <br>
 		<%
 	}
 %>
