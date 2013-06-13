@@ -435,6 +435,7 @@ public class Controller {
 	{
 		int pbId = 0;
 		try {
+//			SOS(socketConnect);
 			recieveUserId(socketConnect, 0);
 			pbId = recieveProductBatchId(socketConnect, 0);
 
@@ -448,5 +449,19 @@ public class Controller {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void SOS(MySocket2 con) {
+		con.sendToServer("M12 1 ");
+		con.sendToServer("M12 1 ");
+		con.sendToServer("M12 1 ");
+		con.sendToServer("M12 0 ");
+		con.sendToServer("M12 2 ");
+		con.sendToServer("M12 2 ");
+		con.sendToServer("M12 2 ");
+		con.sendToServer("M12 0 ");
+		con.sendToServer("M12 1 ");
+		con.sendToServer("M12 1 ");
+		con.sendToServer("M12 1 ");
 	}
 }
