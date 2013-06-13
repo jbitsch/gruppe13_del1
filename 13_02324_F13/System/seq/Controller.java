@@ -376,6 +376,7 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Opr_PB = opr;
 		return opr.getOprId();
 	}
 
