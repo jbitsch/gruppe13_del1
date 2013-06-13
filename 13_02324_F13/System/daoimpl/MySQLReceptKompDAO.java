@@ -17,7 +17,7 @@ public class MySQLReceptKompDAO implements IReceptKompDAO {
 		ResultSet rs = Connector.doQuery("SELECT rk.*,r.* FROM raavare r, receptkomponent rk WHERE r.raavare_id=rk.raavare_id AND rk.recept_id = " + receptId + " AND rk.raavare_id=" + raavareId);
 	    try {
 	    	if (!rs.first()) throw new DALException("Receptkomponenten med recept " + receptId + " og raavare " + raavareId + " findes ikke"); 
-	    	RaavareDTO raavare = new RaavareDTO(rs.getInt(5),rs.getString(6),rs.getString(7));
+	    	RaavareDTO raavare = new RaavareDTO(rs.getInt(5),rs.getString(6));
 	    	return new ReceptKompDTO (rs.getInt(1),raavare, rs.getDouble(3), rs.getDouble(4));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
@@ -46,7 +46,7 @@ public class MySQLReceptKompDAO implements IReceptKompDAO {
 		{
 			while (rs.next()) 
 			{
-				RaavareDTO raavare = new RaavareDTO(rs.getInt(5),rs.getString(6),rs.getString(7));
+				RaavareDTO raavare = new RaavareDTO(rs.getInt(5),rs.getString(6));
 				list.add(new ReceptKompDTO(rs.getInt(1), raavare, rs.getDouble(3), rs.getDouble(4)));
 			}
 		}
@@ -61,7 +61,7 @@ public class MySQLReceptKompDAO implements IReceptKompDAO {
 		{
 			while (rs.next()) 
 			{
-				RaavareDTO raavare = new RaavareDTO(rs.getInt(5),rs.getString(6),rs.getString(7));
+				RaavareDTO raavare = new RaavareDTO(rs.getInt(5),rs.getString(6));
 				list.add(new ReceptKompDTO(rs.getInt(1), raavare, rs.getDouble(3), rs.getDouble(4)));
 			}
 		}
