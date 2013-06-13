@@ -55,7 +55,10 @@ public class RaavareAdministration {
 	
 	public ArrayList<RaavareBatchDTO> getRaavarebatch() throws DALException
 	{
-		return raavareBatchDAO.getRaavareBatchList();
+		if(raavareNavn==null || "".equals(raavareNavn))
+			return raavareBatchDAO.getRaavareBatchList();
+		else
+			return raavareBatchDAO.getRaavareBatch(raavareNavn);
 	}
 	
 	public ArrayList<RaavareDTO> getRaavare() throws DALException
@@ -241,7 +244,7 @@ public class RaavareAdministration {
 	{
 		try
 		{
-			double value = Double.parseDouble(maengde);
+			Double.parseDouble(maengde);
 			return true;
 		}
 		catch(NumberFormatException e)

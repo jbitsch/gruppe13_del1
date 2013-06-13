@@ -100,8 +100,8 @@ public class BrugerAdministration {
 			else if(handling.equals("Slet"))
 			{
 				operatoerDAO.deleteOperatoer(id);
-				delete();
 				succes = "Bruger med id "+ id + " er blevet slettet";
+				delete();
 			}
 			else
 				System.out.println("Ukendt handling: " + handling);

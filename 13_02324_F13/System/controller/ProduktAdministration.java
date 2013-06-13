@@ -163,7 +163,10 @@ public class ProduktAdministration {
 	}
 	public ArrayList<ProduktBatchDTO> getProduktbatch()throws DALException
 	{
-		return produktBatchDAO.getProduktBatchList();
+		if(receptNavn==null || "".equals(receptNavn))
+			return produktBatchDAO.getProduktBatchList();
+		else
+			return produktBatchDAO.getProduktBatchList(receptNavn);
 	}
 	public void setProduktbatchId(int produktbatchId)
 	{

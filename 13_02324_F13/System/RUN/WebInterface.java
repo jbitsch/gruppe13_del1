@@ -150,6 +150,12 @@ public class WebInterface extends HttpServlet  {
 		if(raavarebatchChange)
 			udfoerHandlingRaavareAdmin(application,handling);
 		
+		String searchRB = request.getParameter("searchRB"); 
+		if(!(searchRB == null || searchRB.isEmpty())){
+			String searchName =request.getParameter("searchRBatch");
+			raavareAdmin.setRaavareNavn(searchName);
+		}
+		
 		
 		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
 		//createRecept(request);
@@ -191,6 +197,12 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.setProduktbatchId(produktvatchValgID);
 			session.setAttribute("menu", "showProduktbatch");
 		}
+		String searchProduktBatch = request.getParameter("searchProduktB"); 
+		if(!(searchProduktBatch == null || searchProduktBatch.isEmpty())){
+			String searchName =request.getParameter("searchProduktBatch");
+			produktAdmin.setReceptNavn(searchName);
+		}
+		
 			
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
@@ -322,21 +334,21 @@ public class WebInterface extends HttpServlet  {
 		}
 	}
 	/////////////////////////////////Recept///////////////////////////////////////////////////////
-	private boolean createRecept(HttpServletRequest request) {
-		boolean dataExcist = false;
-		
-		String receptId = request.getParameter("receptId");
-		if(!(receptId == null || receptId.isEmpty())){
-			produktAdmin.setReceptId(Integer.parseInt(receptId));
-			dataExcist = true;
-		}
-		String receptNavn = request.getParameter("receptNavn");
-		if(!(receptNavn == null || receptNavn.isEmpty())){
-			produktAdmin.setReceptNavn(receptNavn);
-			dataExcist = true;
-		}
-		return dataExcist;
-	}
+//	private boolean createRecept(HttpServletRequest request) {
+//		boolean dataExcist = false;
+//		
+//		String receptId = request.getParameter("receptId");
+//		if(!(receptId == null || receptId.isEmpty())){
+//			produktAdmin.setReceptId(Integer.parseInt(receptId));
+//			dataExcist = true;
+//		}
+//		String receptNavn = request.getParameter("receptNavn");
+//		if(!(receptNavn == null || receptNavn.isEmpty())){
+//			produktAdmin.setReceptNavn(receptNavn);
+//			dataExcist = true;
+//		}
+//		return dataExcist;
+//	}
 	
 	/////////////////////////Create user informations//////////////////////////////////
 	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {

@@ -34,6 +34,9 @@
 		<%
 	}
 	%>
+	
+	Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><br>
+	<input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
 	<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg produktbatch">
 </form>
 </body>
