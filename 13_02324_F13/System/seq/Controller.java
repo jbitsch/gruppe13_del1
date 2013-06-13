@@ -141,7 +141,7 @@ public class Controller {
 			response = socketConnect.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
-				if(response.equals("RM20 A \" \"")) {
+				if(response.startsWith("RM20 A")) {
 					socketConnect.sendToServer("DW");
 					System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
 					System.out.println("Weight emptied, response: " + response);
