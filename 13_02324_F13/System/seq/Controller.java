@@ -84,7 +84,8 @@ public class Controller {
 		for(int i = 0; i < 3; i++){
 			socketConnect.sendToServer("M12 2");
 		}
-		socketConnect.sendToServer("DET VAR FLOT HVA!?" + "\" \" \" \" \" ");
+		socketConnect.sendToServer("K 1 ");
+		socketConnect.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
 		System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
 		while(true){		
 			response = socketConnect.recieveFromServer().toUpperCase();
@@ -95,12 +96,12 @@ public class Controller {
 					break;
 				}
 				else{
-					socketConnect.sendToServer("DET VAR FLOT HVA!?" + "\" \" \" \" \" ");
+					socketConnect.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
 					System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
 				}
 			}
 			else{
-				socketConnect.sendToServer("DET VAR FLOT HVA!?" + "\" \" \" \" \" ");
+				socketConnect.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
 				System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
 			}
 		}
@@ -129,9 +130,9 @@ public class Controller {
 		}
 
 		// STEP 7. 8. START
+		socketConnect.sendToServer("K 3");
 		socketConnect.sendToServer("DW");
 		System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
-		socketConnect.sendToServer("K 3");
 		System.out.println("Modtager svar fra K 3: \n" + socketConnect.recieveFromServer().toUpperCase());
 		System.out.println("Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’");
 		socketConnect.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
@@ -264,9 +265,15 @@ public class Controller {
 						try {
 							produktBatchKompDB.createProduktBatchKomp(new ProduktBatchKompDTO(pbId, raavareBatchDB.getRaavareBatch(raavareBatchSelect), taraBeholderVægt, raavareMaengde));
 							System.out.println("Ny lager maengde" + (raavareStock - raavareMaengde));
-							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
+							MySQLRaavareBatchDAO RBDAO = new MySQLRaavareBatchDAO();
+							RaavareBatchDTO RBDTO = RBDAO.getRaavareBatch(raavareBatchSelect);
+							RBDTO.setMaengde(raavareStock-raavareMaengde);
+							RBDAO.updateRaavareBatch(RBDTO);
+//							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
 						} catch (DALException e) {	
 							System.out.println("database error");
+							System.out.println(e.getMessage());
+							e.printStackTrace();
 						}
 						break;
 					}
