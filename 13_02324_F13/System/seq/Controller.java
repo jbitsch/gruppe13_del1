@@ -36,8 +36,12 @@ public class Controller {
 
 	public Controller(){
 	}
+	
+	public void run(){
+		connectToWeight();
+	}
 
-	public void Con(){
+	private void connectToWeight(){
 		try
 		{
 			System.out.println("Indtast ip:");
@@ -49,18 +53,18 @@ public class Controller {
 		catch (IOException IO)
 		{
 			System.out.println("Forkert ip/port");
-			Con();
+			connectToWeight();
 		}
 		catch (NumberFormatException Ne){
 			System.out.println("Forkert ip/port");
-			Con();
+			connectToWeight();
 		}
-		mySqlCon();
+		connectToDB();
 		System.out.println("hejconnection");
 		sekvens();
 	}
 
-	public void mySqlCon(){
+	private void connectToDB(){
 		try{
 			Connector mySql = new Connector();
 			System.out.println("MySQL connection");
@@ -71,7 +75,7 @@ public class Controller {
 				Thread.sleep(30000);
 			} catch (InterruptedException e1) {
 			}
-			mySqlCon();	
+			connectToDB();	
 		}
 	}
 
@@ -307,7 +311,7 @@ public class Controller {
 	 * @param message An integer which governs which message will be sent to the scale
 	 * @return The PB_id from the scale
 	 */
-	public int recieveProductBatchId(WeightSocket scaleCon, int message) {
+	private int recieveProductBatchId(WeightSocket scaleCon, int message) {
 		Integer PBId = null;
 		if(message == 0) {
 			scaleCon.sendToServer("RM20 8 \"Indtast PBId\" \" \" \"&3\" ");
@@ -411,7 +415,7 @@ public class Controller {
 	 * @param connection Connection to the scale
 	 * @param message An int governing what message will be sent to the scale
 	 */
-	public void recieveUserId(WeightSocket connection, int message) {
+	private void recieveUserId(WeightSocket connection, int message) {
 
 		if(message == 0) {
 			connection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \"&3\" ");
