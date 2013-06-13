@@ -163,6 +163,7 @@ public class WebInterface extends HttpServlet  {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		String receptValg = request.getParameter("receptValg");
 		if(!(receptValg == null || receptValg.isEmpty())){
 			int receptValgID = Integer.parseInt(receptValg);

@@ -24,7 +24,7 @@ public class Controller {
 
 	private OperatoerDTO Opr_PB = null;
 
-	private MySocket2 socketConnect = new MySocket2();
+	private WeightSocket socketConnect = new WeightSocket();
 	private Scanner input = new Scanner(System.in);
 	private String ip;
 	private int port;
@@ -36,8 +36,12 @@ public class Controller {
 
 	public Controller(){
 	}
+	
+	public void run(){
+		connectToWeight();
+	}
 
-	public void Con(){
+	private void connectToWeight(){
 		try
 		{
 			System.out.println("Indtast ip:");
@@ -49,18 +53,18 @@ public class Controller {
 		catch (IOException IO)
 		{
 			System.out.println("Forkert ip/port");
-			Con();
+			connectToWeight();
 		}
 		catch (NumberFormatException Ne){
 			System.out.println("Forkert ip/port");
-			Con();
+			connectToWeight();
 		}
-		mySqlCon();
+		connectToDB();
 		System.out.println("hejconnection");
 		sekvens();
 	}
 
-	public void mySqlCon(){
+	private void connectToDB(){
 		try{
 			Connector mySql = new Connector();
 			System.out.println("MySQL connection");
@@ -71,7 +75,7 @@ public class Controller {
 				Thread.sleep(30000);
 			} catch (InterruptedException e1) {
 			}
-			mySqlCon();	
+			connectToDB();	
 		}
 	}
 
@@ -170,14 +174,15 @@ public class Controller {
 			response = socketConnect.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
-				if(response.equals("RM20 A \" \"")) {
+				if(response.startsWith("RM20 A")) {
 					socketConnect.sendToServer("DW");
 					System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
 					socketConnect.sendToServer("S");
 					while(!response.contains("kg")) {
 						response = socketConnect.recieveFromServer();
 					}
-					taraBeholderVægt = Double.parseDouble((response.substring(9, 14)));
+					System.out.println(response);
+					taraBeholderVægt = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
 					System.out.println("Taracontainer placed, response: " + response + ", taravægt: " + taraBeholderVægt);
 					socketConnect.sendToServer("T");
 					System.out.println("Modtager svar fra tarering: \n" + socketConnect.recieveFromServer().toUpperCase());
@@ -256,7 +261,7 @@ public class Controller {
 						socketConnect.sendToServer("S");
 						response = socketConnect.recieveFromServer();
 					}
-					raavareMaengde = Double.parseDouble((response.substring(9, 14)));
+					raavareMaengde = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
 					System.out.println("Raavare manengde: " + raavareMaengde);
 					System.out.println("Raavare tolerance: " + raavareTolerance);
 					System.out.println("Raavare value: " + raavareValue);
@@ -299,7 +304,14 @@ public class Controller {
 	}
 
 
-	public int recieveProductBatchId(MySocket2 scaleCon, int message) {
+	/**
+	 * Method which recieves a ProduktBatch_id from scale, and sends the reciet name back
+	 * to the scale.
+	 * @param scaleCon Connection
+	 * @param message An integer which governs which message will be sent to the scale
+	 * @return The PB_id from the scale
+	 */
+	private int recieveProductBatchId(WeightSocket scaleCon, int message) {
 		Integer PBId = null;
 		if(message == 0) {
 			scaleCon.sendToServer("RM20 8 \"Indtast PBId\" \" \" \"&3\" ");
@@ -352,7 +364,15 @@ public class Controller {
 		return PBId;
 	}
 
-	private int validateName(MySocket2 connection, int message, OperatoerDTO opr) {
+	/**
+	 * Method which sends an operator_name to the scale, and waits for it to either confirm or
+	 * deny the name.
+	 * @param connection The connection
+	 * @param message An int which governs what message will be sent to the scale
+	 * @param opr The OperatoerDTO which matches the opr_id from the recieveUserId method
+	 * @return The opr_id from the opr parameter
+	 */
+	private int validateName(WeightSocket connection, int message, OperatoerDTO opr) {
 
 
 		try {
@@ -388,7 +408,14 @@ public class Controller {
 		return opr.getOprId();
 	}
 
-	public void recieveUserId(MySocket2 connection, int message) {
+	
+	/**
+	 * A method which asks for the id of the person using the scale, and calls the method 
+	 * validateName
+	 * @param connection Connection to the scale
+	 * @param message An int governing what message will be sent to the scale
+	 */
+	private void recieveUserId(WeightSocket connection, int message) {
 
 		if(message == 0) {
 			connection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \"&3\" ");
@@ -435,7 +462,6 @@ public class Controller {
 	{
 		int pbId = 0;
 		try {
-//			SOS(socketConnect);
 			recieveUserId(socketConnect, 0);
 			pbId = recieveProductBatchId(socketConnect, 0);
 
@@ -450,18 +476,5 @@ public class Controller {
 		}
 
 	}
-	
-	private void SOS(MySocket2 con) {
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 0 ");
-		con.sendToServer("M12 2 ");
-		con.sendToServer("M12 2 ");
-		con.sendToServer("M12 2 ");
-		con.sendToServer("M12 0 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-	}
+
 }

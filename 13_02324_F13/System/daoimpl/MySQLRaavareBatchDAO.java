@@ -24,6 +24,21 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 			throw new DALException(e); 
 		}
 	}
+	@Override
+	public ArrayList<RaavareBatchDTO> getRaavareBatch(String raavareNavn) throws DALException {
+		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
+		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND r.raavare_navn LIKE '" + raavareNavn +"' ORDER BY r.raavare_id ASC");
+		try
+		{
+			while (rs.next()) 
+			{
+				RaavareDTO raavare = new RaavareDTO(rs.getInt(1),rs.getString(2));
+				list.add(new RaavareBatchDTO (rs.getInt(3), raavare, rs.getDouble(5), rs.getTimestamp(6),rs.getString(7)));
+			}
+		}
+		catch (SQLException e) { throw new DALException(e); }
+		return list;
+	}
 
 	@Override
 	public ArrayList<RaavareBatchDTO> getRaavareBatchList() throws DALException {

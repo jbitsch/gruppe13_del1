@@ -177,10 +177,12 @@ public class ProduktAdministration {
 	{
 		this.produktbatchId = produktbatchId;
 	}
+
 	public ReceptDTO getRecept() throws DALException
 	{
 		return receptDAO.getRecept(receptId);
 	}
+
 	public void addReceptKomp(int r_id, double netto, double tolerance) throws DALException
 	{
 		RaavareDTO raavare = raavareDAO.getRaavare(r_id);

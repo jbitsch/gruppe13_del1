@@ -9,9 +9,12 @@
 <body>
 <h1>Vælg råvarebatch</h1>
 
-<form method="POST">
-<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
+
 <%
+	if(raavareAdmin.getRaavarebatch().size()==0)
+	{
+		out.println("Der findes ingen raavarebatches med raavarenavnet: "+ raavareAdmin.getRaavareNavn());
+	}
 	for (int i=0; i<raavareAdmin.getRaavarebatch().size(); i++) {
 		dto.RaavareBatchDTO raavareBatch = (dto.RaavareBatchDTO) raavareAdmin.getRaavarebatch().get(i);
 		%>
@@ -19,7 +22,11 @@
 		<%
 	}
 %>
-<input type = "submit" name="menuValg" value="Tilbage">
+<form method="POST">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	<br>
+
+Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch"><br>
+<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="searchRB" value="Soeg på raavare navn">
 </form>
 </body>
 </html>

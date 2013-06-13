@@ -1,14 +1,17 @@
-package RUN;
+
 // Import required java libraries
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.util.*;
 
 // Extend HttpServlet class
 public class ErrorHandler extends HttpServlet {
  
-  // Method to handle GET method request.
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+// Method to handle GET method request.
   public void doGet(HttpServletRequest request,
                     HttpServletResponse response)
             throws ServletException, IOException
@@ -45,7 +48,7 @@ public class ErrorHandler extends HttpServlet {
       if (throwable == null && statusCode == null){
          out.println("<h2>Error information is missing</h2>");
          out.println("Please return to the <a href=\"" + 
-           response.encodeURL("http://localhost:8080/") + 
+           response.encodeURL("http://localhost:8080/13_02324_F13_Final/CDIO/") + 
            "\">Home Page</a>.");
       }else if (statusCode != null){
          out.println("The status code : " + statusCode);
