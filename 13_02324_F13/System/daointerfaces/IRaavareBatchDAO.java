@@ -6,6 +6,7 @@ import dto.RaavareBatchDTO;
 
 public interface IRaavareBatchDAO {
 	RaavareBatchDTO getRaavareBatch(int rbId) throws DALException;
+	ArrayList<RaavareBatchDTO>getRaavareBatch(String raavareNavn) throws DALException;
 	ArrayList<RaavareBatchDTO> getRaavareBatchList() throws DALException;
 	ArrayList<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException;
 	void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException;
