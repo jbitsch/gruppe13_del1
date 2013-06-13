@@ -18,8 +18,8 @@ public class MySQLProduktBatchKompDAO implements IProduktBatchKompDAO{
 		ResultSet rs = Connector.doQuery("SELECT pbk.*, rb.*, r.* FROM produktbatchkomponent pbk, raavarebatch rb, raavare r WHERE pbk.rb_id = rb.rb_id AND rb.raavare_id = r.raavare_id AND pbk.pb_id = " + pbId + " AND pbk.rb_id = " + rbId);
 	    try {
 	    	if (!rs.first()) throw new DALException("Produktbatchkomponent med produktbatch " + pbId + " og raavarebatch " + rbId + " findes ikke"); 
-	    	RaavareDTO raavare = new RaavareDTO(rs.getInt(9),rs.getString(10),rs.getString(11));
-	    	RaavareBatchDTO raavareBatch = new RaavareBatchDTO(rs.getInt(5),raavare,rs.getDouble(7),rs.getTimestamp(8));
+	    	RaavareDTO raavare = new RaavareDTO(rs.getInt(10),rs.getString(11));
+	    	RaavareBatchDTO raavareBatch = new RaavareBatchDTO(rs.getInt(5),raavare,rs.getDouble(7),rs.getTimestamp(8),rs.getString(9));
 	    	return new ProduktBatchKompDTO (rs.getInt(1), raavareBatch, rs.getDouble(3), rs.getDouble(4));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
@@ -49,8 +49,8 @@ public class MySQLProduktBatchKompDAO implements IProduktBatchKompDAO{
 		{
 			while (rs.next()) 
 			{
-		    	RaavareDTO raavare = new RaavareDTO(rs.getInt(9),rs.getString(10),rs.getString(11));
-		    	RaavareBatchDTO raavareBatch = new RaavareBatchDTO(rs.getInt(5),raavare,rs.getDouble(7),rs.getTimestamp(8));
+		    	RaavareDTO raavare = new RaavareDTO(rs.getInt(10),rs.getString(11));
+		    	RaavareBatchDTO raavareBatch = new RaavareBatchDTO(rs.getInt(5),raavare,rs.getDouble(7),rs.getTimestamp(8),rs.getString(9));
 				list.add(new ProduktBatchKompDTO(rs.getInt(1), raavareBatch, rs.getDouble(3), rs.getDouble(4)));
 			}
 		}
@@ -65,8 +65,8 @@ public class MySQLProduktBatchKompDAO implements IProduktBatchKompDAO{
 		{
 			while (rs.next()) 
 			{
-				RaavareDTO raavare = new RaavareDTO(rs.getInt(9),rs.getString(10),rs.getString(11));
-		    	RaavareBatchDTO raavareBatch = new RaavareBatchDTO(rs.getInt(5),raavare,rs.getDouble(7),rs.getTimestamp(8));
+		    	RaavareDTO raavare = new RaavareDTO(rs.getInt(10),rs.getString(11));
+		    	RaavareBatchDTO raavareBatch = new RaavareBatchDTO(rs.getInt(5),raavare,rs.getDouble(7),rs.getTimestamp(8),rs.getString(9));
 				list.add(new ProduktBatchKompDTO(rs.getInt(1), raavareBatch, rs.getDouble(3), rs.getDouble(4)));
 			}
 		}

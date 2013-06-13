@@ -17,7 +17,7 @@ public class MySQLRaavareDAO implements IRaavareDAO{
 		ResultSet rs = Connector.doQuery("SELECT * FROM raavare WHERE raavare_id = " + raavareId+" ORDER BY raavare_navn");
 		try {
 			if (!rs.first()) throw new DALException("Raavaren " + raavareId + " findes ikke"); 
-			return new RaavareDTO (rs.getInt(1), rs.getString(2), rs.getString(3));
+			return new RaavareDTO (rs.getInt(1), rs.getString(2));
 		} catch (SQLException e) {
 			throw new DALException(e); 
 		}
@@ -31,7 +31,7 @@ public class MySQLRaavareDAO implements IRaavareDAO{
 		{
 			while (rs.next()) 
 			{
-				list.add(new RaavareDTO(rs.getInt(1), rs.getString(2), rs.getString(3)));
+				list.add(new RaavareDTO(rs.getInt(1), rs.getString(2)));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
@@ -40,16 +40,15 @@ public class MySQLRaavareDAO implements IRaavareDAO{
 
 	@Override
 	public void createRaavare(RaavareDTO raavare) throws DALException {
-		Connector.doUpdate("INSERT INTO raavare(raavare_id,raavare_navn,leverandoer) VALUES "+
-				"(" + raavare.getRaavareId() + ", '" + raavare.getRaavareNavn() + "', '" + raavare.getLeverandoer() + "')"
+		Connector.doUpdate("INSERT INTO raavare(raavare_id,raavare_navn) VALUES "+
+				"(" + raavare.getRaavareId() + ", '" + raavare.getRaavareNavn() + "')"
 				);
 	}
 
 	@Override
 	public void updateRaavare(RaavareDTO raavare) throws DALException {
 		Connector.doUpdate(
-				"UPDATE raavare SET raavare_navn =  '" + raavare.getRaavareNavn() + 
-				"', leverandoer = '" + raavare.getLeverandoer() +"' WHERE raavare_id = " +
+				"UPDATE raavare SET raavare_navn =  '" + raavare.getRaavareNavn()+"' WHERE raavare_id = " +
 				raavare.getRaavareId()
 		);
 
