@@ -36,6 +36,7 @@ public class ProduktAdministration {
 	private String produktbatchReceptId = "";
 	private int produktbatchId = 0;
 	private ArrayList<ReceptKompDTO> receptKomp=null;
+	private ArrayList<RaavareDTO> raavareToAdd = null;
 	
 	public ProduktAdministration()
 	{
@@ -44,6 +45,9 @@ public class ProduktAdministration {
 		receptDAO = new MySQLReceptDAO();
 		receptKompDAO = new MySQLReceptKompDAO();
 		raavareDAO = new MySQLRaavareDAO();
+		
+		receptKomp = new ArrayList<ReceptKompDTO>();
+		raavareToAdd = new ArrayList<RaavareDTO>();
 	}
 	public void deleteSucErr()
 	{
@@ -55,7 +59,8 @@ public class ProduktAdministration {
 	{
 		produktbatchReceptId = "";
 		produktbatchId = 0;
-		receptKomp = null;
+		receptKomp.clear();
+		raavareToAdd.clear();
 		
 	}
 	
@@ -171,6 +176,20 @@ public class ProduktAdministration {
 	public void setProduktbatchId(int produktbatchId)
 	{
 		this.produktbatchId = produktbatchId;
+	}
+	public void addReceptKomp(int r_id, double netto, double tolerance) throws DALException
+	{
+		RaavareDTO raavare = raavareDAO.getRaavare(r_id);
+		ReceptKompDTO recept = new ReceptKompDTO(1,raavare,netto,tolerance);
+	}
+	public void addToRaavareList(int id) throws DALException
+	{
+		RaavareDTO raavare = raavareDAO.getRaavare(id);
+		raavareToAdd.add(raavare);
+	}
+	public ArrayList<RaavareDTO> getRaavareToadd()
+	{
+		return raavareToAdd;
 	}
 
 }

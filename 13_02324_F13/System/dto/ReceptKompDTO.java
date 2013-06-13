@@ -19,6 +19,7 @@ public class ReceptKompDTO
 		this.nomNetto = nomNetto;
 		this.tolerance = tolerance;
 	}
+	
 
 	public int getReceptId() { 
 		return receptId; 

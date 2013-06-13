@@ -20,7 +20,6 @@ import controller.RaavareAdministration;
 import daointerfaces.DALException;
 
 
-
 /**
  * Servlet implementation class BrugerId
  */
@@ -158,7 +157,12 @@ public class WebInterface extends HttpServlet  {
 		
 		
 		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
-		//createRecept(request);
+		try {
+			createRecept(request);
+		} catch (DALException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		
 		//////////////////////////////////////////////Create produktbatch///////////////////////////////////////
@@ -226,7 +230,7 @@ public class WebInterface extends HttpServlet  {
 		}
 		else if("receptForm".equals(session.getAttribute("menu")))
 		{
-			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm1.jsp").forward(request,response);
 		}
 		else if("raavareForm".equals(session.getAttribute("menu")))
 		{
@@ -334,21 +338,28 @@ public class WebInterface extends HttpServlet  {
 		}
 	}
 	/////////////////////////////////Recept///////////////////////////////////////////////////////
-//	private boolean createRecept(HttpServletRequest request) {
-//		boolean dataExcist = false;
-//		
-//		String receptId = request.getParameter("receptId");
-//		if(!(receptId == null || receptId.isEmpty())){
-//			produktAdmin.setReceptId(Integer.parseInt(receptId));
-//			dataExcist = true;
-//		}
-//		String receptNavn = request.getParameter("receptNavn");
-//		if(!(receptNavn == null || receptNavn.isEmpty())){
-//			produktAdmin.setReceptNavn(receptNavn);
-//			dataExcist = true;
-//		}
-//		return dataExcist;
-//	}
+	private boolean createRecept(HttpServletRequest request) throws DALException {
+		boolean dataExcist = false;
+		
+		String receptId = request.getParameter("receptId");
+		if(!(receptId == null || receptId.isEmpty())){
+			produktAdmin.setReceptId(Integer.parseInt(receptId));
+			dataExcist = true;
+		}
+		String receptNavn = request.getParameter("receptNavn");
+		if(!(receptNavn == null || receptNavn.isEmpty())){
+			produktAdmin.setReceptNavn(receptNavn);
+			dataExcist = true;
+		}
+		String select[] = request.getParameterValues("raavareToAdd"); 
+		 if (select != null && select.length != 0) {
+		 
+			 for (int i = 0; i < select.length; i++) {
+				 produktAdmin.addToRaavareList(Integer.parseInt(select[i]));
+			 }
+		 }
+		return dataExcist;
+	}
 	
 	/////////////////////////Create user informations//////////////////////////////////
 	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
