@@ -24,7 +24,7 @@ public class Controller {
 
 	private OperatoerDTO Opr_PB = null;
 
-	private MySocket2 socketConnect = new MySocket2();
+	private WeightSocket socketConnect = new WeightSocket();
 	private Scanner input = new Scanner(System.in);
 	private String ip;
 	private int port;
@@ -307,7 +307,7 @@ public class Controller {
 	 * @param message An integer which governs which message will be sent to the scale
 	 * @return The PB_id from the scale
 	 */
-	public int recieveProductBatchId(MySocket2 scaleCon, int message) {
+	public int recieveProductBatchId(WeightSocket scaleCon, int message) {
 		Integer PBId = null;
 		if(message == 0) {
 			scaleCon.sendToServer("RM20 8 \"Indtast PBId\" \" \" \"&3\" ");
@@ -368,7 +368,7 @@ public class Controller {
 	 * @param opr The OperatoerDTO which matches the opr_id from the recieveUserId method
 	 * @return The opr_id from the opr parameter
 	 */
-	private int validateName(MySocket2 connection, int message, OperatoerDTO opr) {
+	private int validateName(WeightSocket connection, int message, OperatoerDTO opr) {
 
 
 		try {
@@ -411,7 +411,7 @@ public class Controller {
 	 * @param connection Connection to the scale
 	 * @param message An int governing what message will be sent to the scale
 	 */
-	public void recieveUserId(MySocket2 connection, int message) {
+	public void recieveUserId(WeightSocket connection, int message) {
 
 		if(message == 0) {
 			connection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \"&3\" ");
@@ -458,7 +458,6 @@ public class Controller {
 	{
 		int pbId = 0;
 		try {
-//			SOS(socketConnect);
 			recieveUserId(socketConnect, 0);
 			pbId = recieveProductBatchId(socketConnect, 0);
 
@@ -473,21 +472,5 @@ public class Controller {
 		}
 
 	}
-	/**
-	 * Method used to make the scale make an SOS signal
-	 * @param con the connection
-	 */
-	private void SOS(MySocket2 con) {
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 0 ");
-		con.sendToServer("M12 2 ");
-		con.sendToServer("M12 2 ");
-		con.sendToServer("M12 2 ");
-		con.sendToServer("M12 0 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-		con.sendToServer("M12 1 ");
-	}
+
 }

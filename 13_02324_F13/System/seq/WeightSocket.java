@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class MySocket2 {
+public class WeightSocket {
 	
 	private String ip;
 	private int port;
