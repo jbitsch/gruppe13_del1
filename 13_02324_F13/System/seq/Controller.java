@@ -333,19 +333,20 @@ public class Controller {
 				scaleCon.recieveFromServer();
 			}
 			else {
-				recieveProductBatchId(scaleCon, 3);
+				return recieveProductBatchId(scaleCon, 3);
 			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
-			recieveProductBatchId(scaleCon, 1);
 			e.printStackTrace();
+			return recieveProductBatchId(scaleCon, 1);
+			
 		} catch (DALException e) {
 			e.printStackTrace();
-			recieveProductBatchId(scaleCon, 2);
-			e.printStackTrace();
+			return recieveProductBatchId(scaleCon, 2);
+			
 		}
 
 		return PBId;
