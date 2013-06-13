@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class WeightGUI extends JFrame {
 
@@ -35,6 +38,8 @@ public class WeightGUI extends JFrame {
 	private char choise;
 	private String answer;
 	private JLabel lblTaraVgt;
+	private JSlider slider;
+	private double bruttoD;
 	
 	public WeightGUI() {
 		setResizable(false);
@@ -58,7 +63,7 @@ public class WeightGUI extends JFrame {
 		
 		lblStrengModtaget = new JLabel("Streng modtaget: ");
 		lblStrengModtaget.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblStrengModtaget.setBounds(11, 157, 473, 30);
+		lblStrengModtaget.setBounds(161, 195, 473, 30);
 		contentPane.add(lblStrengModtaget);
 		
 		brutto = new JFormattedTextField();
@@ -92,6 +97,18 @@ public class WeightGUI extends JFrame {
 		JLabel lblNetto = new JLabel("Netto:");
 		lblNetto.setBounds(12, 18, 56, 16);
 		contentPane.add(lblNetto);
+		
+		slider = new JSlider(0,100,0);
+		slider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				int d = slider.getValue();
+				bruttoD = d/10.5;
+				choise = 'S';
+				ok();
+			}
+		});
+		slider.setBounds(82, 150, 200, 26);
+		contentPane.add(slider);
 	}
 	public char getInput() {
 
@@ -359,5 +376,9 @@ public class WeightGUI extends JFrame {
 		});
 		btnClickToQuit.setBounds(12, 200, 139, 25);
 		contentPane.add(btnClickToQuit);
+	}
+	public double getBrutto()
+	{
+		return bruttoD;
 	}
 }

@@ -207,6 +207,10 @@ public class Controller {
 					case 'K':
 						data.writeTo("K C 4\r\n");
 						break;
+					case 'S':
+						brutto = wg.getBrutto();
+						updateGUI();
+						break;
 					case 'Q':
 						wg.dispose();
 						System.in.close();
