@@ -69,7 +69,6 @@ public class RaavareAdministration {
 		{
 			raavareId = id+"";
 			raavareNavn = raavare.getRaavareNavn();
-			leverandoer = raavare.getLeverandoer();
 			isNew = false;
 		}
 	}
@@ -88,9 +87,9 @@ public class RaavareAdministration {
 					
 					raavareNavn = replaceChar(raavareNavn);
 					leverandoer = replaceChar(leverandoer);
-					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn, leverandoer);
+					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn);
 					raavareDAO.createRaavare(nyRaavare);
-					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " ved navn " + nyRaavare.getRaavareNavn() + " fra leverandøren " + nyRaavare.getLeverandoer() + " er nu oprettet!";
+					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " ved navn " + nyRaavare.getRaavareNavn()+ " er nu oprettet!";
 					delete();
 				}
 			}
@@ -99,8 +98,7 @@ public class RaavareAdministration {
 				if(okNavn(raavareNavn) && okNavn(leverandoer))
 				{
 					raavareNavn = replaceChar(raavareNavn);
-					leverandoer = replaceChar(leverandoer);
-					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn, leverandoer);
+					RaavareDTO nyRaavare = new RaavareDTO(Integer.parseInt(raavareId), raavareNavn);
 					
 					raavareDAO.updateRaavare(nyRaavare);
 					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " blev opdateret!";
@@ -113,8 +111,9 @@ public class RaavareAdministration {
 				{
 					double talMaengde = Double.parseDouble(maengde);
 					talMaengde = Math.round(talMaengde*10000)/10000.0d;
-					java.util.Date date= new java.util.Date();					
-					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), raavareDAO.getRaavare(Integer.parseInt(batchRaavareId)), talMaengde, new Timestamp(date.getTime()));
+					java.util.Date date= new java.util.Date();	
+					leverandoer = replaceChar(leverandoer);
+					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), raavareDAO.getRaavare(Integer.parseInt(batchRaavareId)), talMaengde, new Timestamp(date.getTime()),leverandoer);
 					
 					raavareBatchDAO.createRaavareBatch(nytRaavareBatch);
 					succes = "Råvarebatch nr." + nytRaavareBatch.getRbId() + " er nu oprettet!";

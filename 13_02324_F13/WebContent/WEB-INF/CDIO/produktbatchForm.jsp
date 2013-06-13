@@ -28,7 +28,6 @@
 			int id = recept.getReceptId();
 		%>
 			<input type="radio" name="produktbatchReceptId" value="<%=id %>" style="display:inline"/>
-			
 			<input type="submit" name="visInfo" value="<%=id%>"/>Receptnavn: <%= recept.getReceptNavn() %>
 			<br>
 		<%
