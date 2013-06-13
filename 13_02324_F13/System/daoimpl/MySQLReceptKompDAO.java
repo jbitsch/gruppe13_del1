@@ -24,11 +24,11 @@ public class MySQLReceptKompDAO implements IReceptKompDAO {
 		
 	}
 	@Override
-	public void createReceptKomp(ReceptKompDTO receptkomp) throws DALException {		
-			Connector.doUpdate(
+	public void createReceptKomp(ReceptKompDTO receptkomp) throws DALException {			
+		Connector.doUpdate(
 				"INSERT INTO receptkomponent(recept_id, raavare_id, nom_netto, tolerance) VALUES " +
 				"(" + receptkomp.getReceptId() + ", '" + receptkomp.getRaavare().getRaavareId() + "', '" + receptkomp.getNomNetto() + "', '" + 
-				receptkomp + "')"
+				receptkomp.getTolerance() + "')"
 			);
 	}
 	@Override

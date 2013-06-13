@@ -30,13 +30,12 @@ public class ProduktAdministration {
 	private String succes = "";
 	private String handling ="";
 
-	private int receptId = 0;
+	private String receptId = "";
 	private String receptNavn = "";
 	
 	private String produktbatchReceptId = "";
 	private int produktbatchId = 0;
 	private ArrayList<ReceptKompDTO> receptKomp=null;
-	private ArrayList<RaavareDTO> raavareToAdd = null;
 	
 	public ProduktAdministration()
 	{
@@ -47,7 +46,6 @@ public class ProduktAdministration {
 		raavareDAO = new MySQLRaavareDAO();
 		
 		receptKomp = new ArrayList<ReceptKompDTO>();
-		raavareToAdd = new ArrayList<RaavareDTO>();
 	}
 	public void deleteSucErr()
 	{
@@ -59,9 +57,9 @@ public class ProduktAdministration {
 	{
 		produktbatchReceptId = "";
 		produktbatchId = 0;
+		receptNavn = "";
+		receptId = "";
 		receptKomp.clear();
-		raavareToAdd.clear();
-		
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
@@ -76,6 +74,19 @@ public class ProduktAdministration {
 			{
 				createProduktbatch(produktbatchReceptId);
 			}
+			else if("Opret recept".equals(handling))
+			{
+				createRecept();
+			}
+			else if("Tilfoej raavare".equals(handling))
+			{
+				
+			}
+			else if("Slet raavare".equals(handling))
+			{
+				deleteKomp(Integer.parseInt((receptId)));//Er raavare id...
+			}
+			
 			else
 				System.out.println("Ukendt handling: " + handling);
 		}
@@ -94,6 +105,107 @@ public class ProduktAdministration {
 		produktBatchDAO.createProduktBatch(produktBatch);
 		
 		succes = "Produktbatch med id: "+batchId+ " er nu oprettet.";
+	}
+	public void createRecept() throws DALException
+	{
+
+		boolean dataOk = true;
+		int recept_id = 0;
+		try
+		{
+			recept_id = Integer.parseInt(receptId);
+		}catch(NumberFormatException e1)
+		{
+			error+="Recept id skal være et tal<br>";
+			dataOk = false;
+		}
+		try
+		{
+			receptDAO.getRecept(recept_id);
+			error += "Id'et findes i forvejen<br>";
+			dataOk = false;
+			
+		}
+		catch(DALException e)
+		{
+			// Id'et lever op til alle krav
+		}
+		if(receptNavn.length()<2 || receptNavn.length()>20)
+		{
+			error += "Receptnavn skaæ være mellem 2 og 20 karaktere<br>";
+			dataOk = false;
+		}
+		if(!(receptKomp.size()>0))
+		{
+			error +="Der skal minimum vaere tilfoejet en raavare til recepten<br>";
+			dataOk = false;
+		}
+		if(dataOk)
+		{
+			ReceptDTO recept= new ReceptDTO(recept_id,replaceChar(receptNavn)); 
+			receptDAO.createRecept(recept);
+			for(int i=0; i<receptKomp.size();i++)
+			{
+				ReceptKompDTO receptkomponent = receptKomp.get(i);
+				receptkomponent.setReceptId(recept_id);
+				receptKompDAO.createReceptKomp(receptkomponent);
+				succes = "Recepten med navn "+receptNavn+" er nu oprettet";
+				delete();
+			}
+			
+		}
+		
+		
+	}
+	public void addToRaavareList(String r_id, String netto, String tolerance) throws DALException
+	{
+		boolean dataOk = true;
+		double net = 0.00;
+		double tol = 0.00;
+		try
+		{
+			net = Double.parseDouble(netto);
+			if(net < 0.05 || net > 20.0)
+			{
+				error+="Netto skal være mellem 0.05 og 20 kg.<br>";
+				dataOk = false;
+			}
+		}catch(NumberFormatException e)
+		{
+			error += "Netto skal være et tal<br>";
+			dataOk = false;
+		}
+		try
+		{
+			tol = Double.parseDouble(tolerance);
+			if(tol < 0.1 || net > 10.0)
+			{
+				error+="Tolerance skal være mellem 0.1 og 10%.<br>";
+				dataOk = false;
+			}
+		}catch(NumberFormatException e)
+		{
+			error += "Tolerance skal være et tal<br>";
+			dataOk = false;
+		}
+		if (dataOk)
+		{
+			RaavareDTO raavare = raavareDAO.getRaavare(Integer.parseInt(r_id));
+			receptKomp.add(new ReceptKompDTO(0,raavare,net,tol));
+			error ="";
+		}
+	}
+	public void deleteKomp(int r_id)
+	{
+		for(int i=0; i<receptKomp.size(); i++)
+		{
+			int recept_id = receptKomp.get(i).getRaavare().getRaavareId();
+			if(recept_id==r_id)
+			{
+				receptKomp.remove(i);
+				succes = "Raavaren er fjernet fra listen";
+			}
+		}
 	}
 	private int unusedId() throws DALException {
 		ArrayList<ProduktBatchDTO> produktBatch = produktBatchDAO.getProduktBatchList();
@@ -122,15 +234,6 @@ public class ProduktAdministration {
 		return receptDAO.getReceptList();
 	}
 	
-	public ArrayList<ReceptKompDTO> getReceptKomp()
-	{
-		return receptKomp;
-	}
-	public void setReceptKomp(int id)  throws DALException 
-	{
-		receptKomp = receptKompDAO.getReceptKompList(id);
-	}
-	
 	public ArrayList<ProduktBatchKompDTO> getproduktbatchKomp()throws DALException
 	{
 		return produktBatchKomDAO.getProduktBatchKompList(produktbatchId);
@@ -147,10 +250,10 @@ public class ProduktAdministration {
 	{
 		return succes;
 	}
-	public int getReceptId() {
+	public String getReceptId() {
 		return receptId;
 	}
-	public void setReceptId(int receptId) {
+	public void setReceptId(String receptId) {
 		this.receptId = receptId;
 	}
 	public String getReceptNavn() {
@@ -180,22 +283,33 @@ public class ProduktAdministration {
 
 	public ReceptDTO getRecept() throws DALException
 	{
-		return receptDAO.getRecept(receptId);
+		return receptDAO.getRecept(Integer.parseInt((receptId)));
 	}
-
-	public void addReceptKomp(int r_id, double netto, double tolerance) throws DALException
+	public ArrayList<ReceptKompDTO> getReceptKomp()
 	{
-		RaavareDTO raavare = raavareDAO.getRaavare(r_id);
-		ReceptKompDTO recept = new ReceptKompDTO(1,raavare,netto,tolerance);
+		return receptKomp;
 	}
-	public void addToRaavareList(int id) throws DALException
+	public void setReceptKomp(int id)  throws DALException 
 	{
-		RaavareDTO raavare = raavareDAO.getRaavare(id);
-		raavareToAdd.add(raavare);
+		receptKomp = receptKompDAO.getReceptKompList(id);
 	}
-	public ArrayList<RaavareDTO> getRaavareToadd()
+	public ArrayList<ReceptKompDTO> getReceptKompToadd()
 	{
-		return raavareToAdd;
+		return receptKomp;
+	}
+	public String getHandling()
+	{
+		return handling;
+	}
+	public String replaceChar(String toReplace)
+	{
+		toReplace = toReplace.replace("&", "&amp;");   // erstat & med HTML-koden for &
+		toReplace = toReplace.replace("<", "&lt;");    // erstat < med HTML-koden for <
+		toReplace = toReplace.replace(">", "&gt;");    // erstat > med HTML-koden for >
+		toReplace = toReplace.replace("\"","&quot;");  // erstat " med HTML-koden for "
+		toReplace = toReplace.replace("'", "&lsquo;"); // erstat ' med HTML-koden for '
+		
+		return toReplace;
 	}
 
 }

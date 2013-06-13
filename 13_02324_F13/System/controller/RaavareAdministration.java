@@ -219,7 +219,6 @@ public class RaavareAdministration {
 			else
 			{
 				// Findes id'et i forvejen?
-				System.out.println(id);
 				try
 				{
 					raavareBatchDAO.getRaavareBatch(id);

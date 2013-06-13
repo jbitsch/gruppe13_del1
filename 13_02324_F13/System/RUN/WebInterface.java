@@ -158,21 +158,22 @@ public class WebInterface extends HttpServlet  {
 		
 		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
 		try {
-			createRecept(request);
+			boolean dataEntered = createRecept(request);
+			if(dataEntered)
+				udfoerHandlingProduktAdmin(application,handling);
 		} catch (DALException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
+		///////////show recept//////////////////////////////////
 		String receptValg = request.getParameter("receptValg");
 		if(!(receptValg == null || receptValg.isEmpty())){
-			int receptValgID = Integer.parseInt(receptValg);
 			try {
-				produktAdmin.setReceptKomp(receptValgID);
+				produktAdmin.setReceptKomp(Integer.parseInt(receptValg));
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			produktAdmin.setReceptId(receptValgID);
+			produktAdmin.setReceptId(receptValg);
 			session.setAttribute("menu", "showRecept");
 		}
 		
@@ -345,7 +346,6 @@ public class WebInterface extends HttpServlet  {
 		return dataExcist;
 	}
 	private void udfoerHandlingRaavareAdmin(ServletContext application,String handling) {
-		//Udfoere handlingen i brugervalg.
 		raavareAdmin.setHandling(handling);
 		if (raavareAdmin.getHandling() != null) {           
 			application.log(login.getId()+" udfoerer handling: "+raavareAdmin.getHandling());
@@ -362,7 +362,7 @@ public class WebInterface extends HttpServlet  {
 		
 		String receptId = request.getParameter("receptId");
 		if(!(receptId == null || receptId.isEmpty())){
-			produktAdmin.setReceptId(Integer.parseInt(receptId));
+			produktAdmin.setReceptId(receptId);
 			dataExcist = true;
 		}
 		String receptNavn = request.getParameter("receptNavn");
@@ -370,14 +370,30 @@ public class WebInterface extends HttpServlet  {
 			produktAdmin.setReceptNavn(receptNavn);
 			dataExcist = true;
 		}
-		String select[] = request.getParameterValues("raavareToAdd"); 
-		 if (select != null && select.length != 0) {
-		 
-			 for (int i = 0; i < select.length; i++) {
-				 produktAdmin.addToRaavareList(Integer.parseInt(select[i]));
-			 }
-		 }
+		String r_id = request.getParameter("raavareToAdd");
+		if (!(r_id == null || r_id.isEmpty())) {
+			String netto= request.getParameter("netto"); 
+			String tolerance = request.getParameter("tolerance");
+			produktAdmin.addToRaavareList(r_id, netto, tolerance);
+		}
+		String raavareTodelete = request.getParameter("raavareToDelete");
+		if (!(raavareTodelete == null || raavareTodelete.isEmpty())) {
+			produktAdmin.setReceptId(raavareTodelete);
+			dataExcist = true;
+		}
 		return dataExcist;
+	}
+	private void udfoerHandlingProduktAdmin(ServletContext application,String handling) {
+		//Udfoere handlingen i brugervalg.
+		produktAdmin.setHandling(handling);
+		if (produktAdmin.getHandling() != null) {           
+			application.log(login.getId()+" udfoerer handling: "+produktAdmin.getHandling());
+			try {
+				produktAdmin.udfoerHandling();
+			} catch (DALException e) {
+				e.printStackTrace();
+			} 
+		}
 	}
 	
 	/////////////////////////Create user informations//////////////////////////////////
