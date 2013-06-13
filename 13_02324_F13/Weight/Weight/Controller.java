@@ -53,6 +53,18 @@ public class Controller {
 				{
 					data.writeTo("RM20 I\r\n");
 				}
+				else if(inline.startsWith("K 3"))
+				{
+					wg.setK3btn(true);
+					wg.writeCommand("K 3");
+					data.writeTo("K A"+"\r\n");
+				}
+				else if(inline.startsWith("K 1"))
+				{
+					wg.setK3btn(false);
+					wg.writeCommand("K 1");
+					data.writeTo("K A"+"\r\n");
+				}
 				else if (inline.startsWith("DW")){
 					IndstruktionsDisplay="";
 					wg.writeCommand("DW");
@@ -191,6 +203,9 @@ public class Controller {
 					case 'U':					
 						setBrutto((brutto+0.001));
 						updateGUI();
+						break;
+					case 'K':
+						data.writeTo("K C 4\r\n");
 						break;
 					case 'Q':
 						wg.dispose();

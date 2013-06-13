@@ -31,6 +31,7 @@ public class WeightGUI extends JFrame {
 	private JButton btnTara;
 	private JButton btnUp;
 	private JButton btnDown;
+	private JButton k3btn;
 	private char choise;
 	private String answer;
 	private JLabel lblTaraVgt;
@@ -125,6 +126,10 @@ public class WeightGUI extends JFrame {
 		brutto.setText(bru+" kg");
 		lblTaraVgt.setText("Tara vaegt: "+tar+ " kg");
 	}
+	public void setK3btn(boolean click)
+	{
+		k3btn.setEnabled(click);
+	}
 	public void setEdit(boolean one, boolean two)
 	{
 		btnEnter.setEnabled(one);
@@ -200,6 +205,18 @@ public class WeightGUI extends JFrame {
 		btnQuit.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnQuit.setBounds(492, 93, 93, 25);
 		contentPane.add(btnQuit);
+		
+		k3btn = new JButton("K 3");
+		k3btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				choise = 'K';
+				ok();
+			}
+		});
+		k3btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		k3btn.setEnabled(false);
+		k3btn.setBounds(492, 121, 93, 25);
+		contentPane.add(k3btn);
 		
 		JButton btn0 = new JButton("0");
 		btn0.addActionListener(new ActionListener() {
