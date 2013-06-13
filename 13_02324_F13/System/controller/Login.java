@@ -1,5 +1,6 @@
 package controller;
 
+import daoimpl.MySQLOperatoerDAO;
 import daointerfaces.DALException;
 import daointerfaces.IOperatoerDAO;
 import dto.OperatoerDTO;
@@ -18,49 +19,10 @@ public class Login
 
 	private IOperatoerDAO d;
 	
-	public void setData(IOperatoerDAO d)
+	public Login()
 	{
-		this.d = d;
+			d = new MySQLOperatoerDAO();
 	}
-	
-	public void setId(String idString)  
-	{ 
-		tjek=true;
-		try{
-			id = Integer.parseInt(idString);
-		}
-		catch(NumberFormatException e){
-			id = 0;
-			meddelelse += "Id skal være et tal <br>";
-		}
-	}
-
-	public int getId()        
-	{ 
-		return id; 
-	}
-
-
-	public void setAdgangskode(String ak) 
-	{ 
-		tjek=true; 
-		adgangskode = ak; 
-	}
-
-	public void setMeddelelse(String m)   { 
-		meddelelse = m; 
-	}
-
-	public String getMeddelelse() { 
-		String m=meddelelse; meddelelse=""; 
-		return m; 
-	}
-
-	public boolean isLoggetInd() {
-		if (tjek) return false;       // er der sket aendringer skal der logges ind
-		return loggetInd;
-	}
-
 
 	public void tjekLogin() throws DALException
 	{
@@ -87,13 +49,45 @@ public class Login
 			loggetInd = true;
 			rolle = operatoer.getRolle();
 		}
+	}
+	
+	public void setId(String idString)  
+	{ 
+		tjek=true;
+		try{
+			id = Integer.parseInt(idString);
+		}
+		catch(NumberFormatException e){
+			id = 0;
+			meddelelse += "Id skal være et tal <br>";
+		}
+	}
 
+	public int getId()        
+	{ 
+		return id; 
+	}
+	public void setAdgangskode(String ak) 
+	{ 
+		tjek=true; 
+		adgangskode = ak; 
+	}
+
+	public void setMeddelelse(String m)   { 
+		meddelelse = m; 
+	}
+
+	public String getMeddelelse() { 
+		String m=meddelelse; meddelelse=""; 
+		return m; 
+	}
+
+	public boolean isLoggetInd() {
+		if (tjek) return false;       // er der sket aendringer skal der logges ind
+		return loggetInd;
 	}
 	public String getRolle()
 	{
 		return rolle;
 	}
-	
-
-
 }

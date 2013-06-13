@@ -30,8 +30,7 @@ public class WebInterface extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	private BrugerAdministration brugerAdmin = null;
 	private RaavareAdministration raavareAdmin = null;
-	private ProduktAdministration produktAdmin = null;
-	private IOperatoerDAO d = null;  
+	private ProduktAdministration produktAdmin = null; 
 	private Connector c = null;
 	private Login login = null;
     /**
@@ -49,29 +48,22 @@ public class WebInterface extends HttpServlet  {
 		ServletContext application = request.getSession().getServletContext();
 		HttpSession session = request.getSession();
 		
-		//tjekker om data er oprettet, ellers bliver det oprettet. 
-		d = (IOperatoerDAO) application.getAttribute("data");
-		if(d==null)
-		{
-			d = new MySQLOperatoerDAO();
-			application.setAttribute("data", d);
-		}
 		c = (Connector) application.getAttribute("con");
 		if(c==null)
 		{
 			try {
 				c = new Connector();
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			application.setAttribute("con", c);
@@ -81,7 +73,6 @@ public class WebInterface extends HttpServlet  {
 		login = (Login) session.getAttribute("login");
 		if(login == null){
 			login = new Login();
-			login.setData(d);
 			session.setAttribute("login", login);
 		}	
 
@@ -117,8 +108,7 @@ public class WebInterface extends HttpServlet  {
 		
 		 // er brugeren logget korrekt ind?
 		if (!login.isLoggetInd()) {           
-			application.log("Bruger med "+login.getId()+" skal logge ind.");
-			session.removeAttribute("valg");   
+			application.log("Bruger med "+login.getId()+" skal logge ind."); 
 			request.getRequestDispatcher("/WEB-INF/CDIO/login.jsp").forward(request,response);
 			return;                              // afslut behandlingen af denne side
 		}
@@ -184,6 +174,8 @@ public class WebInterface extends HttpServlet  {
 			}
 		}
 		String visInfo = request.getParameter("visInfo");
+		String test = request.getParameter("test");
+		System.out.println(test);
 		if(!(visInfo  == null || visInfo.isEmpty())){
 			
 			try {
@@ -204,8 +196,6 @@ public class WebInterface extends HttpServlet  {
 			
 		
 		//Hvilken side skal vi lande paa
-		
-		
 		String menuValg = request.getParameter("menuValg");
 		
 		if(menuValg!=null)
@@ -263,14 +253,12 @@ public class WebInterface extends HttpServlet  {
 			delete();
 			if(page!=null)
 				request.getRequestDispatcher(page).forward(request,response);
-			else
-				request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
 		}
 		else
-		{
-			delete();
-			request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
-		}	
+		{	
+		delete();
+		request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);	
+		}
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

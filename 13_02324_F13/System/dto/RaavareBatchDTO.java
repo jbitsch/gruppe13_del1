@@ -3,18 +3,20 @@ import java.sql.Timestamp;
 
 public class RaavareBatchDTO
 {
-	int rbId;                     // i omr�det 1-99999999
-	RaavareDTO raavare;             // i omr�det 1-99999999
-	double maengde;             // kan v�re negativ
-	Timestamp dato;
+	private int rbId;                     // i omr�det 1-99999999
+	private RaavareDTO raavare;             // i omr�det 1-99999999
+	private double maengde;             // kan v�re negativ
+	private Timestamp dato;
+	private String leverandoer;
 
 	
-	public RaavareBatchDTO(int rbId, RaavareDTO raavare, double maengde, Timestamp dato)
+	public RaavareBatchDTO(int rbId, RaavareDTO raavare, double maengde, Timestamp dato,String leverandoer)
 	{
 		this.rbId = rbId;
 		this.raavare = raavare;
 		this.maengde = maengde;
 		this.dato = dato;
+		this.leverandoer = leverandoer;
 	}
 	
 	public int getRbId() { return rbId; }
@@ -25,7 +27,16 @@ public class RaavareBatchDTO
 	public void setMaengde(double maengde) { this.maengde = maengde; }
 	public Timestamp getDato(){return dato;}
 	public void setDato(Timestamp dato) { this.dato = dato;}
+	
+	public String getLeverandoer() {
+		return leverandoer;
+	}
+
+	public void setLeverandoer(String leverandoer) {
+		this.leverandoer = leverandoer;
+	}
+
 	public String toString() { 
-		return rbId + "\t" + raavare +"\t" + maengde; 
+		return rbId + "\t" + raavare +"\t" +leverandoer+"\t" + maengde; 
 	}
 }
