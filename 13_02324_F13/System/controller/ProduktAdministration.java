@@ -35,7 +35,7 @@ public class ProduktAdministration {
 	
 	private String produktbatchReceptId = "";
 	private int produktbatchId = 0;
-	
+	private ArrayList<ReceptKompDTO> receptKomp=null;
 	
 	public ProduktAdministration()
 	{
@@ -55,6 +55,8 @@ public class ProduktAdministration {
 	{
 		produktbatchReceptId = "";
 		produktbatchId = 0;
+		receptKomp = null;
+		
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
@@ -83,7 +85,6 @@ public class ProduktAdministration {
 		//int pbId, int status, ReceptDTO recept, Timestamp datoStart, Timestamp datoSlut,OperatoerDTO opr
 		int receptId = Integer.parseInt(id);
 		int batchId = unusedId();
-		System.out.println(batchId);
 		ProduktBatchDTO produktBatch = new ProduktBatchDTO(batchId,receptDAO.getRecept(receptId),0,null,null,null);
 		produktBatchDAO.createProduktBatch(produktBatch);
 		
@@ -116,10 +117,15 @@ public class ProduktAdministration {
 		return receptDAO.getReceptList();
 	}
 	
-	public ArrayList<ReceptKompDTO> getReceptKomp(int id) throws DALException 
+	public ArrayList<ReceptKompDTO> getReceptKomp()
 	{
-		return receptKompDAO.getReceptKompList(id);
+		return receptKomp;
 	}
+	public void setReceptKomp(int id)  throws DALException 
+	{
+		receptKomp = receptKompDAO.getReceptKompList(id);
+	}
+	
 	public ArrayList<ProduktBatchKompDTO> getproduktbatchKomp()throws DALException
 	{
 		return produktBatchKomDAO.getProduktBatchKompList(produktbatchId);

@@ -171,17 +171,28 @@ public class WebInterface extends HttpServlet  {
 		
 		//////////////////////////////////////////////Create produktbatch///////////////////////////////////////
 		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
-		
+			
 		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){
-			produktAdmin.setProduktbatchReceptId(produktbatchReceptId);
-			produktAdmin.setHandling(handling);
+			
 			try {
-				produktAdmin.udfoerHandling();
+					produktAdmin.setProduktbatchReceptId(produktbatchReceptId);
+					produktAdmin.setHandling(handling);
+					produktAdmin.udfoerHandling();
 			} catch (DALException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}		
+		}
+		String visInfo = request.getParameter("visInfo");
+		if(!(visInfo  == null || visInfo.isEmpty())){
+			
+			try {
+				produktAdmin.setReceptKomp(Integer.parseInt(visInfo ));
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		/////////////////////////////////////////show produktbatch/////////////////////////////////
 		String produktvatchValg = request.getParameter("produktvatchValg");
@@ -191,6 +202,7 @@ public class WebInterface extends HttpServlet  {
 			session.setAttribute("menu", "showProduktbatch");
 		}
 			
+		
 		//Hvilken side skal vi lande paa
 		
 		
