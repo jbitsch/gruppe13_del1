@@ -300,6 +300,13 @@ public class Controller {
 	}
 
 
+	/**
+	 * Method which recieves a ProduktBatch_id from scale, and sends the reciet name back
+	 * to the scale.
+	 * @param scaleCon Connection
+	 * @param message An integer which governs which message will be sent to the scale
+	 * @return The PB_id from the scale
+	 */
 	public int recieveProductBatchId(MySocket2 scaleCon, int message) {
 		Integer PBId = null;
 		if(message == 0) {
@@ -353,6 +360,14 @@ public class Controller {
 		return PBId;
 	}
 
+	/**
+	 * Method which sends an operator_name to the scale, and waits for it to either confirm or
+	 * deny the name.
+	 * @param connection The connection
+	 * @param message An int which governs what message will be sent to the scale
+	 * @param opr The OperatoerDTO which matches the opr_id from the recieveUserId method
+	 * @return The opr_id from the opr parameter
+	 */
 	private int validateName(MySocket2 connection, int message, OperatoerDTO opr) {
 
 
@@ -389,6 +404,13 @@ public class Controller {
 		return opr.getOprId();
 	}
 
+	
+	/**
+	 * A method which asks for the id of the person using the scale, and calls the method 
+	 * validateName
+	 * @param connection Connection to the scale
+	 * @param message An int governing what message will be sent to the scale
+	 */
 	public void recieveUserId(MySocket2 connection, int message) {
 
 		if(message == 0) {
@@ -451,7 +473,10 @@ public class Controller {
 		}
 
 	}
-	
+	/**
+	 * Method used to make the scale make an SOS signal
+	 * @param con the connection
+	 */
 	private void SOS(MySocket2 con) {
 		con.sendToServer("M12 1 ");
 		con.sendToServer("M12 1 ");
