@@ -170,14 +170,15 @@ public class Controller {
 			response = socketConnect.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
-				if(response.equals("RM20 A \" \"")) {
+				if(response.startsWith("RM20 A")) {
 					socketConnect.sendToServer("DW");
 					System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
 					socketConnect.sendToServer("S");
 					while(!response.contains("kg")) {
 						response = socketConnect.recieveFromServer();
 					}
-					taraBeholderVægt = Double.parseDouble((response.substring(9, 14)));
+					System.out.println(response);
+					taraBeholderVægt = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
 					System.out.println("Taracontainer placed, response: " + response + ", taravægt: " + taraBeholderVægt);
 					socketConnect.sendToServer("T");
 					System.out.println("Modtager svar fra tarering: \n" + socketConnect.recieveFromServer().toUpperCase());
@@ -256,7 +257,7 @@ public class Controller {
 						socketConnect.sendToServer("S");
 						response = socketConnect.recieveFromServer();
 					}
-					raavareMaengde = Double.parseDouble((response.substring(9, 14)));
+					raavareMaengde = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
 					System.out.println("Raavare manengde: " + raavareMaengde);
 					System.out.println("Raavare tolerance: " + raavareTolerance);
 					System.out.println("Raavare value: " + raavareValue);
