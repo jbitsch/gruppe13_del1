@@ -36,6 +36,7 @@ public class ProduktAdministration {
 	private String produktbatchReceptId = "";
 	private int produktbatchId = 0;
 	private ArrayList<ReceptKompDTO> receptKomp=null;
+	private ArrayList<RaavareDTO> raavareList = null;
 	
 	public ProduktAdministration()
 	{
@@ -60,6 +61,7 @@ public class ProduktAdministration {
 		receptNavn = "";
 		receptId = "";
 		receptKomp.clear();
+		raavareList = null;
 	}
 	
 	//////////////////////Udfoer handling/////////////////////////
@@ -227,7 +229,14 @@ public class ProduktAdministration {
 	
 	public ArrayList<RaavareDTO> getRaavare() throws DALException 
 	{
-		return raavareDAO.getRaavareList();
+		
+		if(raavareList==null)
+		{
+			return raavareList = raavareDAO.getRaavareList();
+		}
+		else
+			return raavareList;
+		
 	}
 	public ArrayList<ReceptDTO> getRecepter() throws DALException 
 	{
