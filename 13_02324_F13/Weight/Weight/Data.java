@@ -48,5 +48,14 @@ public class Data {
 	{
 		return sock.getInetAddress().toString();
 	}
+	public void flushOut()
+	{
+		try {
+			outstream.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

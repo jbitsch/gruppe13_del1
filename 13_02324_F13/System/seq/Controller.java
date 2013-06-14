@@ -326,8 +326,9 @@ public class Controller {
 			scaleCon.sendToServer("RM20 8 \"PBId igen: status\" \" \" \"&3\" ");
 		}
 		try {
-			scaleCon.recieveFromServer();
+			System.out.println(scaleCon.recieveFromServer());
 			String PBIdTemp = scaleCon.recieveFromServer();
+			System.out.println(PBIdTemp);
 			PBIdTemp = PBIdTemp.replaceAll("\"", "");
 			PBId = Integer.parseInt(PBIdTemp.substring(7, PBIdTemp.length()));
 
@@ -338,7 +339,7 @@ public class Controller {
 				PBDTO.setStatus(1);
 				PBDTO.setDatoStart(new Timestamp(System.currentTimeMillis()));
 				PBDTO.setOpr(Opr_PB);
-				PBDAO.updateProduktBatch(PBDTO);
+				PBDAO.updateProduktBatchStart(PBDTO);
 				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
 				scaleCon.sendToServer("RM20 8 \""+RDTO.getReceptNavn()+"\" \" \" \"&3\" ");
 				scaleCon.recieveFromServer();
@@ -405,6 +406,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 		Opr_PB = opr;
+		System.out.println(opr.getOprId());
 		return opr.getOprId();
 	}
 
@@ -440,11 +442,7 @@ public class Controller {
 			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(7, oprTemp.length())));
 			System.out.println(opr);
 
-
-
 			validateName(connection, 0, opr);
-
-
 		}catch (DALException e) {
 			recieveUserId(connection, 2);
 			e.printStackTrace();

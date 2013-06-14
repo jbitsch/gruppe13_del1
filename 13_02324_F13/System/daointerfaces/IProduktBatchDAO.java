@@ -10,4 +10,5 @@ public interface IProduktBatchDAO {
 	ArrayList<ProduktBatchDTO> getProduktBatchList(String receptName) throws DALException;
 	void createProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
 	void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
+	void updateProduktBatchStart(ProduktBatchDTO produktbatch) throws DALException;
 }

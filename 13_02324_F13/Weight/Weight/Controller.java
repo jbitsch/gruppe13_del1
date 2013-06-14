@@ -121,6 +121,7 @@ public class Controller {
 						wg.setRecievedCommand("Venter paa svar fra RM20 8 ordre");
 						wg.enableAnswerBtns(true, false);
 						rm20Flag = true;
+						data.flushOut();
 					}
 					else
 						data.writeTo("RM20 L\r\n");
@@ -182,15 +183,16 @@ public class Controller {
 					case 'E':
 						String retur = wg.getAnswer();
 						try {
+							rm20Flag = false;
+							wg.enableAnswerBtns(false, true);
+							wg.setMessage("");
+							wg.setRecievedCommand("");
+							data.flushOut();
 							data.writeTo("RM20 A \""+retur+"\"\r\n");
 
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
-						wg.enableAnswerBtns(false, true);
-						wg.setMessage("");
-						wg.setRecievedCommand("");
-						rm20Flag = false;
 						break;
 					case 'T': 
 						setTara();
