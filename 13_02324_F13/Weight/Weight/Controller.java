@@ -116,11 +116,13 @@ public class Controller {
 
 					if(temp.length>1)
 					{
-						data.writeTo("RM20 B\r\n");
+						
 						wg.setMessage(temp[1]);
 						wg.setRecievedCommand("Venter paa svar fra RM20 8 ordre");
 						wg.enableAnswerBtns(true, false);
 						rm20Flag = true;
+						
+						data.writeTo("RM20 B\r\n");
 						data.flushOut();
 					}
 					else
