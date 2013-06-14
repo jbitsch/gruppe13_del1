@@ -24,7 +24,7 @@ public class Controller {
 
 	private OperatoerDTO Opr_PB = null;
 
-	private WeightSocket socketConnect = new WeightSocket();
+	private WeightSocket weightConnection = new WeightSocket();
 	private Scanner input = new Scanner(System.in);
 	private String ip;
 	private int port;
@@ -48,7 +48,7 @@ public class Controller {
 			ip = input.next();
 			System.out.println("Indtast port:");
 			port = Integer.parseInt((input.next()));
-			socketConnect.connect(ip, port);
+			weightConnection.connect(ip, port);
 		}
 		catch (IOException IO)
 		{
@@ -86,13 +86,13 @@ public class Controller {
 		} catch (DALException e) {
 		}
 		for(int i = 0; i < 3; i++){
-			socketConnect.sendToServer("M12 2");
+			weightConnection.sendToServer("M12 2");
 		}
-		socketConnect.sendToServer("K 1 ");
-		socketConnect.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
-		System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
+		weightConnection.sendToServer("K 1 ");
+		weightConnection.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
+		System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){		
-			response = socketConnect.recieveFromServer().toUpperCase();
+			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.equals("RM20 A \" \"")) {
@@ -100,13 +100,13 @@ public class Controller {
 					break;
 				}
 				else{
-					socketConnect.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
-					System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
+					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}
 			}
 			else{
-				socketConnect.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
-				System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+				weightConnection.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
+				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
 
@@ -134,77 +134,77 @@ public class Controller {
 		}
 
 		// STEP 7. 8. START
-		socketConnect.sendToServer("K 3");
-		socketConnect.sendToServer("DW");
-		System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
-		System.out.println("Modtager svar fra K 3: \n" + socketConnect.recieveFromServer().toUpperCase());
+		weightConnection.sendToServer("K 3");
+		weightConnection.sendToServer("DW");
+		System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+		System.out.println("Modtager svar fra K 3: \n" + weightConnection.recieveFromServer().toUpperCase());
 		System.out.println("Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’");
-		socketConnect.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
-		System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+		weightConnection.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
+		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){		
-			response = socketConnect.recieveFromServer().toUpperCase();
+			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")) {
-					socketConnect.sendToServer("DW");
-					System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("DW");
+					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 					System.out.println("Weight emptied, response: " + response);
-					socketConnect.sendToServer("T");
-					System.out.println("Modtager svar fra tarering: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("T");
+					System.out.println("Modtager svar fra tarering: \n" + weightConnection.recieveFromServer().toUpperCase());
 					response = "";
 					break;
 				}
 				else{
-					socketConnect.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
-					System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
+					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}
 			}
 			else{
-				socketConnect.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
-				System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+				weightConnection.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
+				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
 		// STEP 7. 8. SLUT
 
 		// STEP 9. 10. 11. 12. START
 		System.out.println("Vægten beder om tara beholder.");
-		socketConnect.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
-		System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+		weightConnection.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
+		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){
-			response = socketConnect.recieveFromServer().toUpperCase();
+			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")) {
-					socketConnect.sendToServer("DW");
-					System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
-					socketConnect.sendToServer("S");
+					weightConnection.sendToServer("DW");
+					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("S");
 					while(!response.contains("kg")) {
-						response = socketConnect.recieveFromServer();
+						response = weightConnection.recieveFromServer();
 					}
 					System.out.println(response);
 					taraBeholderVægt = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
 					System.out.println("Taracontainer placed, response: " + response + ", taravægt: " + taraBeholderVægt);
-					socketConnect.sendToServer("T");
-					System.out.println("Modtager svar fra tarering: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("T");
+					System.out.println("Modtager svar fra tarering: \n" + weightConnection.recieveFromServer().toUpperCase());
 					break;
 				}
 				else{
-					socketConnect.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
-					System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
+					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}
 			}
 			else{
-				socketConnect.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
-				System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+				weightConnection.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
+				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
 
 		// STEP 13.
 		System.out.println("Vægten beder om raavarebatch nummer paa raavaren: " + raavareNavn);
-		socketConnect.sendToServer("RM20 8 \"RBnr: "+ raavareNavn + "\" \" \" \"&3\" ");
-		System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+		weightConnection.sendToServer("RM20 8 \"RBnr: "+ raavareNavn + "\" \" \" \"&3\" ");
+		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){
-			response = socketConnect.recieveFromServer().toUpperCase();
+			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20 A")) {
 				try {
@@ -216,50 +216,50 @@ public class Controller {
 						System.out.println("Minimum vægt med tol: " +((currentReceptKomp.getNomNetto() * raavareTolerance/100) + currentReceptKomp.getNomNetto())+ " uden tol: " + currentReceptKomp.getNomNetto());
 						if(currentReceptKomp.getRaavare().getRaavareId() == raavareBatchDB.getRaavareBatch(raavareBatchSelect).getRaavare().getRaavareId()) {
 							if(raavareStock >= ((currentReceptKomp.getNomNetto() * raavareTolerance/100) + currentReceptKomp.getNomNetto())) {
-								socketConnect.sendToServer("DW");
-								System.out.println("Modtager svar fra text clear: \n" + socketConnect.recieveFromServer().toUpperCase());
+								weightConnection.sendToServer("DW");
+								System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 								break;
 							}
 							else {
-								socketConnect.sendToServer("RM20 8 \"RB min. "+ ((currentReceptKomp.getNomNetto() * raavareTolerance/100) + currentReceptKomp.getNomNetto()) + " kg" + "\" \" \" \" \" ");
-								System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+								weightConnection.sendToServer("RM20 8 \"RB min. "+ ((currentReceptKomp.getNomNetto() * raavareTolerance/100) + currentReceptKomp.getNomNetto()) + " kg" + "\" \" \" \" \" ");
+								System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 							}
 						}
 						else {
-							socketConnect.sendToServer("RM20 8 \"Forkert RB"+ "\" \" \" \"&3\" ");
+							weightConnection.sendToServer("RM20 8 \"Forkert RB"+ "\" \" \" \"&3\" ");
 						}
 					}
 					catch(DALException e){
 						e.printStackTrace();
-						socketConnect.sendToServer("RM20 8 \"RB findes ikke" + "\" \" \" \"&3\" ");
-						System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+						weightConnection.sendToServer("RM20 8 \"RB findes ikke" + "\" \" \" \"&3\" ");
+						System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 					}	
 				}
 				catch(NumberFormatException e){
-					socketConnect.sendToServer("RM20 8 \"Angiv RBnr ved tal" + "\" \" \" \"&3\" ");
-					System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("RM20 8 \"Angiv RBnr ved tal" + "\" \" \" \"&3\" ");
+					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}	
 			}
 			else{
-				socketConnect.sendToServer("RM20 8 \"RBnr: "+ raavareNavn + "\" \" \" \"&3\" ");
-				System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+				weightConnection.sendToServer("RM20 8 \"RBnr: "+ raavareNavn + "\" \" \" \"&3\" ");
+				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
 		// STEP 13 SLUT
 
 		// STEP 14 START
 		System.out.println("Vægten beder om afvejning af raavaren: " + raavareNavn);
-		socketConnect.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
-		System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+		weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
+		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){
-			response = socketConnect.recieveFromServer().toUpperCase();
+			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("K")) {
 				if(response.equals("K C 4")) {
-					socketConnect.sendToServer("S");
+					weightConnection.sendToServer("S");
 					while(!response.contains("kg")) {
-						socketConnect.sendToServer("S");
-						response = socketConnect.recieveFromServer();
+						weightConnection.sendToServer("S");
+						response = weightConnection.recieveFromServer();
 					}
 					raavareMaengde = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
 					System.out.println("Raavare manengde: " + raavareMaengde);
@@ -284,20 +284,20 @@ public class Controller {
 					}
 					else
 					{
-						socketConnect.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
-						System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+						weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
+						System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 					}
 				}
 				else{
-					socketConnect.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
-					System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+					weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
+					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}
 			}
 			else if(response.startsWith("RM20")){
 			}
 			else{
-				socketConnect.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
-				System.out.println("Modtager svar fra RM20: \n" + socketConnect.recieveFromServer().toUpperCase());
+				weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
+				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
 		// STEP 14 Slut	
@@ -462,8 +462,8 @@ public class Controller {
 	{
 		int pbId = 0;
 		try {
-			recieveUserId(socketConnect, 0);
-			pbId = recieveProductBatchId(socketConnect, 0);
+			recieveUserId(weightConnection, 0);
+			pbId = recieveProductBatchId(weightConnection, 0);
 
 			receptKompDBList = receptKompDB.getReceptKompList(produktBatchDB.getProduktBatch(pbId).getRecept().getReceptId());
 			System.out.println("size: " + receptKompDBList.size());
