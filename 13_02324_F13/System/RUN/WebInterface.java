@@ -114,110 +114,46 @@ public class WebInterface extends HttpServlet  {
 		//Opretter et nye administrations objekter til sessionen hvis de ikke allerede er oprettet
 		createAdminObjekts(session);
 
-		//////////////////Choose user information/////////////////////////////////////////////////////
-		String userID = request.getParameter("brugervalg");
-		if(!(userID == null || userID.isEmpty())){
-			int uId = Integer.parseInt(userID);
-			try {
-				brugerAdmin.setUser(uId);
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-			session.setAttribute("menu", "userForm");
-		}
-		boolean brugerChange = createUserInformation(request);
+		///////////////Choose user information////////////////
+		OperatoerHandling op = new OperatoerHandling();
+		op.UserSelected(request, brugerAdmin, session);
+		boolean brugerChange = op.createUserInformation(request, brugerAdmin);
 		if(brugerChange)
-				udfoerHandlingUserAdmin(application,handling);
+				op.udfoerHandlingUserAdmin(application, handling, brugerAdmin, login);
 		
-		//////////////////Raavare information /////////////////////////////////////////////////////////////
-		String raavareId = request.getParameter("raavarevalg");
-		if(!(raavareId == null || raavareId.isEmpty())){
-			int raavareID = Integer.parseInt(raavareId);
-			try {
-				raavareAdmin.setRaavare(raavareID);
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-			session.setAttribute("menu", "raavareForm");
-		}
-		boolean raavareChange = raavareChange(request);
+		///////////////Raavare information //////////////
+		RaavareHandling raavareHandling = new RaavareHandling();
+		raavareHandling.raavareChoose(request, raavareAdmin, session); //er der valgt en raavare?
+		boolean raavareChange = raavareHandling.raavareChange(request, raavareAdmin);
 		if(raavareChange)
-			udfoerHandlingRaavareAdmin(application,handling);
+			raavareHandling.udfoerHandlingRaavareAdmin(application, handling, raavareAdmin, login);
 		
-		//////////////////////////Raavarebatch information ////////////////////////////////////
-		boolean raavarebatchChange = raavarebatchChange(request);
+		//////////////////////////Raavarebatch information ///////////////////////
+		boolean raavarebatchChange = raavareHandling.raavarebatchChange(request, raavareAdmin);
 		if(raavarebatchChange)
-			udfoerHandlingRaavareAdmin(application,handling);
+			raavareHandling.udfoerHandlingRaavareAdmin(application, handling, raavareAdmin, login);
 		
-		String searchRB = request.getParameter("searchRB"); 
-		if(!(searchRB == null || searchRB.isEmpty())){
-			String searchName =request.getParameter("searchRBatch");
-			raavareAdmin.setRaavareNavn(searchName);
-		}
+		raavareHandling.searchRB(request,raavareAdmin);//er der soegt paa en raavarebatch?
 		
 		
-		//////////////////////////////Recept//////////////////////////////////////////////////////////////////
+		//////////////////////////////Recept/////////////////////////////////
+		ReceptHandling receptHandling = new ReceptHandling();
 		try {
-			boolean dataEntered = createRecept(request);
+			boolean dataEntered = receptHandling.createRecept(request, produktAdmin);
 			if(dataEntered)
-				udfoerHandlingProduktAdmin(application,handling);
+				receptHandling.udfoerHandlingProduktAdmin(application, handling, produktAdmin, login);
 		} catch (DALException e1) {
 			e1.printStackTrace();
 		}
 
-		///////////show recept//////////////////////////////////
-		String receptValg = request.getParameter("receptValg");
-		if(!(receptValg == null || receptValg.isEmpty())){
-			try {
-				produktAdmin.setReceptKomp(Integer.parseInt(receptValg));
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-			produktAdmin.setReceptId(receptValg);
-			session.setAttribute("menu", "showRecept");
-		}
+		receptHandling.receptValg(request, session,produktAdmin);//er der valgt en recept?
 		
-		//////////////////////////////////////////////Create produktbatch///////////////////////////////////////
-		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
-			
-		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){
-			
-			try {
-					produktAdmin.setProduktbatchReceptId(produktbatchReceptId);
-					produktAdmin.setHandling(handling);
-					produktAdmin.udfoerHandling();
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-		}
-		String visInfo = request.getParameter("visInfo");
-
-		if(!(visInfo  == null || visInfo.isEmpty())){
-			
-			try {
-				produktAdmin.setReceptKomp(Integer.parseInt(visInfo ));
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-		}
+		//////////////////////Create produktbatch/////////////////////////////////
+		ProduktHandling produktHandling = new ProduktHandling();
+		produktHandling.createProduktbatch(request, handling,produktAdmin);
 		
-		/////////////////////////////////////////show produktbatch/////////////////////////////////
-		String produktvatchValg = request.getParameter("produktvatchValg");
-		if(!(produktvatchValg == null || produktvatchValg.isEmpty())){
-			int produktvatchValgID = Integer.parseInt(produktvatchValg);
-			try {
-				produktAdmin.setReceptKomp(produktvatchValgID);
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-			produktAdmin.setProduktbatchId(produktvatchValgID);
-			session.setAttribute("menu", "showProduktbatch");
-		}
-		String searchProduktBatch = request.getParameter("searchProduktB"); 
-		if(!(searchProduktBatch == null || searchProduktBatch.isEmpty())){
-			String searchName =request.getParameter("searchProduktBatch");
-			produktAdmin.setReceptNavn(searchName);
-		}
+		//show produktbatch
+		produktHandling.showProduktbatch(request, session, produktAdmin);
 		
 			
 		//Hvilken side skal vi lande paa
@@ -302,158 +238,6 @@ public class WebInterface extends HttpServlet  {
 		doGet(request,response);
 	}
 	
-	////////////////////////////////////////Raavare////////////////////////////////////////////////
-	private boolean raavareChange(HttpServletRequest request)
-	{
-		boolean dataExcist = false;
-		
-		String raavareId = request.getParameter("raavareId");
-		if(!(raavareId == null || raavareId.isEmpty())){
-			raavareAdmin.setRaavareId(raavareId);
-			dataExcist = true;
-		}
-		String raavareNavn = request.getParameter("raavareNavn");
-		if(!(raavareNavn == null || raavareNavn.isEmpty())){
-			raavareAdmin.setRaavareNavn(raavareNavn);
-			dataExcist = true;
-		}
-		return dataExcist;
-	}	
-	private boolean raavarebatchChange(HttpServletRequest request)
-	{
-		boolean dataExcist = false;
-		
-		String raavarebatchId = request.getParameter("raavarebatchId");
-		if(!(raavarebatchId == null || raavarebatchId.isEmpty())){
-			raavareAdmin.setRaavareBatchId(raavarebatchId);
-			dataExcist = true;
-		}
-		String raavareMaengde = request.getParameter("raavareMaengde");
-		if(!(raavareMaengde == null || raavareMaengde.isEmpty())){
-			raavareAdmin.setMaengde(raavareMaengde);
-			dataExcist = true;
-		}
-		String raavarevalgBatch = request.getParameter("raavarevalgBatch");
-		if(!(raavarevalgBatch == null || raavarevalgBatch.isEmpty())){
-			raavareAdmin.setBatchRaavareId(raavarevalgBatch);
-			dataExcist = true;
-		}
-		String leverandoer = request.getParameter("leverandoer");
-		if(!(leverandoer == null || leverandoer.isEmpty())){
-			raavareAdmin.setLeverandoer(leverandoer);
-			dataExcist = true;
-		}
-		return dataExcist;
-	}
-	private void udfoerHandlingRaavareAdmin(ServletContext application,String handling) {
-		raavareAdmin.setHandling(handling);
-		if (raavareAdmin.getHandling() != null) {           
-			application.log(login.getId()+" udfoerer handling: "+raavareAdmin.getHandling());
-			try {
-				raavareAdmin.udfoerHandling();
-			} catch (DALException e) {
-				e.printStackTrace();
-			} 
-		}
-	}
-	/////////////////////////////////Recept///////////////////////////////////////////////////////
-	private boolean createRecept(HttpServletRequest request) throws DALException {
-		boolean dataExcist = false;
-		
-		String receptId = request.getParameter("receptId");
-		if(!(receptId == null || receptId.isEmpty())){
-			produktAdmin.setReceptId(receptId);
-			dataExcist = true;
-		}
-		String receptNavn = request.getParameter("receptNavn");
-		if(!(receptNavn == null || receptNavn.isEmpty())){
-			produktAdmin.setReceptNavn(receptNavn);
-			dataExcist = true;
-		}
-		String r_id = request.getParameter("raavareToAdd");
-		if (!(r_id == null || r_id.isEmpty())) {
-			String netto= request.getParameter("netto"); 
-			String tolerance = request.getParameter("tolerance");
-			produktAdmin.addToRaavareList(r_id, netto, tolerance);
-		}
-		String raavareTodelete = request.getParameter("raavareToDelete");
-		if (!(raavareTodelete == null || raavareTodelete.isEmpty())) {
-			produktAdmin.setReceptId(raavareTodelete);
-			dataExcist = true;
-		}
-		return dataExcist;
-	}
-	private void udfoerHandlingProduktAdmin(ServletContext application,String handling) {
-		//Udfoere handlingen i brugervalg.
-		produktAdmin.setHandling(handling);
-		if (produktAdmin.getHandling() != null) {           
-			application.log(login.getId()+" udfoerer handling: "+produktAdmin.getHandling());
-			try {
-				produktAdmin.udfoerHandling();
-			} catch (DALException e) {
-				e.printStackTrace();
-			} 
-		}
-	}
-	
-	/////////////////////////Create user informations//////////////////////////////////
-	private void udfoerHandlingUserAdmin(ServletContext application,String handling) {
-		//Udfoere handlingen i brugervalg.
-		brugerAdmin.setHandling(handling);
-		if (brugerAdmin.getHandling() != null) {           
-			application.log(login.getId()+" udfoerer handling: "+brugerAdmin.getHandling());
-			try {
-				brugerAdmin.udfoerHandling();
-			} catch (DALException e) {
-				e.printStackTrace();
-			} 
-		}
-	}
-	private boolean createUserInformation(HttpServletRequest request) {
-		boolean dataExcist = false;
-
-		String name = request.getParameter("oprName");
-		if(!(name == null || name.isEmpty())){
-			brugerAdmin.setName(name);
-			dataExcist = true;
-		}
-		String ini = request.getParameter("ini");
-		if(!(ini == null || ini.isEmpty())){
-			brugerAdmin.setIni(ini);
-			dataExcist = true;
-		}
-		String cpr = request.getParameter("cpr");
-		if(!(cpr == null || cpr.isEmpty())){
-			brugerAdmin.setCpr(cpr);
-			dataExcist = true;
-		}
-		String newPw = request.getParameter("newPw");
-		if(!(newPw == null || newPw.isEmpty())){
-			brugerAdmin.setPassword(newPw);
-			dataExcist = true;
-		}
-		String rolle = request.getParameter("rolle");
-		if(!(rolle == null || rolle.isEmpty())){
-			brugerAdmin.setRolle(rolle);
-			dataExcist = true;
-		}
-		String old = request.getParameter("old");
-		if(!(old == null || old.isEmpty())){
-			dataExcist = true;
-			brugerAdmin.setOld(old);
-		}
-		String new1 = request.getParameter("new1");
-		if(!(new1 == null || new1.isEmpty())){
-			dataExcist = true;
-			brugerAdmin.setNew1(new1);
-		}
-		String new2 = request.getParameter("new2");
-		if(!(new2 == null || new2.isEmpty())){
-			dataExcist = true;
-			brugerAdmin.setNew2(new2);
-		}
-		return dataExcist;
-	}
 	private void createAdminObjekts(HttpSession session) {
 		brugerAdmin = (BrugerAdministration) session.getAttribute("brugerAdmin");
 		if(brugerAdmin == null){
