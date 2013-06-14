@@ -34,12 +34,12 @@ public class WeightGUI extends JFrame {
 	private JButton btnTara;
 	private JButton btnUp;
 	private JButton btnDown;
-	private JButton k3btn;
-	private char choise;
+	private JButton btnTransfer;
+	private char choice;
 	private String answer;
 	private JLabel lblTaraVgt;
 	private JSlider slider;
-	private double bruttoD;
+	private double sliderBrutto;
 	
 	public WeightGUI() {
 		setResizable(false);
@@ -102,9 +102,9 @@ public class WeightGUI extends JFrame {
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				int d = slider.getValue();
-				bruttoD = d/10.5;
-				choise = 'S';
-				ok();
+				sliderBrutto = d/10.5;
+				choice = 'S';
+				unlock();
 			}
 		});
 		slider.setBounds(82, 150, 200, 26);
@@ -117,9 +117,9 @@ public class WeightGUI extends JFrame {
 				lock.wait();
 			}
 		} catch (InterruptedException e) {}	
-		return choise;
+		return choice;
 	}
-	private void ok() {
+	private void unlock() {
 		synchronized (lock) {
 			lock.notify();
 		}
@@ -129,7 +129,7 @@ public class WeightGUI extends JFrame {
 	{	
 		return answer;
 	}
-	public void writeCommand(String text)
+	public void setRecievedCommand(String text)
 	{
 		lblStrengModtaget.setText("Streng modtaget: "+text);
 	}
@@ -143,11 +143,11 @@ public class WeightGUI extends JFrame {
 		brutto.setText(bru+" kg");
 		lblTaraVgt.setText("Tara vaegt: "+tar+ " kg");
 	}
-	public void setK3btn(boolean click)
+	public void enableTransferBtn(boolean click)
 	{
-		k3btn.setEnabled(click);
+		btnTransfer.setEnabled(click);
 	}
-	public void setEdit(boolean one, boolean two)
+	public void enableAnswerBtns(boolean one, boolean two)
 	{
 		btnEnter.setEnabled(one);
 		btnYes.setEnabled(one);
@@ -176,8 +176,8 @@ public class WeightGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				answer = fieldReturn.getText();
 				fieldReturn.setText("");
-				choise = 'E';
-				ok();
+				choice = 'E';
+				unlock();
 			}
 		});
 		btnEnter.setBounds(421, 120, 63, 25);
@@ -188,9 +188,9 @@ public class WeightGUI extends JFrame {
 		btnYes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				answer = "Y";
-				choise = 'E';
+				choice = 'E';
 				fieldReturn.setText("");
-				ok();
+				unlock();
 			}
 		});
 		btnYes.setBounds(492, 42, 93, 25);
@@ -201,9 +201,9 @@ public class WeightGUI extends JFrame {
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				answer = "N";
-				choise = 'E';
+				choice = 'E';
 				fieldReturn.setText("");
-				ok();
+				unlock();
 			}
 		});
 		btnNo.setBounds(492, 67, 93, 25);
@@ -214,26 +214,26 @@ public class WeightGUI extends JFrame {
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				answer = "Q";
-				choise = 'E';
+				choice = 'E';
 				fieldReturn.setText("");
-				ok();
+				unlock();
 			}
 		});
 		btnQuit.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnQuit.setBounds(492, 93, 93, 25);
 		contentPane.add(btnQuit);
 		
-		k3btn = new JButton("K 3");
-		k3btn.addActionListener(new ActionListener() {
+		btnTransfer = new JButton("K 3");
+		btnTransfer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				choise = 'K';
-				ok();
+				choice = 'K';
+				unlock();
 			}
 		});
-		k3btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		k3btn.setEnabled(false);
-		k3btn.setBounds(492, 121, 93, 25);
-		contentPane.add(k3btn);
+		btnTransfer.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnTransfer.setEnabled(false);
+		btnTransfer.setBounds(492, 121, 93, 25);
+		contentPane.add(btnTransfer);
 		
 		JButton btn0 = new JButton("0");
 		btn0.addActionListener(new ActionListener() {
@@ -338,8 +338,8 @@ public class WeightGUI extends JFrame {
 		btnTara = new JButton("Tara");
 		btnTara.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				choise = 'T';
-				ok();
+				choice = 'T';
+				unlock();
 			}
 		});
 		btnTara.setBounds(12, 91, 97, 25);
@@ -348,8 +348,8 @@ public class WeightGUI extends JFrame {
 		btnDown = new JButton("");
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choise = 'D';
-				ok();
+				choice = 'D';
+				unlock();
 			}
 		});
 		btnDown.setIcon(new ImageIcon(WeightGUI.class.getResource("/javax/swing/plaf/metal/icons/sortDown.png")));
@@ -359,8 +359,8 @@ public class WeightGUI extends JFrame {
 		btnUp = new JButton("");
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choise = 'U';
-				ok();
+				choice = 'U';
+				unlock();
 			}
 		});
 		btnUp.setIcon(new ImageIcon(WeightGUI.class.getResource("/javax/swing/plaf/metal/icons/sortUp.png")));
@@ -370,15 +370,15 @@ public class WeightGUI extends JFrame {
 		JButton btnClickToQuit = new JButton("Click to Quit");
 		btnClickToQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				choise = 'Q';
-				ok();	
+				choice = 'Q';
+				unlock();	
 			}
 		});
 		btnClickToQuit.setBounds(12, 200, 139, 25);
 		contentPane.add(btnClickToQuit);
 	}
-	public double getBrutto()
+	public double getSliderBrutto()
 	{
-		return bruttoD;
+		return sliderBrutto;
 	}
 }

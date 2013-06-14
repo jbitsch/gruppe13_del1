@@ -8,8 +8,8 @@ public class Controller {
 	private static double brutto=0;
 	private static double tara=0;
 	private static String inline="";
-	private static String IndstruktionsDisplay= "";
-	private static int portdst;
+	private static String instruktionsDisplay= "";
+	private static int portDst;
 	private boolean rm20Flag = false;
 	private WeightGUI wg;
 	private Data data;
@@ -24,12 +24,12 @@ public class Controller {
 
 	public synchronized void run(int port)
 	{
-		portdst = port;	
+		portDst = port;	
 	
 		try
 		{
-			System.out.println("Lytter paa port "+ portdst);
-			data.getCon(portdst);
+			System.out.println("Lytter paa port "+ portDst);
+			data.awaitConnection(portDst);
 		}
 		catch(Exception e)
 		{
@@ -55,42 +55,42 @@ public class Controller {
 				}
 				else if(inline.startsWith("K 3"))
 				{
-					wg.setK3btn(true);
-					wg.writeCommand("K 3");
+					wg.enableTransferBtn(true);
+					wg.setRecievedCommand("K 3");
 					data.writeTo("K A"+"\r\n");
 				}
 				else if(inline.startsWith("K 1"))
 				{
-					wg.setK3btn(false);
-					wg.writeCommand("K 1");
+					wg.enableTransferBtn(false);
+					wg.setRecievedCommand("K 1");
 					data.writeTo("K A"+"\r\n");
 				}
 				else if (inline.startsWith("DW")){
-					IndstruktionsDisplay="";
-					wg.writeCommand("DW");
-					wg.setMessage(IndstruktionsDisplay);
+					instruktionsDisplay="";
+					wg.setRecievedCommand("DW");
+					wg.setMessage(instruktionsDisplay);
 					data.writeTo("DW A"+"\r\n");
 				}
 				else if (inline.startsWith("D")){
 					if (inline.equals("D"))
-						IndstruktionsDisplay="";
+						instruktionsDisplay="";
 					else
-						IndstruktionsDisplay=(inline.substring(2,inline.length()));
+						instruktionsDisplay=(inline.substring(2,inline.length()));
 					
-					wg.writeCommand("D");
-					wg.setMessage(IndstruktionsDisplay);
+					wg.setRecievedCommand("D");
+					wg.setMessage(instruktionsDisplay);
 					data.writeTo("D A"+"\r\n");
 				}
 				else if (inline.startsWith("T")){
 					tara = brutto;
 					updateGUI();
-					wg.writeCommand("T");
+					wg.setRecievedCommand("T");
 					String sTara = brutoFormat.format(tara);
 					data.writeTo("T S " + sTara + " kg "+"\r\n");
 				}
 				else if (inline.startsWith("S")){
 					String sNetto = brutoFormat.format((brutto-tara));
-					wg.writeCommand("S");
+					wg.setRecievedCommand("S");
 					data.writeTo("S S " + sNetto+ " kg " +"\r\n");
 				}
 				else if (inline.startsWith("B")){ 
@@ -99,14 +99,14 @@ public class Controller {
 						String temp= inline.substring(2,inline.length());
 						brutto = Double.parseDouble(temp);
 						updateGUI();
-						wg.writeCommand("B");
+						wg.setRecievedCommand("B");
 						data.writeTo("DB"+"\r\n");
 					}catch (IndexOutOfBoundsException e) {
 						data.writeTo("ES" + "\r\n");
-						wg.writeCommand("Ugyldig kommando: "+inline);
+						wg.setRecievedCommand("Ugyldig kommando: "+inline);
 					}catch(NumberFormatException e){
 						data.writeTo("ES"+"\r\n");
-						wg.writeCommand("Ugyldig kommando: "+inline);
+						wg.setRecievedCommand("Ugyldig kommando: "+inline);
 					}
 				}
 				else if ((inline.startsWith("RM20 8"))){
@@ -118,8 +118,8 @@ public class Controller {
 					{
 						data.writeTo("RM20 B\r\n");
 						wg.setMessage(temp[1]);
-						wg.writeCommand("Venter paa svar fra RM20 8 ordre");
-						wg.setEdit(true, false);
+						wg.setRecievedCommand("Venter paa svar fra RM20 8 ordre");
+						wg.enableAnswerBtns(true, false);
 						rm20Flag = true;
 					}
 					else
@@ -129,7 +129,7 @@ public class Controller {
 				{
 					brutto = 0.00;
 					tara = 0.00;
-					wg.writeCommand("Z");
+					wg.setRecievedCommand("Z");
 					updateGUI();
 					data.writeTo("Z A\r\n");
 				}
@@ -144,18 +144,18 @@ public class Controller {
 					data.writeTo("I0 B \"DW\"\r\n");
 					data.writeTo("I0 B \"RM20 8\"\r\n");
 					data.writeTo("I0 B \"Q\"\r\n");
-					wg.writeCommand("I0");
+					wg.setRecievedCommand("I0");
 				}
 				else if ((inline.startsWith("Q"))){
 					wg.dispose();
 					System.in.close();
 					System.out.close();
-					data.closeCon();
+					data.closeConnection();
 					System.exit(0);
 				}
 				else
 				{
-					wg.writeCommand("Ugyldig kommando: "+inline);
+					wg.setRecievedCommand("Ugyldig kommando: "+inline);
 					data.writeTo("ES"+"\r\n");
 				}
 			}
@@ -187,9 +187,9 @@ public class Controller {
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
-						wg.setEdit(false, true);
+						wg.enableAnswerBtns(false, true);
 						wg.setMessage("");
-						wg.writeCommand("");
+						wg.setRecievedCommand("");
 						rm20Flag = false;
 						break;
 					case 'T': 
@@ -208,14 +208,14 @@ public class Controller {
 						data.writeTo("K C 4\r\n");
 						break;
 					case 'S':
-						brutto = wg.getBrutto();
+						brutto = wg.getSliderBrutto();
 						updateGUI();
 						break;
 					case 'Q':
 						wg.dispose();
 						System.in.close();
 						System.out.close();
-						data.closeCon();
+						data.closeConnection();
 						System.exit(0);
 					default: 
 						wg.setMessage("Forkert input");

@@ -12,13 +12,13 @@ public class Data {
 
 	private static BufferedReader instream;
 	private static DataOutputStream outstream;
-	static ServerSocket listener;
+	private static ServerSocket listener;
 	
 	public Data() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void getCon(int portdst) throws IOException
+	public void awaitConnection(int portdst) throws IOException
 	{
 		
 		listener = new ServerSocket(portdst);
@@ -38,7 +38,7 @@ public class Data {
 		outstream.writeBytes(text);
 	}
 	
-	public void closeCon() throws IOException
+	public void closeConnection() throws IOException
 	{
 		instream.close();
 		outstream.close();
