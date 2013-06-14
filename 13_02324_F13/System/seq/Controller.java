@@ -95,7 +95,7 @@ public class Controller {
 			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
-				if(response.equals("RM20 A \" \"")) {
+				if(response.startsWith("RM20 A")){
 					sekvens();
 					break;
 				}
