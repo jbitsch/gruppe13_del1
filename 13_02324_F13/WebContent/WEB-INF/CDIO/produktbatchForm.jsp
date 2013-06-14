@@ -28,14 +28,29 @@
 			int id = recept.getReceptId();
 		%>
 			<input type="radio" name="produktbatchReceptId" value="<%=id %>" style="display:inline"/>
-			ID er <%=id %><input type="hidden" name="visInfo" value="<%=id%>"/> 
-			<input type="submit" name="show" value="Vis"/>Receptnavn: <%= recept.getReceptNavn() %>
+			Receptnavn: <%= recept.getReceptNavn() %>
 			<br>
 		<%
 			}
 		%>
 			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret produktbatch">
 	</form>
+   
+   </div>
+   <div>
+   <%
+   	for (int i=0; i<recepter.size(); i++) {
+   	%>
+   	<form method="post">
+   	<input type ="submit" name="show" value="Vis raavare">
+   	<input type="hidden" name="visInfo" value="<%=recepter.get(i).getReceptId()%>"/> <br>
+   	</form>
+   	<%
+   	}
+   
+   %>
+   
+ 
    
    </div>
    <div style="float:left">
