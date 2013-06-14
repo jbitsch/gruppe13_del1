@@ -84,7 +84,7 @@ public class ProduktAdministration {
 			{
 				
 			}
-			else if("Slet raavare".equals(handling))
+			else if("Slet".equals(handling))
 			{
 				deleteKomp(Integer.parseInt((receptId)));//Er raavare id...
 			}
@@ -148,12 +148,13 @@ public class ProduktAdministration {
 			receptDAO.createRecept(recept);
 			for(int i=0; i<receptKomp.size();i++)
 			{
+				
 				ReceptKompDTO receptkomponent = receptKomp.get(i);
 				receptkomponent.setReceptId(recept_id);
 				receptKompDAO.createReceptKomp(receptkomponent);
-				succes = "Recepten med navn "+receptNavn+" er nu oprettet";
-				delete();
 			}
+			succes = "Recepten med navn "+receptNavn+" er nu oprettet";
+			delete();
 			
 		}
 		
@@ -193,6 +194,14 @@ public class ProduktAdministration {
 		if (dataOk)
 		{
 			RaavareDTO raavare = raavareDAO.getRaavare(Integer.parseInt(r_id));
+			for(int i=0;i<raavareList.size();i++)
+			{
+				if(raavare.getRaavareId()==raavareList.get(i).getRaavareId())
+				{
+					raavareList.remove(i);
+				}
+					
+			}
 			receptKomp.add(new ReceptKompDTO(0,raavare,net,tol));
 			error ="";
 		}
@@ -204,6 +213,7 @@ public class ProduktAdministration {
 			int recept_id = receptKomp.get(i).getRaavare().getRaavareId();
 			if(recept_id==r_id)
 			{
+				raavareList.add(receptKomp.get(i).getRaavare());
 				receptKomp.remove(i);
 				succes = "Raavaren er fjernet fra listen";
 			}
