@@ -163,7 +163,7 @@ public class WebInterface extends HttpServlet  {
 		{
 			session.setAttribute("menu", menuValg);
 		}
-		if("changePassword".equals(session.getAttribute("menu")))
+		if("Skift Adgangskode".equals(session.getAttribute("menu")))
 		{
 			brugerAdmin.setId(login.getId());
 			request.getRequestDispatcher("/WEB-INF/CDIO/changePw.jsp").forward(request,response);

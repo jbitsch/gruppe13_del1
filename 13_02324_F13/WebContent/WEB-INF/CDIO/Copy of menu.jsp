@@ -21,33 +21,34 @@
 	<%
 		String rolle = login.getRolle();
 	%>
-	<input type="submit" name="menuValg" value="Skift Adgangskode"><br>
+	<input type="radio" name="menuValg" value="changePassword">Skift Adgangskode<br>
 	
 	<h3>Værkfører opgaver:</h3>	
-	<input type="submit" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
-	<input type="submit" name="menuValg" value="produktbatch">Opret produktbatch<br>					
-	<input type="submit" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
-	<input type="submit" name="menuValg" value="chooseProduktBatch">Vis produktbatch<br>
+	<input type="radio" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
+	<input type="radio" name="menuValg" value="produktbatch">Opret produktbatch<br>					
+	<input type="radio" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
+	<input type="radio" name="menuValg" value="chooseProduktBatch">Vis produktbatch<br>
 	<%
 		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
 		{
 			%>
 					<h3>Farmaceut opgaver:</h3>
-					<input type="submit" name="menuValg" value="receptForm">Opret recpet<br>
-					<input type="submit" name="menuValg" value="raavareForm">Opret råvare<br>
-					<input type="submit" name="menuValg" value="showRaavare">Administrer råvare<br>
-					<input type="submit" name="menuValg" value="chooseRecept">Vis recept<br>
+					<input type="radio" name="menuValg" value="receptForm">Opret recpet<br>
+					<input type="radio" name="menuValg" value="raavareForm">Opret råvare<br>
+					<input type="radio" name="menuValg" value="showRaavare">Administrer råvare<br>
+					<input type="radio" name="menuValg" value="chooseRecept">Vis recept<br>
 			<%
 		}
 		if("Administrator".equals(rolle) )
 		{
 			%>
 					<h3>Administrator opgaver::</h3>
-					<input type="submit" name="menuValg" value="userForm">Opret bruger<br>
-					<input type="submit" name="menuValg" value="showUsers">Administrer operatører<br>
+					<input type="radio" name="menuValg" value="userForm">Opret bruger<br>
+					<input type="radio" name="menuValg" value="showUsers">Administrer operatører<br>
 			<%
 		}
 	%>
+	<input type="submit" value="Vælg menu punkt">
 </form>
 
 <form method="POST">

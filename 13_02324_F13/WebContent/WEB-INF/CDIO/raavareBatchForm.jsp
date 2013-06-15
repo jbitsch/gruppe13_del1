@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<style type="text/css">
+	<%@include file="../../static/style.css" %>
+</style>
+
 <title>Råvarebatch form</title>
 </head>
 <body>

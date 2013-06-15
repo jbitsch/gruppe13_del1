@@ -1,0 +1,75 @@
+body
+{
+	width: 90%;
+	position:relative;
+	left: 5%;
+	top: 2%;
+	min-width: 900px;
+	min-height: 500px;
+
+}
+
+.page
+{
+}
+
+.indhold
+{
+	width: 100%;
+}
+
+#receptListe
+{
+	float:left;
+	width: 65%;
+}
+
+#raavareBox
+{
+	float:left;
+	width: 29%;
+	padding: 2%;
+	border: 5px double black;
+}
+
+.noMargin
+{
+	margin: 0%;
+	padding: 0%;
+}
+
+#radios
+{
+	width: 50%;
+	float: left;
+}
+
+#visRaavareKnapper
+{
+	width: 50%;
+	float: left;
+}
+
+.row
+{
+	width: 100%;
+	height: 25px;
+	border-bottom: 1px solid gray;
+}
+
+.bottomSubmit
+{
+	margin-top: 4%;
+}
+
+.receptNavn:active + .raavareBox
+{
+	display: block;
+}
+
+.signout{
+      display:none;
+}
+.membernames:hover + .signout{
+      display : block;
+}

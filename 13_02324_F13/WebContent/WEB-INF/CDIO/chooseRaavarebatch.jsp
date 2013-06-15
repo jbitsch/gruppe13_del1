@@ -5,6 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<style type="text/css">
+	<%@include file="../../static/style.css" %>
+</style>
+
 <head><title>Vælg Råvarebatch</title></head>
 <body>
 <h1>Vælg råvarebatch</h1>

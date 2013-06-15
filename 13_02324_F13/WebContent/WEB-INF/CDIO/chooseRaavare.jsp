@@ -1,6 +1,11 @@
 <%@page import="dto.RaavareDTO"%>
 <jsp:useBean id="raavareAdmin" class="controller.RaavareAdministration" scope="session" />
 <html>
+
+<style type="text/css">
+	<%@include file="../../static/style.css" %>
+</style>
+
 <head><title>Vælg Råvare</title></head>
 <body>
 <h1>Vælg råvare</h1>

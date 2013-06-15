@@ -81,7 +81,7 @@
 					ArrayList<dto.ReceptKompDTO> recepterKomp = produktAdmin.getReceptKomp();
 					if(recepterKomp!=null)
 					{
-						out.println("<h2>Raavare:</h2>");
+						out.println("<h2 class='noMaring'>Raavare:</h2>");
 						if(recepterKomp.size()==0)
 							out.println("Indeholder ingen raavare");
 						for(int i=0; i<recepterKomp.size(); i++)

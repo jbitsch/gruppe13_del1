@@ -1,5 +1,10 @@
 <jsp:useBean id="brugerAdmin" class="controller.BrugerAdministration" scope="session" />
 <html>
+
+<style type="text/css">
+	<%@include file="../../static/style.css" %>
+</style>
+
 <head><title>Vælg bruger</title></head>
 <body>
 <h1>Vælg bruger</h1>
