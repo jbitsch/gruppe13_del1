@@ -63,7 +63,7 @@
 				   	%>
 				   	<div class="row">
 					   	<form method="post">
-						   	<a href="#" class="receptNavn"><input type ="submit" name="show" value="Vis raavare"></a>
+						   	<input class="submitLink" type ="submit" name="show" value="Vis raavare">
 						   	<input type="hidden" name="visInfo" value="<%=recepter.get(i).getReceptId()%>"/> <br>
 					   	</form>
 					</div>

@@ -23,7 +23,10 @@
 	Indtast nyt password: <input type="password" name="new1"><br />
 	Gentag nyt password: <input type="password" name="new2"><br />
 	
-	<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="submit" value="Skift">
+	<div class="bottomSubmit">
+		<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="submit" value="Skift">
+	</div>
+	
 </form>
 
 

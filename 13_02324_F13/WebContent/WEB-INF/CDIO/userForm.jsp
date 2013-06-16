@@ -56,24 +56,28 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 	
 	if(brugerAdmin.getId()==0)
 	{
-	%>		
-			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
+	%>
+			<div class="bottomSubmit">	
+				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
+			</div>
 			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 	}
 	else
 	{
 		%>
-			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
-			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp" />	
-			<%
-			if(!(brugerAdmin.getId()==login.getId()) && !("Operatør".equals(brugerAdmin.getRolle())))
-			{
-				%>
-					<input type = "submit" name="handling" value="Slet">
+			<div class="bottomSubmit">
+				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
+				<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp" />	
 				<%
-			}
-			%>
+				if(!(brugerAdmin.getId()==login.getId()) && !("Operatør".equals(brugerAdmin.getRolle())))
+				{
+					%>
+						<input type = "submit" name="handling" value="Slet">
+					<%
+				}
+				%>
+			</div>
 		<%
 	}
 %>

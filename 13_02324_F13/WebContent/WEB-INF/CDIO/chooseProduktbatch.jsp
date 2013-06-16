@@ -34,15 +34,21 @@
 			status = "Afsluttet";
 		}
 		%>
-			<input type="radio" name="produktvatchValg" value="<%= produktBatch.getPbId() %>">
+			<input type="radio" name="produktbatchValg" value="<%= produktBatch.getPbId() %>">
 			<font color="<%=color%>">Status:<%=status %> produktbatch id <%=produktBatch.getPbId() %>: <%=produktBatch.getRecept().getReceptNavn() %></font><br>
 		<%
 	}
 	%>
 	
-	Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><br>
-	<input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
-	<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg produktbatch">
+	<div class="bottomSubmit">
+		Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><br>
+		<input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
+	</div>
+	
+	<div class="bottomSubmit">
+		<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg produktbatch">
+	</div>
+	
 </form>
 </body>
 </html>

@@ -20,7 +20,11 @@
 		<%
 	}
 %>
-<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg bruger">
+
+<div class="bottomSubmit">
+	<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg bruger">
+</div>
+
 </form>
 
 </body>

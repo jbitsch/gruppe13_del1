@@ -24,7 +24,7 @@
 <input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	Råvarebatch id: <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"><br>
 	Leverandøer: <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"><br>
-	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br>
+	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br><br/>
 	
 	Vælg råvare:<br>
 	<%
@@ -36,7 +36,10 @@
 		<%
 	}
 %>
-<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavarebatch">
+
+<div class="bottomSubmit">
+	<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavarebatch">
+</div>
 
 </form>
 
