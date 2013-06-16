@@ -14,6 +14,9 @@
 <title>Skift password</title>
 </head>
 <body>
+
+<h1>Skift adgangskode </h1>
+
 <p><font color="red"><%= brugerAdmin.getError() %></font><br>
 
 <form method="POST">

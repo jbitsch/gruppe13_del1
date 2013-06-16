@@ -172,7 +172,7 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/userForm.jsp").forward(request,response);
 		}
-		else if("Administrer operatører".equals(session.getAttribute("menu")))
+		else if("Administrer operatoerer".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseUser.jsp").forward(request,response);
 		}
@@ -180,19 +180,19 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm1.jsp").forward(request,response);
 		}
-		else if("Opret råvare".equals(session.getAttribute("menu")))
+		else if("Opret raavare".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/raavareForm.jsp").forward(request,response);
 		}
-		else if("Administrer råvare".equals(session.getAttribute("menu")))
+		else if("Administrer raavare".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseRaavare.jsp").forward(request,response);
 		}
-		else if("Opret råvarebatch".equals(session.getAttribute("menu")))
+		else if("Opret raavarebatch".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/raavareBatchForm.jsp").forward(request,response);
 		}
-		else if("Vis råvarebatch".equals(session.getAttribute("menu")))
+		else if("Vis raavarebatch".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseRaavarebatch.jsp").forward(request,response);
 		}

@@ -24,9 +24,9 @@
 	<input class="submitLink" type="submit" name="menuValg" value="Skift Adgangskode"><br>
 	
 	<h3>Værkfører opgaver:</h3>	
-	<input class="submitLink" type="submit" name="menuValg" value="Opret råvarebatch"><br>
+	<input class="submitLink" type="submit" name="menuValg" value="Opret raavarebatch"><br>
 	<input class="submitLink" type="submit" name="menuValg" value="Opret produktbatch"><br>					
-	<input class="submitLink" type="submit" name="menuValg" value="Vis råvarebatch"><br>
+	<input class="submitLink" type="submit" name="menuValg" value="Vis raavarebatch"><br>
 	<input class="submitLink" type="submit" name="menuValg" value="Vis produktbatch"><br>
 	<%
 		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
@@ -34,8 +34,8 @@
 			%>
 					<h3>Farmaceut opgaver:</h3>
 					<input class="submitLink" type="submit" name="menuValg" value="Opret recpet"><br>
-					<input class="submitLink" type="submit" name="menuValg" value="Opret råvare"><br>
-					<input class="submitLink" type="submit" name="menuValg" value="Administrer råvare"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Opret raavare"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Administrer raavare"><br>
 					<input class="submitLink" type="submit" name="menuValg" value="Vis recept"><br>
 			<%
 		}
@@ -44,7 +44,7 @@
 			%>
 					<h3>Administrator opgaver::</h3>
 					<input class="submitLink" type="submit" name="menuValg" value="Opret bruger"><br>
-					<input class="submitLink" type="submit" name="menuValg" value="Administrer operatører"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Administrer operatoerer"><br>
 			<%
 		}
 	%>
