@@ -24,7 +24,6 @@ public class ProduktHandling {
 		String visInfo = request.getParameter("visInfo");
 
 		if(!(visInfo  == null || visInfo.isEmpty())){
-			System.out.println(visInfo);
 			try {
 				produktAdmin.setReceptKomp(Integer.parseInt(visInfo ));
 			} catch (DALException e) {

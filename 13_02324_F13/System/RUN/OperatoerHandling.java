@@ -21,6 +21,11 @@ public class OperatoerHandling {
 			}
 			session.setAttribute("menu", "Opret bruger");
 		}
+		String handling = request.getParameter("handling");
+		if(!(handling == null || handling.isEmpty())){
+			if("Slet".equals(handling))
+				session.setAttribute("menu", "userDelete");
+		}
 	}
 	public boolean createUserInformation(HttpServletRequest request, BrugerAdministration brugerAdmin) {
 		boolean dataExcist = false;

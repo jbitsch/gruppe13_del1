@@ -42,7 +42,7 @@
 		if("Administrator".equals(rolle) )
 		{
 			%>
-					<h3>Administrator opgaver::</h3>
+					<h3>Administrator opgaver:</h3>
 					<input class="submitLink" type="submit" name="menuValg" value="Opret bruger"><br>
 					<input class="submitLink" type="submit" name="menuValg" value="Administrer operatoerer"><br>
 			<%

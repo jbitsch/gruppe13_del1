@@ -320,6 +320,9 @@ public class ProduktAdministration {
 	{
 		return handling;
 	}
+	/**
+	 * @author Jacob Nordfalk - Webprogrammering med JSP
+	 */
 	public String replaceChar(String toReplace)
 	{
 		toReplace = toReplace.replace("&", "&amp;");   // erstat & med HTML-koden for &

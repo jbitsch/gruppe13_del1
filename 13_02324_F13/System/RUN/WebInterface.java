@@ -176,6 +176,10 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseUser.jsp").forward(request,response);
 		}
+		else if("userDelete".equals(session.getAttribute("menu")))
+		{
+			request.getRequestDispatcher("/WEB-INF/CDIO/userDelete.jsp").forward(request,response);
+		}		
 		else if("Opret recpet".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/receptForm1.jsp").forward(request,response);

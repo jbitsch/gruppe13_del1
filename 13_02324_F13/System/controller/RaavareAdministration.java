@@ -85,7 +85,9 @@ public class RaavareAdministration {
 		{
 			if (handling.equals("Opret Raavare"))
 			{
-				if(okRaavareId() && okNavn(raavareNavn))
+				boolean okId= okRaavareId();
+				boolean okNavn = okNavn(raavareNavn);
+				if( okId&&okNavn )
 				{
 					
 					raavareNavn = replaceChar(raavareNavn);
@@ -105,12 +107,16 @@ public class RaavareAdministration {
 					
 					raavareDAO.updateRaavare(nyRaavare);
 					succes = "Råvare nr. " + nyRaavare.getRaavareId() + " blev opdateret!";
-					delete();
 				}
 			}
 			else if (handling.equals("Opret Raavarebatch"))
 			{
-				if(okRaavareBatchId() && okMaengde() && okBatchRaavareId()&& okLeverandoer(leverandoer))
+				boolean idOk =  okRaavareBatchId();
+				boolean maengdeOk = okMaengde();
+				boolean rbOk = okBatchRaavareId();
+				boolean levOk = okLeverandoer(leverandoer);
+				
+				if(idOk &&maengdeOk  &&rbOk &&levOk )
 				{
 					double talMaengde = Double.parseDouble(maengde);
 					talMaengde = Math.round(talMaengde*10000)/10000.0d;
@@ -136,16 +142,13 @@ public class RaavareAdministration {
 	public boolean okRaavareId()
 	{
 		try
-		{
-			// Kommatal?
-			
+		{	
 			// Tjek at id er en int
-			int id = Integer.parseInt(raavareId);
-			
+			int id = Integer.parseInt(raavareId);	
 			// Id i intervallet 1-99999999
 			if(id < 1 || id > 99999999)
 			{
-				error += "Id skal være i intervallet 1-99999999\n";
+				error += "Id skal være i intervallet 1-99999999<br>";
 			}
 			else
 			{
@@ -153,7 +156,7 @@ public class RaavareAdministration {
 				try
 				{
 					raavareDAO.getRaavare(id);
-					error += "Id'et findes i forvejen\n";
+					error += "Id'et findes i forvejen<br>";
 				}
 				catch(DALException e)
 				{
@@ -164,7 +167,7 @@ public class RaavareAdministration {
 		}
 		catch(NumberFormatException e)
 		{
-			error += "Id skal være et tal i intervallet 1-99999999\n";
+			error += "Id skal være et tal i intervallet 1-99999999<br>";
 		}
 		
 		return false;
@@ -174,7 +177,7 @@ public class RaavareAdministration {
 	{
 		if(navn.length() < 2 || navn.length() > 20)
 		{
-			error += "Længde på raavarenavn skal være på 2-20 karakterer\n";
+			error += "Længde på raavarenavn skal være på 2-20 karakterer<br>";
 			return false;
 		}
 		return true;
@@ -183,7 +186,7 @@ public class RaavareAdministration {
 	{
 		if(navn.length() < 2 || navn.length() > 20)
 		{
-			error += "Længde på leverandoer skal være på 2-20 karakterer\n";
+			error += "Længde på leverandoer skal være på 2-20 karakterer<br>";
 			return false;
 		}
 		return true;
@@ -198,7 +201,7 @@ public class RaavareAdministration {
 		}
 		catch(NumberFormatException e)
 		{
-			error += "Du skal vaelge en raavare\n";
+			error += "Du skal vaelge en raavare<br>";
 		}
 		
 		return false;
@@ -214,7 +217,7 @@ public class RaavareAdministration {
 			// Id i intervallet 1-99999999
 			if(id < 1 || id > 99999999)
 			{
-				error += "Id skal være i intervallet 1-99999999\n";
+				error += "Id skal være i intervallet 1-99999999<br>";
 			}
 			else
 			{
@@ -222,7 +225,7 @@ public class RaavareAdministration {
 				try
 				{
 					raavareBatchDAO.getRaavareBatch(id);
-					error += "Id'et findes i forvejen\n";
+					error += "Id'et findes i forvejen<br>";
 				}
 				catch(DALException e)
 				{
@@ -233,7 +236,7 @@ public class RaavareAdministration {
 		}
 		catch(NumberFormatException e)
 		{
-			error += "Id skal være et tal i intervallet 1-99999999\n";
+			error += "Id skal være et tal i intervallet 1-99999999<br>";
 		}
 		
 		return false;
@@ -248,7 +251,7 @@ public class RaavareAdministration {
 		}
 		catch(NumberFormatException e)
 		{
-			error += "Mængden skal angives som et tal\n";
+			error += "Mængden skal angives som et tal<br>";
 			return false;
 		}
 		
@@ -309,6 +312,10 @@ public class RaavareAdministration {
 	{
 		return handling;
 	}
+	
+	/**
+	 * @author Jacob Nordfalk - Webprogrammering med JSP
+	 */
 	public String replaceChar(String toReplace)
 	{
 		toReplace = toReplace.replace("&", "&amp;");   // erstat & med HTML-koden for &

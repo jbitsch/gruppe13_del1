@@ -175,6 +175,7 @@ public class BrugerAdministration {
 				OperatoerDTO user = new OperatoerDTO(id, name, ini, cpr, replaceChar(password),rolle);
 				operatoerDAO.createOperatoer(user);
 				succes = "Bruger oprettet med id: "+id;
+				delete(); //nulstiller alle parametere
 			}
 			else //Aendre bruger oplysninger
 			{
@@ -189,9 +190,6 @@ public class BrugerAdministration {
 				
 				succes = "Bruger med id: "+id + " aendret";
 			}
-			
-			delete(); //nulstiller alle parametere
-			
 		}
 	}
 	
@@ -328,6 +326,9 @@ public class BrugerAdministration {
 		error = "";
 		succes = "";
 	}
+	/**
+	 * @author Jacob Nordfalk - Webprogrammering med JSP
+	 */
 	public String replaceChar(String toReplace)
 	{
 		toReplace = toReplace.replace("&", "&amp;");   // erstat & med HTML-koden for &
