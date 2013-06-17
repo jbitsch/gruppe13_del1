@@ -12,6 +12,10 @@ import daoimpl.MySQLProduktBatchKompDAO;
 import daoimpl.MySQLReceptDAO;
 import daoimpl.MySQLReceptKompDAO;
 import daointerfaces.DALException;
+import daointerfaces.IProduktBatchDAO;
+import daointerfaces.IProduktBatchKompDAO;
+import daointerfaces.IRaavareBatchDAO;
+import daointerfaces.IReceptKompDAO;
 import dto.OperatoerDTO;
 import dto.ProduktBatchDTO;
 import dto.ProduktBatchKompDTO;
@@ -24,17 +28,22 @@ public class Controller {
 
 	private OperatoerDTO Opr_PB = null;
 
-	private WeightSocket weightConnection = new WeightSocket();
+	private WeightSocket weightConnection;
 	private Scanner input = new Scanner(System.in);
 	private String ip;
 	private int port;
-	private MySQLRaavareBatchDAO raavareBatchDB = new MySQLRaavareBatchDAO();
-	private MySQLProduktBatchKompDAO produktBatchKompDB = new MySQLProduktBatchKompDAO();
-	private MySQLProduktBatchDAO produktBatchDB = new MySQLProduktBatchDAO();
-	private MySQLReceptKompDAO receptKompDB = new MySQLReceptKompDAO();
+	private IRaavareBatchDAO raavareBatchDB;
+	private IProduktBatchKompDAO produktBatchKompDB;
+	private IProduktBatchDAO produktBatchDB;
+	private IReceptKompDAO receptKompDB;
 	private List<ReceptKompDTO> receptKompDBList;
 
 	public Controller(){
+		weightConnection = new WeightSocket();
+		raavareBatchDB = new MySQLRaavareBatchDAO();
+		produktBatchKompDB = new MySQLProduktBatchKompDAO();
+		produktBatchDB = new MySQLProduktBatchDAO();
+		receptKompDB = new MySQLReceptKompDAO();
 	}
 	
 	public void run(){
@@ -66,7 +75,7 @@ public class Controller {
 
 	private void connectToDB(){
 		try{
-			Connector mySql = new Connector();
+			new Connector();
 			System.out.println("MySQL connection");
 		}
 		catch(Exception e){
