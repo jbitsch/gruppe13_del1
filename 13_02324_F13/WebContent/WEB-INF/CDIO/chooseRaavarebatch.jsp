@@ -12,6 +12,7 @@
 
 <head><title>Vælg Råvarebatch</title></head>
 <body>
+<jsp:include page="menubar.jsp" /><br>
 <h1>Vælg råvarebatch</h1>
 
 
@@ -30,14 +31,12 @@
 
 
 <form method="POST">
-	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />
-	
 	<div class="bottomSubmit">
 		Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch">
 	</div>
 	
 	<div class="bottomSubmit">
-		<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="searchRB" value="Soeg på raavare navn">
+		<input type = "submit" name="searchRB" value="Soeg på raavare navn">
 	</div>
 	
 </form>

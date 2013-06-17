@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<jsp:useBean id="user" class="dto.OperatoerDTO" type="dto.OperatoerDTO" scope="session"/>
 <jsp:useBean id="login" class="model.Login" type="model.Login" scope="session"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -13,8 +12,9 @@
 <title>Menu</title>
 </head>
 <body>
+<jsp:include page="menubar.jsp" /><br>
+
 	<h1>Menu</h1>
-	
 	
 <form method="POST">
 <input type="hidden" name="namePage" value="/WEB-INF/CDIO/menu.jsp" />	

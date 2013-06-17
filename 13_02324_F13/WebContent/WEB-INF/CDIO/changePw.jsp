@@ -14,7 +14,7 @@
 <title>Skift password</title>
 </head>
 <body>
-
+<jsp:include page="menubar.jsp" /><br>
 <h1>Skift adgangskode </h1>
 
 <p><font color="red"><%= brugerAdmin.getError() %></font><br>
@@ -27,7 +27,7 @@
 	Gentag nyt password: <input type="password" name="new2"><br />
 	
 	<div class="bottomSubmit">
-		<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="submit" value="Skift">
+		<input type = "submit" name="submit" value="Skift">
 	</div>
 	
 </form>

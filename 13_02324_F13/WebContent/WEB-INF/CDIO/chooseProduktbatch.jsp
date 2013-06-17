@@ -13,9 +13,10 @@
 <title>Vælg produktbatch</title>
 </head>
 <body>
+<jsp:include page="menubar.jsp" /><br> 
 <h1>Vælg produktbatch</h1>
+
 <form method="POST">
-<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 	for (int i=0; i<produktAdmin.getProduktbatch().size(); i++) {
 		
@@ -46,7 +47,7 @@
 	</div>
 	
 	<div class="bottomSubmit">
-		<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg produktbatch">
+		<input type="submit" value="Vælg produktbatch">
 	</div>
 	
 </form>

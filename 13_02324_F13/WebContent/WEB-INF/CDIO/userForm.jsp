@@ -20,7 +20,7 @@
 
 String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør"};
 %>
-
+<jsp:include page="menubar.jsp" /><br>
 <h1>Bruger formular</h1>
 
 <p><font color="red"><%=brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
@@ -58,9 +58,8 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 	{
 	%>
 			<div class="bottomSubmit">	
-				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret bruger">
+				<input type="submit" name="handling" value="Opret bruger">
 			</div>
-			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 	}
 	else

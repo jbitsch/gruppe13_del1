@@ -18,7 +18,7 @@
 <%
 ProduktBatchDTO produktBatch = produktAdmin.getProduktBatch();
 %>
-
+<jsp:include page="menubar.jsp" /><br>
 
 <h1><%=produktBatch.getRecept().getReceptNavn()%></h1>
 <%

@@ -8,6 +8,7 @@
 <title>Bruger slettet</title>
 </head>
 <body>
+<jsp:include page="menubar.jsp" /><br>
 <h1>Bruger er slettet</h1>
 
 <font color="green"><%= brugerAdmin.getSucces() %></font><br>

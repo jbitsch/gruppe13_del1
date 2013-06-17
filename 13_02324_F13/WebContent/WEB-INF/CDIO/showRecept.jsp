@@ -18,7 +18,7 @@
 <%
 ReceptDTO recept = produktAdmin.getRecept();
 %>
-
+<jsp:include page="menubar.jsp" /><br>
 
 <h1><%=recept.getReceptNavn()%></h1>
 

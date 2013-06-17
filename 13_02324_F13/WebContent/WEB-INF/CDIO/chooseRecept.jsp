@@ -14,9 +14,9 @@
 <title>Vælg recept</title>
 </head>
 <body>
+<jsp:include page="menubar.jsp" /><br>
 <h1>Vælg recpet</h1>
 <form method="POST">
-<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 	for (int i=0; i<produktAdmin.getRecepter().size(); i++) {
 		
@@ -29,7 +29,7 @@
 	%>
 	
 	<div class="bottomSubmit">
-		<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" value="Vælg recept">
+		<input type="submit" value="Vælg recept">
 	</div>
 	
 </form>

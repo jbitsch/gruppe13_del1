@@ -15,6 +15,8 @@
 
 </head>
 <body>
+<jsp:include page="menubar.jsp" /><br>
+<h1>Recept formular</h1>
 <font color="red"><%=produktAdmin.getError() %></font><font color="green"><%= produktAdmin.getSucces() %></font><br>
 <form method="POST">
 <input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	

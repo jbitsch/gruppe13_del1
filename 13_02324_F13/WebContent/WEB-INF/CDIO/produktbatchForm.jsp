@@ -9,10 +9,7 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<link rel="stylesheet" type="text/css" href="C:\Users\marti_000\Desktop\style.css"/>
-		<!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style.css"></link>
-		${pageContext.request.contextPath} -->
-		
+
 		<style type="text/css">
 			<%@include file="../../static/style.css" %>
 		</style>
@@ -21,11 +18,7 @@
 	</head>
 	
 	<body>
-		<!--<li class="membernames"><a href="#">David M.</a></li>
-		
-		<li class="signout"><a href="#">Sign Out</a></li>
-		<h1>${pageContext.request.contextPath}</h1>-->
-		
+		<jsp:include page="menubar.jsp" /><br>
 		<div class="page">
 			
 			<h1>Vaelg recept der skal oprettes som produktbatch</h1>
@@ -52,7 +45,7 @@
 								}
 							%>
 								<div class="bottomSubmit">
-									<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret produktbatch">
+									<input type="submit" name="handling" value="Opret produktbatch">
 								</div>
 						</form>
 				   
@@ -71,9 +64,6 @@
 				   	}
 				   
 				   %>
-				   
-				 
-				   
 				   </div>
 			   </div>
 			   <div id="raavareBox">

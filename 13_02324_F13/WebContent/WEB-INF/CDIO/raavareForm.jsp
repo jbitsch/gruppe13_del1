@@ -13,7 +13,7 @@
 <title>Råvare form</title>
 </head>
 <body>
-
+<jsp:include page="menubar.jsp" /><br>
 <h1>Indtast råvare information</h1>
 
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
@@ -39,8 +39,7 @@
 		if(raavareAdmin.getIsnew())
 		{
 			%>
-				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
-				<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
+				<input type="submit" name="handling" value="Opret Raavare">
 			<%
 		}
 		else

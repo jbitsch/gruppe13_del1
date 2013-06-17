@@ -16,6 +16,7 @@
 
 </head>
 <body>
+<jsp:include page="menubar.jsp" /><br>
 <h1>Opret recept</h1>
 
 <font color="red"><%=produktAdmin.getError() %></font><font color="green"><%= produktAdmin.getSucces() %></font><br>
@@ -63,7 +64,7 @@ if(receptKomp!=null && receptKomp.size()>0 )
 	Recept navn: <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"/><br>
 	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />
 	<div class="bottomSubmit">
-		<input type = "submit" name="menuValg" value="Tilbage"/><input type="submit" name="handling" value="Opret recept"/>
+		<input type="submit" name="handling" value="Opret recept"/>
 	</div>
 
 </form>
