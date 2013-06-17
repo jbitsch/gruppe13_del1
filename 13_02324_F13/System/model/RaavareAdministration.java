@@ -139,7 +139,7 @@ public class RaavareAdministration {
 	}
 	
 	////Tjek metoder //////////
-	public boolean okRaavareId()
+	private boolean okRaavareId()
 	{
 		try
 		{	
@@ -173,7 +173,7 @@ public class RaavareAdministration {
 		return false;
 	}
 	
-	public boolean okNavn(String navn)
+	private boolean okNavn(String navn)
 	{
 		if(navn.length() < 2 || navn.length() > 20)
 		{
@@ -182,7 +182,7 @@ public class RaavareAdministration {
 		}
 		return true;
 	}
-	public boolean okLeverandoer(String navn)
+	private boolean okLeverandoer(String navn)
 	{
 		if(navn.length() < 2 || navn.length() > 20)
 		{
@@ -191,7 +191,7 @@ public class RaavareAdministration {
 		}
 		return true;
 	}
-	public boolean okBatchRaavareId()
+	private boolean okBatchRaavareId()
 	{
 		try
 		{
@@ -207,7 +207,7 @@ public class RaavareAdministration {
 		return false;
 	}
 
-	public boolean okRaavareBatchId()
+	private boolean okRaavareBatchId()
 	{
 		try
 		{	
@@ -242,7 +242,7 @@ public class RaavareAdministration {
 		return false;
 	}
 	
-	public boolean okMaengde()
+	private boolean okMaengde()
 	{
 		try
 		{

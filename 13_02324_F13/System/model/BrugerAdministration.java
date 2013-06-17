@@ -211,27 +211,27 @@ public class BrugerAdministration {
 	}
 	
 	/** Operat�r navn min. 2 max.. 20 karakterer */
-	public boolean checkName(String navn)
+	private boolean checkName(String navn)
 	{
 		String REGEX = "^[a-zA-Z[\\s]]{2,20}$+";
 		return checkRegex(REGEX,navn);
 	}
 	
 	/** Operat�r initialer min. 2 max. 3 karakterer */
-	public boolean checkIni(String ini)
+	private boolean checkIni(String ini)
 	{
 		String REGEX ="^[a-zA-Z[\\s]]{2,3}$+";
 		return checkRegex(REGEX, ini);
 	}
 	
 	/** Operat�r cpr-nr 10 karakterer */
-	public boolean checkCpr(String cpr)
+	private boolean checkCpr(String cpr)
 	{
 		String REGEX = "^[0-9]{10,10}$+";
 		return checkRegex(REGEX, cpr);
 	}
 	/** Operat�r password min. 7 max. 8 karakterer */
-	public boolean checkPassword(String password)
+	private boolean checkPassword(String password)
 	{
 		String REGEX = "^[0-9[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]]{7,8}$+";
 		return checkRegex(REGEX, password);
