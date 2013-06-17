@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.BrugerAdministration;
+import model.Login;
+import model.ProduktAdministration;
+import model.RaavareAdministration;
+
 import connector.Connector;
-import controller.BrugerAdministration;
-import controller.Login;
-import controller.ProduktAdministration;
-import controller.RaavareAdministration;
 
 import daointerfaces.DALException;
 

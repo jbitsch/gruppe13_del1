@@ -13,13 +13,13 @@ public class Controller {
 	private boolean rm20Flag = false;
 	private WeightGUI wg;
 	private Data data;
-	private DecimalFormat brutoFormat;
+	private DecimalFormat doubleFormat;
 	private Thread networkCon;
 
 	public Controller(WeightGUI wg, Data data) {
 		this.wg = wg;
 		this.data = data;
-		brutoFormat = new DecimalFormat("0.000");
+		doubleFormat = new DecimalFormat("0.000");
 
 	}
 
@@ -102,9 +102,9 @@ public class Controller {
 
 	private void updateGUI()
 	{	
-		String sBrutto = brutoFormat.format(brutto);
-		String sNetto = brutoFormat.format((brutto-tara));
-		String sTara = brutoFormat.format(tara);
+		String sBrutto = doubleFormat.format(brutto);
+		String sNetto = doubleFormat.format((brutto-tara));
+		String sTara = doubleFormat.format(tara);
 		wg.updateWeight(sNetto, sBrutto, sTara,brutto);
 	}
 
@@ -172,11 +172,11 @@ public class Controller {
 						tara = brutto;
 						updateGUI();
 						wg.setRecievedCommand("T");
-						String sTara = brutoFormat.format(tara);
+						String sTara = doubleFormat.format(tara);
 						data.writeTo("T S " + sTara + " kg "+"\r\n");
 					}
 					else if (inline.startsWith("S")){
-						String sNetto = brutoFormat.format((brutto-tara));
+						String sNetto = doubleFormat.format((brutto-tara));
 						wg.setRecievedCommand("S");
 						data.writeTo("S S " + sNetto+ " kg " +"\r\n");
 					}
@@ -203,12 +203,12 @@ public class Controller {
 
 						if(temp.length>1)
 						{
-							data.writeTo("RM20 B\r\n");
+							
 							wg.setMessage(temp[1]);
 							wg.setRecievedCommand("Venter paa svar fra RM20 8 ordre");
 							wg.enableAnswerBtns(true, false);
 							rm20Flag = true;
-							data.flushOut();
+							data.writeTo("RM20 B\r\n");
 						}
 						else
 							data.writeTo("RM20 L\r\n");

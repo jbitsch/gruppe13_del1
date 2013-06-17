@@ -1,4 +1,4 @@
-<jsp:useBean id="brugerAdmin" class="controller.BrugerAdministration" scope="session" />
+<jsp:useBean id="brugerAdmin" class="model.BrugerAdministration" scope="session" />
 <html>
 
 <style type="text/css">

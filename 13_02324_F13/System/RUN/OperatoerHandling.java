@@ -4,8 +4,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import controller.BrugerAdministration;
-import controller.Login;
+import model.BrugerAdministration;
+import model.Login;
+
 import daointerfaces.DALException;
 
 public class OperatoerHandling {

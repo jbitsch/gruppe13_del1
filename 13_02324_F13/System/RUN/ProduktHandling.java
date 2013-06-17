@@ -3,7 +3,8 @@ package RUN;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import controller.ProduktAdministration;
+import model.ProduktAdministration;
+
 
 import daointerfaces.DALException;
 

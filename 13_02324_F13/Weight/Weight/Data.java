@@ -47,10 +47,6 @@ public class Data {
 		sock.close();
 	}
 	
-	public String getIp()
-	{
-		return sock.getInetAddress().toString();
-	}
 	public void flushOut()
 	{
 		try {

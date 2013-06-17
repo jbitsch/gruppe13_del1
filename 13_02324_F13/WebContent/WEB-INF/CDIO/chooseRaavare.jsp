@@ -1,5 +1,5 @@
 <%@page import="dto.RaavareDTO"%>
-<jsp:useBean id="raavareAdmin" class="controller.RaavareAdministration" scope="session" />
+<jsp:useBean id="raavareAdmin" class="model.RaavareAdministration" scope="session" />
 <html>
 
 <style type="text/css">

@@ -4,8 +4,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import controller.Login;
-import controller.ProduktAdministration;
+import model.Login;
+import model.ProduktAdministration;
+
 
 import daointerfaces.DALException;
 

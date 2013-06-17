@@ -8,16 +8,12 @@ import java.net.Socket;
 
 public class WeightSocket {
 	
-	private String ip;
-	private int port;
 	private Socket scaleSocket;
 	private PrintWriter out;
 	private BufferedReader in;
 	
 	public void connect(String ip, int port) throws IOException
 	{
-		this.ip = ip;
-		this.port = port;
 		scaleSocket = new Socket(ip, port);
     	out = new PrintWriter(scaleSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(scaleSocket.getInputStream()));
