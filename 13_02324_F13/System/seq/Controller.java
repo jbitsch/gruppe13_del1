@@ -45,7 +45,7 @@ public class Controller {
 		produktBatchDB = new MySQLProduktBatchDAO();
 		receptKompDB = new MySQLReceptKompDAO();
 	}
-	
+
 	public void run(){
 		connectToWeight();
 	}
@@ -287,7 +287,7 @@ public class Controller {
 							RaavareBatchDTO RBDTO = RBDAO.getRaavareBatch(raavareBatchSelect);
 							RBDTO.setMaengde(raavareStock-raavareMaengde);
 							RBDAO.updateRaavareBatch(RBDTO);
-//							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
+							//							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
 						} catch (DALException e) {	
 							System.out.println("database error");
 							System.out.println(e.getMessage());
@@ -324,7 +324,7 @@ public class Controller {
 	 * @param message An integer which governs which message will be sent to the scale
 	 * @return The PB_id from the scale
 	 */
-	private int recieveProductBatchId(WeightSocket scaleCon, int message) {
+	private int recieveProductBatchId(WeightSocket scaleCon, int message) throws IOException {
 		Integer PBId = null;
 		if(message == 0) {
 			scaleCon.sendToServer("RM20 8 \"Indtast PBId\" \" \" \"&3\" ");
@@ -362,17 +362,14 @@ public class Controller {
 				return recieveProductBatchId(scaleCon, 3);
 			}
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return recieveProductBatchId(scaleCon, 1);
-			
+
 		} catch (DALException e) {
 			e.printStackTrace();
 			return recieveProductBatchId(scaleCon, 2);
-			
+
 		}
 
 		return PBId;
@@ -386,51 +383,48 @@ public class Controller {
 	 * @param opr The OperatoerDTO which matches the opr_id from the recieveUserId method
 	 * @return The opr_id from the opr parameter
 	 */
-	private int validateName(WeightSocket connection, int message, OperatoerDTO opr) {
+	private int validateName(WeightSocket connection, int message, OperatoerDTO opr) throws IOException {
 
 
-		try {
-			if(message == 0){
-				if(opr.getOprNavn().length() > 14) {
-					connection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&1\" "); 
-				}
-				else {
-					connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&1\" ");
-				}
+
+		if(message == 0){
+			if(opr.getOprNavn().length() > 14) {
+				connection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&1\" "); 
 			}
 			else {
-				connection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&1\" ");
+				connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&1\" ");
 			}
-			System.out.println(connection.recieveFromServer());
-			String responseTemp;
-			responseTemp = connection.recieveFromServer();
-			responseTemp = responseTemp.replaceAll("\"", "");
-			System.out.println(responseTemp);
-			String response = responseTemp.substring(7, responseTemp.length());
-
-			if(response.equals("N")) {
-				recieveUserId(connection, 0);
-			}
-			else if(!response.equals("Y"))  {
-				validateName(connection, 1, opr);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		else {
+			connection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&1\" ");
+		}
+		System.out.println(connection.recieveFromServer());
+		String responseTemp;
+		responseTemp = connection.recieveFromServer();
+		responseTemp = responseTemp.replaceAll("\"", "");
+		System.out.println(responseTemp);
+		String response = responseTemp.substring(7, responseTemp.length());
+
+		if(response.equals("N")) {
+			recieveUserId(connection, 0);
+		}
+		else if(!response.equals("Y"))  {
+			validateName(connection, 1, opr);
+		}
+
 		Opr_PB = opr;
 		System.out.println(opr.getOprId());
 		return opr.getOprId();
 	}
 
-	
+
 	/**
 	 * A method which asks for the id of the person using the scale, and calls the method 
 	 * validateName
 	 * @param connection Connection to the scale
 	 * @param message An int governing what message will be sent to the scale
 	 */
-	private void recieveUserId(WeightSocket connection, int message) {
+	private void recieveUserId(WeightSocket connection, int message) throws IOException {
 
 		if(message == 0) {
 			connection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \"&3\" ");
@@ -462,9 +456,6 @@ public class Controller {
 		}catch (NumberFormatException e) {
 			recieveUserId(connection, 1);
 			e.printStackTrace();
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -482,7 +473,17 @@ public class Controller {
 				afvejning(receptKompDBList.get(i), pbId);
 			}
 			faerdig(pbId);
-		} catch (Exception e) {
+		} catch (IOException e) {
+			try {
+				ProduktBatchDTO pb = produktBatchDB.getProduktBatch(pbId);
+				pb.setDatoSlut(new Timestamp(System.currentTimeMillis()));
+				pb.setStatus(3);
+				produktBatchDB.updateProduktBatch(pb);
+			} catch (DALException e1) {
+				e1.printStackTrace();
+			}
+			
+		} catch (DALException e) {
 			e.printStackTrace();
 		}
 
