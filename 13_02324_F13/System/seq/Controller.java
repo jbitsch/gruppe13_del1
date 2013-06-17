@@ -79,7 +79,7 @@ public class Controller {
 		}
 	}
 
-	private void færdig(int pbId) throws IOException{
+	private void faerdig(int pbId) throws IOException{
 		String response = "";
 		try {
 			produktBatchDB.updateProduktBatch(new ProduktBatchDTO(pbId, produktBatchDB.getProduktBatch(pbId).getRecept(), 2, produktBatchDB.getProduktBatch(pbId).getDatoStart(), new Timestamp(System.currentTimeMillis()), produktBatchDB.getProduktBatch(pbId).getOpr()));
@@ -468,7 +468,7 @@ public class Controller {
 			for(int i = 0; i < receptKompDBList.size(); i++) {
 				afvejning(receptKompDBList.get(i), pbId);
 			}
-			færdig(pbId);
+			faerdig(pbId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
