@@ -110,6 +110,7 @@ public class Controller {
 			}
 		}
 
+		weightConnection.sendToServer("Z ");
 
 	}
 
@@ -201,6 +202,9 @@ public class Controller {
 
 		// STEP 13.
 		System.out.println("Vægten beder om raavarebatch nummer paa raavaren: " + raavareNavn);
+		if(raavareNavn.length() > 14) {
+			raavareNavn = raavareNavn.substring(0, 14);
+		}
 		weightConnection.sendToServer("RM20 8 \"RBnr: "+ raavareNavn + "\" \" \" \"&3\" ");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){
