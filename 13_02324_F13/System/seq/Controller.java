@@ -213,9 +213,9 @@ public class Controller {
 					try{
 						raavareStock = raavareBatchDB.getRaavareBatch(raavareBatchSelect).getMaengde();
 						System.out.println("RBStock: " + raavareStock);
-						System.out.println("Minimum vægt med tol: " +((currentReceptKomp.getNomNetto() * raavareTolerance/100) + currentReceptKomp.getNomNetto())+ " uden tol: " + currentReceptKomp.getNomNetto());
+						System.out.println("Minimum vægt med tol: " +(currentReceptKomp.getNomNetto() - (currentReceptKomp.getNomNetto() * raavareTolerance/100))+ " uden tol: " + currentReceptKomp.getNomNetto());
 						if(currentReceptKomp.getRaavare().getRaavareId() == raavareBatchDB.getRaavareBatch(raavareBatchSelect).getRaavare().getRaavareId()) {
-							if(raavareStock >= ((currentReceptKomp.getNomNetto() * raavareTolerance/100) + currentReceptKomp.getNomNetto())) {
+							if(raavareStock >= (currentReceptKomp.getNomNetto() - (currentReceptKomp.getNomNetto() * raavareTolerance/100))) {
 								weightConnection.sendToServer("DW");
 								System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 								break;
