@@ -451,11 +451,11 @@ public class Controller {
 
 			validateName(connection, 0, opr);
 		}catch (DALException e) {
+			e.printStackTrace();
 			recieveUserId(connection, 2);
-			e.printStackTrace();
 		}catch (NumberFormatException e) {
-			recieveUserId(connection, 1);
 			e.printStackTrace();
+			recieveUserId(connection, 1);
 		}
 	}
 
