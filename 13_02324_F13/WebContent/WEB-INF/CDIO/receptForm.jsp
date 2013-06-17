@@ -30,7 +30,10 @@
 		<%
 	}
 %>
-	<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret recept">
+
+	<div class="bottomSubmit">
+		<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret recept">
+	</div>
 
 </form>
 

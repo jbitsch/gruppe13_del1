@@ -64,8 +64,12 @@ for (int i=0; i<produktAdmin.getproduktbatchKomp().size(); i++) {
 }
 %>
 <form method="POST">
-<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseProduktbatch.jsp" />	
-<input type = "submit" name="menuValg" value="Tilbage">
+<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseProduktbatch.jsp" />
+
+<div class="bottomSubmit">	
+	<input type = "submit" name="menuValg" value="Tilbage">
+</div>
+
 </form>
 
 

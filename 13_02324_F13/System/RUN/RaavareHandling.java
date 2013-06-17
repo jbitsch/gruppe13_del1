@@ -43,7 +43,7 @@ public class RaavareHandling {
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			session.setAttribute("menu", "raavareForm");
+			session.setAttribute("menu", "Opret raavare");
 		}
 	}
 	public boolean raavarebatchChange(HttpServletRequest request,RaavareAdministration raavareAdmin)

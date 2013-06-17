@@ -21,38 +21,40 @@
 	<%
 		String rolle = login.getRolle();
 	%>
-	<input type="submit" name="menuValg" value="Skift Adgangskode"><br>
+	<input class="submitLink" type="submit" name="menuValg" value="Skift Adgangskode"><br>
 	
 	<h3>Værkfører opgaver:</h3>	
-	<input type="submit" name="menuValg" value="raavarebatchForm">Opret råvarebatch<br>
-	<input type="submit" name="menuValg" value="produktbatch">Opret produktbatch<br>					
-	<input type="submit" name="menuValg" value="showRaavarebatch">Vis råvarebatch<br>
-	<input type="submit" name="menuValg" value="chooseProduktBatch">Vis produktbatch<br>
+	<input class="submitLink" type="submit" name="menuValg" value="Opret raavarebatch"><br>
+	<input class="submitLink" type="submit" name="menuValg" value="Opret produktbatch"><br>					
+	<input class="submitLink" type="submit" name="menuValg" value="Vis raavarebatch"><br>
+	<input class="submitLink" type="submit" name="menuValg" value="Vis produktbatch"><br>
 	<%
 		if("Farmaceut".equals(rolle) || "Administrator".equals(rolle) )
 		{
 			%>
 					<h3>Farmaceut opgaver:</h3>
-					<input type="submit" name="menuValg" value="receptForm">Opret recpet<br>
-					<input type="submit" name="menuValg" value="raavareForm">Opret råvare<br>
-					<input type="submit" name="menuValg" value="showRaavare">Administrer råvare<br>
-					<input type="submit" name="menuValg" value="chooseRecept">Vis recept<br>
+					<input class="submitLink" type="submit" name="menuValg" value="Opret recpet"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Opret raavare"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Administrer raavare"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Vis recept"><br>
 			<%
 		}
 		if("Administrator".equals(rolle) )
 		{
 			%>
 					<h3>Administrator opgaver::</h3>
-					<input type="submit" name="menuValg" value="userForm">Opret bruger<br>
-					<input type="submit" name="menuValg" value="showUsers">Administrer operatører<br>
+					<input class="submitLink" type="submit" name="menuValg" value="Opret bruger"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Administrer operatoerer"><br>
 			<%
 		}
 	%>
 </form>
 
 <form method="POST">
-	<input type="hidden" name="handling" value="log_ud">
-	<input type="submit" value="Log ud">
+	<div class="bottomSubmit">
+		<input type="hidden" name="handling" value="log_ud">
+		<input type="submit" value="Log ud">
+	</div>
 </form>
 	
 	

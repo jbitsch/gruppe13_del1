@@ -19,7 +19,7 @@ public class OperatoerHandling {
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			session.setAttribute("menu", "userForm");
+			session.setAttribute("menu", "Opret bruger");
 		}
 	}
 	public boolean createUserInformation(HttpServletRequest request, BrugerAdministration brugerAdmin) {

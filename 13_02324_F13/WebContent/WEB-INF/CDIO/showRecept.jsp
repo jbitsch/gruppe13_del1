@@ -42,7 +42,11 @@ for (int i=0; i<produktAdmin.getReceptKomp().size(); i++) {
 
 <form method="POST">
 <input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseRecept.jsp" />	
-<input type = "submit" name="menuValg" value="Tilbage">
+
+<div class="bottomSubmit">
+	<input type = "submit" name="menuValg" value="Tilbage">
+</div>
+
 </form>
 
 

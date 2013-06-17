@@ -6,7 +6,6 @@ body
 	top: 2%;
 	min-width: 900px;
 	min-height: 500px;
-
 }
 
 .page
@@ -59,17 +58,16 @@ body
 
 .bottomSubmit
 {
-	margin-top: 4%;
+	margin-top: 10px;
 }
 
-.receptNavn:active + .raavareBox
+input.submitLink
 {
-	display: block;
-}
-
-.signout{
-      display:none;
-}
-.membernames:hover + .signout{
-      display : block;
+	background-color: transparent;
+	text-decoration: underline;
+	border: none;
+	color: blue;
+	cursor: pointer;
+	margin: 2px 0px;
+	padding: 0;
 }

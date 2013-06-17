@@ -23,15 +23,24 @@
 	for (int i=0; i<raavareAdmin.getRaavarebatch().size(); i++) {
 		dto.RaavareBatchDTO raavareBatch = (dto.RaavareBatchDTO) raavareAdmin.getRaavarebatch().get(i);
 		%>
-			Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %> <br>
+			Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %> <br/>
 		<%
 	}
 %>
-<form method="POST">
-<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	<br>
 
-Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch"><br>
-<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="searchRB" value="Soeg på raavare navn">
+
+<form method="POST">
+	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />
+	
+	<div class="bottomSubmit">
+		Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch">
+	</div>
+	
+	<div class="bottomSubmit">
+		<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="searchRB" value="Soeg på raavare navn">
+	</div>
+	
 </form>
+	
 </body>
 </html>

@@ -34,22 +34,25 @@
 	%>
 	Råvare navn: <input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
 	
-	<%
-	if(raavareAdmin.getIsnew())
-	{
-		%>
-			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
-			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
+	<div class="bottomSubmit">
 		<%
-	}
-	else
-	{
+		if(raavareAdmin.getIsnew())
+		{
+			%>
+				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Opret Raavare">
+				<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />	
+			<%
+		}
+		else
+		{
+			%>
+				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
+				<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseRaavare.jsp" />	
+			<%
+		}
 		%>
-			<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
-			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseRaavare.jsp" />	
-		<%
-	}
-%>
+	</div>
+	
 </form>
 
 

@@ -14,6 +14,9 @@
 <title>Skift password</title>
 </head>
 <body>
+
+<h1>Skift adgangskode </h1>
+
 <p><font color="red"><%= brugerAdmin.getError() %></font><br>
 
 <form method="POST">
@@ -23,7 +26,10 @@
 	Indtast nyt password: <input type="password" name="new1"><br />
 	Gentag nyt password: <input type="password" name="new2"><br />
 	
-	<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="submit" value="Skift">
+	<div class="bottomSubmit">
+		<input type = "submit" name="menuValg" value="Tilbage"><input type = "submit" name="submit" value="Skift">
+	</div>
+	
 </form>
 
 

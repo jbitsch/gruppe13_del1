@@ -33,10 +33,10 @@ public class ProduktHandling {
 		}
 	}
 	public void showProduktbatch(HttpServletRequest request,HttpSession session, ProduktAdministration produktAdmin) {
-		String produktvatchValg = request.getParameter("produktvatchValg");
-		if(!(produktvatchValg == null || produktvatchValg.isEmpty())){
-			int produktvatchValgID = Integer.parseInt(produktvatchValg);
-			produktAdmin.setProduktbatchId(produktvatchValgID);
+		String produktbatchValg = request.getParameter("produktbatchValg");
+		if(!(produktbatchValg == null || produktbatchValg.isEmpty())){
+			int produktbatchValgID = Integer.parseInt(produktbatchValg);
+			produktAdmin.setProduktbatchId(produktbatchValgID);
 			
 			try {
 				int id = produktAdmin.getProduktBatch().getRecept().getReceptId();
