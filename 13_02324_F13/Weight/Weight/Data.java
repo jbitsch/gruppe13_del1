@@ -1,4 +1,5 @@
 package Weight;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -40,8 +41,10 @@ public class Data {
 	
 	public void closeConnection() throws IOException
 	{
+		listener.close();
 		instream.close();
 		outstream.close();
+		sock.close();
 	}
 	
 	public String getIp()
@@ -53,7 +56,6 @@ public class Data {
 		try {
 			outstream.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

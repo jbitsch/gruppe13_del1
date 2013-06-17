@@ -1,4 +1,5 @@
 package Weight;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -137,11 +138,15 @@ public class WeightGUI extends JFrame {
 	{
 		message.setText(text);
 	}
-	public void updateWeight(String net, String bru, String tar)
+	public void updateWeight(String net, String bru, String tar,double brut)
 	{
 		netto.setText(net+" kg");
 		brutto.setText(bru+" kg");
 		lblTaraVgt.setText("Tara vaegt: "+tar+ " kg");
+		int a = (int) Math.round(brut*10.5);
+		slider.setValue(a);
+		
+		slider.setValue(a);
 	}
 	public void enableTransferBtn(boolean click)
 	{
@@ -223,7 +228,7 @@ public class WeightGUI extends JFrame {
 		btnQuit.setBounds(492, 93, 93, 25);
 		contentPane.add(btnQuit);
 		
-		btnTransfer = new JButton("Transfer");
+		btnTransfer = new JButton("K 3");
 		btnTransfer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				choice = 'K';
