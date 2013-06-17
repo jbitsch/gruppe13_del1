@@ -476,13 +476,15 @@ public class Controller {
 		} catch (IOException e) {
 			try {
 				ProduktBatchDTO pb = produktBatchDB.getProduktBatch(pbId);
-				pb.setDatoSlut(new Timestamp(System.currentTimeMillis()));
-				pb.setStatus(3);
-				produktBatchDB.updateProduktBatch(pb);
+				if(pb.getStatus() == 1) {
+					pb.setDatoSlut(new Timestamp(System.currentTimeMillis()));
+					pb.setStatus(3);
+					produktBatchDB.updateProduktBatch(pb);
+				}
 			} catch (DALException e1) {
 				e1.printStackTrace();
 			}
-			
+
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
