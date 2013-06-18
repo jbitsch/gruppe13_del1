@@ -394,7 +394,9 @@ public class Controller {
 		} catch (DALException e) {
 			e.printStackTrace();
 			return recieveProductBatchId(2);
-
+		}
+		catch (StringIndexOutOfBoundsException e) {
+			throw new IOException();
 		}
 
 		return PBId;
@@ -417,11 +419,11 @@ public class Controller {
 				weightConnection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&1\" "); 
 			}
 			else {
-				weightConnection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&1\" ");
+				weightConnection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \"Y\" \"&1\" ");
 			}
 		}
 		else {
-			weightConnection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&1\" ");
+			weightConnection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \"Y\" \"&1\" ");
 		}
 		System.out.println(weightConnection.recieveFromServer());
 		String responseTemp;
@@ -481,6 +483,9 @@ public class Controller {
 		}catch (NumberFormatException e) {
 			e.printStackTrace();
 			recieveUserId(1);
+		}
+		catch (StringIndexOutOfBoundsException e) {
+			throw new IOException();
 		}
 	}
 
