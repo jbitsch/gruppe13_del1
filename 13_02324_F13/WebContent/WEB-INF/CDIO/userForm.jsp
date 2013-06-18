@@ -72,7 +72,7 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 				if(!(brugerAdmin.getId()==login.getId()) && !("Operatør".equals(brugerAdmin.getRolle())))
 				{
 					%>
-						<input type = "submit" name="handling" value="Slet">
+						<input type = "submit" name="handling" value="Slet bruger">
 					<%
 				}
 				%>

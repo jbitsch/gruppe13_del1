@@ -97,7 +97,7 @@ public class BrugerAdministration {
 			{
 				userForm(name, ini, cpr,password);
 			}
-			else if(handling.equals("Slet"))
+			else if(handling.equals("Slet bruger"))
 			{
 				operatoerDAO.deleteOperatoer(id);
 				succes = "Bruger med id "+ id + " er blevet slettet";

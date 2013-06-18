@@ -16,8 +16,8 @@
 
 	<h1>Menu</h1>
 	
+<p>Velkommen <%=login.getUser().getOprNavn() %>, du har rettigheder til følgende opgaver:</p>
 <form method="POST">
-<input type="hidden" name="namePage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
 		String rolle = login.getUser().getRolle();
 	%>

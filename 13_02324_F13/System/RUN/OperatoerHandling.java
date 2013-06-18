@@ -24,7 +24,7 @@ public class OperatoerHandling {
 		}
 		String handling = request.getParameter("handling");
 		if(!(handling == null || handling.isEmpty())){
-			if("Slet".equals(handling))
+			if("Slet bruger".equals(handling))
 				session.setAttribute("menu", "userDelete");
 		}
 	}

@@ -16,9 +16,11 @@
 		String rolle = login.getUser().getRolle();
 		String name = login.getUser().getOprNavn();
 %>
-<div align="right">
-Du er logget ind som <%=name%>
-</div>
+<br>
+<form method="POST">
+Du er logget ind som <%=name%> <input type="submit" class="submitLink" value="Log ud">
+<input type="hidden" name="handling" value="log_ud">	
+</form>
 <ul id="menu">
     <li>
         <form name="start" method="POST">
