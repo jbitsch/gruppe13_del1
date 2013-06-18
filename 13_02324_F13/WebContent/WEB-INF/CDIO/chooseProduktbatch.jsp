@@ -1,5 +1,7 @@
+<%@page import="dto.ProduktBatchDTO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean id="produktAdmin" class="model.ProduktAdministration" type="model.ProduktAdministration" scope="session"/>
 <html>
@@ -18,21 +20,26 @@
 
 <form method="POST">
 	<%
-	for (int i=0; i<produktAdmin.getProduktbatch().size(); i++) {
+	ArrayList<ProduktBatchDTO> produktbatchList = produktAdmin.getProduktbatch();
+	for (int i=0; i<produktbatchList.size(); i++) {
 		
-		dto.ProduktBatchDTO produktBatch = (dto.ProduktBatchDTO) produktAdmin.getProduktbatch().get(i);
+		dto.ProduktBatchDTO produktBatch = produktbatchList.get(i);
 		String color = "black";
 		String status = "Ikke påbegyndt";
 		if(produktBatch.getStatus()==1)
 		{
 			color = "green";
 			status = "Under produktion";
-			
 		}
 		else if(produktBatch.getStatus()==2)
 		{
-			color = "red";
+			color = "";
 			status = "Afsluttet";
+		}
+		else if(produktBatch.getStatus()==3)
+		{
+			color = "red";
+			status = "FEJL under afvejning";
 		}
 		%>
 			<input type="radio" name="produktbatchValg" value="<%= produktBatch.getPbId() %>">

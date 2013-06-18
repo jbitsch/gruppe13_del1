@@ -1,5 +1,7 @@
+<%@page import="dto.OperatoerDTO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean id="brugerAdmin" class="model.BrugerAdministration" type="model.BrugerAdministration" scope="session"/>
 
@@ -19,8 +21,9 @@
 
 <form method="POST">	
 <%
-	for (int i=0; i<brugerAdmin.getUsers().size(); i++) {
-		dto.OperatoerDTO user = (dto.OperatoerDTO) brugerAdmin.getUsers().get(i);
+	ArrayList<OperatoerDTO> userList = brugerAdmin.getUsers();
+	for (int i=0; i<userList.size(); i++) {
+			OperatoerDTO user = userList.get(i);
 		%>
 			<input type="radio" name="brugervalg" value="<%= user.getOprId() %>">
 			Bruger: <%= user.getOprId() %> Navn <%= user.getOprNavn() %><br>

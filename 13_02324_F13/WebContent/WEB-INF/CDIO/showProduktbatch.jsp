@@ -1,5 +1,6 @@
 <%@page import="dto.ReceptKompDTO"%>
 <%@page import="dto.ProduktBatchDTO"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -30,6 +31,10 @@ if(produktBatch.getStatus()==1)
 else if(produktBatch.getStatus()==2)
 {
 		status = "Afsluttet";
+}
+else if(produktBatch.getStatus()==3)
+{
+		status = "FEJL i afvejning";
 }
 %>		
 <p>Produktbatch id: <%=produktBatch.getPbId() %></p>

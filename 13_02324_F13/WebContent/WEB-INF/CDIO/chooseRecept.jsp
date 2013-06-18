@@ -1,4 +1,5 @@
 <%@page import="dto.ReceptDTO"%>
+<%@page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,9 +19,10 @@
 <h1>Vælg recpet</h1>
 <form method="POST">
 	<%
-	for (int i=0; i<produktAdmin.getRecepter().size(); i++) {
+	ArrayList<ReceptDTO> receptList = produktAdmin.getRecepter();
+	for (int i=0; i<receptList.size(); i++) {
 		
-		ReceptDTO recept = (ReceptDTO) produktAdmin.getRecepter().get(i);
+		ReceptDTO recept = receptList.get(i);
 		%>
 			<input type="radio" name="receptValg" value="<%= recept.getReceptId() %>">
 			Navn: <%=recept.getReceptNavn() %><br>

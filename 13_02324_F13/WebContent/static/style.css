@@ -71,7 +71,10 @@ input.submitLink
 	margin: 2px 0px;
 	padding: 0;
 }
-
+/*
+Foelgende er der hentet inspiration fra:
+http://www.handy-html.com/create-a-simple-css-dropdown-menu/
+*/
 ul {
     font-family: Arial, Verdana;
     font-size: 14px;
