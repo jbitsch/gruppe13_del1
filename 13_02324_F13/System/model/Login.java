@@ -11,8 +11,8 @@ public class Login
 {
 	private int id = 0;
 	private String adgangskode = "";
-	private String rolle="";
 	private String meddelelse = "";       // fejlmeddelelse til brugeren
+	private OperatoerDTO user;
 
 	private boolean tjek = false;         // om adgangskode skal tjekkes
 	private boolean loggetInd = false;    // om adgangskoden var korrekt
@@ -47,7 +47,7 @@ public class Login
 		else
 		{
 			loggetInd = true;
-			rolle = operatoer.getRolle();
+			user = operatoer;
 		}
 	}
 	
@@ -86,8 +86,8 @@ public class Login
 		if (tjek) return false;       // er der sket aendringer skal der logges ind
 		return loggetInd;
 	}
-	public String getRolle()
+	public OperatoerDTO getUser()
 	{
-		return rolle;
+		return user;
 	}
 }

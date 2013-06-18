@@ -228,7 +228,7 @@ public class WeightGUI extends JFrame {
 		btnQuit.setBounds(492, 93, 93, 25);
 		contentPane.add(btnQuit);
 		
-		btnTransfer = new JButton("K 3");
+		btnTransfer = new JButton("K C 4 (-->)");
 		btnTransfer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				choice = 'K';

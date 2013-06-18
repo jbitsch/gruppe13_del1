@@ -19,7 +19,7 @@
 <form method="POST">
 <input type="hidden" name="namePage" value="/WEB-INF/CDIO/menu.jsp" />	
 	<%
-		String rolle = login.getRolle();
+		String rolle = login.getUser().getRolle();
 	%>
 	<input class="submitLink" type="submit" name="menuValg" value="Skift Adgangskode"><br>
 	

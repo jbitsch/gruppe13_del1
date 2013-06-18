@@ -13,9 +13,12 @@
 </head>
 <body>
 <%
-		String rolle = login.getRolle();
+		String rolle = login.getUser().getRolle();
+		String name = login.getUser().getOprNavn();
 %>
-
+<div align="right">
+Du er logget ind som <%=name%>
+</div>
 <ul id="menu">
     <li>
         <form name="start" method="POST">
