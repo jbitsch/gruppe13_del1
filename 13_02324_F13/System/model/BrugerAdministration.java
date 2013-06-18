@@ -233,6 +233,7 @@ public class BrugerAdministration {
 	/** Operat�r password min. 7 max. 8 karakterer */
 	private boolean checkPassword(String password)
 	{
+		
 		String REGEX = "^[0-9[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]]{7,8}$+";
 		return checkRegex(REGEX, password);
 	}

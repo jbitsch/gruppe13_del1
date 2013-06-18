@@ -59,7 +59,7 @@ Du er logget ind som <%=name%> <input type="submit" class="submitLink" value="Lo
     </li>
     <li>    	
     	<form name="" method="POST">
-    		<A HREF="">Produktbacth</A>
+    		<A HREF="">Produktbatch</A>
 		</form> 
         <ul>
             <li>
