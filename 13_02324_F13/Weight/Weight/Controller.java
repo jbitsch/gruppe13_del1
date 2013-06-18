@@ -236,6 +236,10 @@ public class Controller {
 						data.writeTo("I0 B \"Q\"\r\n");
 						wg.setRecievedCommand("I0");
 					}
+					else if((inline.startsWith("M12 2")))
+					{
+						java.awt.Toolkit.getDefaultToolkit().beep();
+					}
 					else if ((inline.startsWith("Q"))){
 						break;
 					}
