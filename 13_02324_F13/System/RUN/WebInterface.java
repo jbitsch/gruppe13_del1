@@ -158,7 +158,9 @@ public class WebInterface extends HttpServlet  {
 			
 		//Hvilken side skal vi lande paa
 		String menuValg = request.getParameter("menuValg");
-		
+		String menuBar = request.getParameter("menuBar");
+		if(menuBar!=null)
+			delete();
 		if(menuValg!=null)
 		{
 			session.setAttribute("menu", menuValg);
