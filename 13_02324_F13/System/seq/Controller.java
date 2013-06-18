@@ -294,6 +294,8 @@ public class Controller {
 							RaavareBatchDTO RBDTO = RBDAO.getRaavareBatch(raavareBatchSelect);
 							RBDTO.setMaengde(raavareStock-raavareMaengde);
 							RBDAO.updateRaavareBatch(RBDTO);
+							weightConnection.sendToServer("DW");
+							System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 							//							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
 						} catch (DALException e) {	
 							System.out.println("database error");
@@ -327,16 +329,18 @@ public class Controller {
 		weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
 		System.out.println("Afvejning Ok");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
-//		while(true){
-//			response = weightConnection.recieveFromServer().toUpperCase();
-//			System.out.println(response);
-//			if(response.startsWith("RM20 A")) {
-//				break;
-//				}
-//			else{
-//			weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
-//			}
-//		}
+		while(true){
+			response = weightConnection.recieveFromServer().toUpperCase();
+			System.out.println(response);
+			if(response.startsWith("RM20")) {
+				if(response.startsWith("RM20 A")){
+					break;
+					}
+				}
+			else {
+			weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
+			}
+		}
 	}
 
 
