@@ -12,7 +12,7 @@ public class ProduktHandling {
 	public void createProduktbatch(HttpServletRequest request, String handling,ProduktAdministration produktAdmin) {
 		String produktbatchReceptId = request.getParameter("produktbatchReceptId");
 			
-		if(!(produktbatchReceptId == null || produktbatchReceptId.isEmpty())){
+		if(!(produktbatchReceptId == null )){
 			
 			try {
 					produktAdmin.setProduktbatchReceptId(produktbatchReceptId);
@@ -24,7 +24,7 @@ public class ProduktHandling {
 		}
 		String visInfo = request.getParameter("visInfo");
 
-		if(!(visInfo  == null || visInfo.isEmpty())){
+		if(!(visInfo  == null)){
 			try {
 				produktAdmin.setReceptKomp(Integer.parseInt(visInfo ));
 			} catch (DALException e) {
@@ -34,7 +34,7 @@ public class ProduktHandling {
 	}
 	public void showProduktbatch(HttpServletRequest request,HttpSession session, ProduktAdministration produktAdmin) {
 		String produktbatchValg = request.getParameter("produktbatchValg");
-		if(!(produktbatchValg == null || produktbatchValg.isEmpty())){
+		if(!(produktbatchValg == null)){
 			int produktbatchValgID = Integer.parseInt(produktbatchValg);
 			produktAdmin.setProduktbatchId(produktbatchValgID);
 			
@@ -48,7 +48,7 @@ public class ProduktHandling {
 			session.setAttribute("menu", "showProduktbatch");
 		}
 		String searchProduktBatch = request.getParameter("searchProduktB"); 
-		if(!(searchProduktBatch == null || searchProduktBatch.isEmpty())){
+		if(!(searchProduktBatch == null)){
 			String searchName =request.getParameter("searchProduktBatch");
 			produktAdmin.setReceptNavn(searchName);
 		}

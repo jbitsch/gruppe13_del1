@@ -16,23 +16,23 @@ public class ReceptHandling {
 		boolean dataExcist = false;
 		
 		String receptId = request.getParameter("receptId");
-		if(!(receptId == null || receptId.isEmpty())){
+		if(!(receptId == null)){
 			produktAdmin.setReceptId(receptId);
 			dataExcist = true;
 		}
 		String receptNavn = request.getParameter("receptNavn");
-		if(!(receptNavn == null || receptNavn.isEmpty())){
+		if(!(receptNavn == null)){
 			produktAdmin.setReceptNavn(receptNavn);
 			dataExcist = true;
 		}
 		String r_id = request.getParameter("raavareToAdd");
-		if (!(r_id == null || r_id.isEmpty())) {
+		if (!(r_id == null)) {
 			String netto= request.getParameter("netto"); 
 			String tolerance = request.getParameter("tolerance");
 			produktAdmin.addToRaavareList(r_id, netto, tolerance);
 		}
 		String raavareTodelete = request.getParameter("raavareToDelete");
-		if (!(raavareTodelete == null || raavareTodelete.isEmpty())) {
+		if (!(raavareTodelete == null)) {
 			produktAdmin.setReceptId(raavareTodelete);
 			dataExcist = true;
 		}
@@ -40,7 +40,7 @@ public class ReceptHandling {
 	}
 	public void receptValg(HttpServletRequest request, HttpSession session, ProduktAdministration produktAdmin) {
 		String receptValg = request.getParameter("receptValg");
-		if(!(receptValg == null || receptValg.isEmpty())){
+		if(!(receptValg == null)){
 			try {
 				produktAdmin.setReceptKomp(Integer.parseInt(receptValg));
 			} catch (DALException e) {
