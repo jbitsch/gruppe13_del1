@@ -324,23 +324,23 @@ public class Controller {
 	 * @param message An integer which governs which message will be sent to the scale
 	 * @return The PB_id from the scale
 	 */
-	private int recieveProductBatchId(WeightSocket scaleCon, int message) throws IOException {
+	private int recieveProductBatchId(int message) throws IOException {
 		Integer PBId = null;
 		if(message == 0) {
-			scaleCon.sendToServer("RM20 8 \"Indtast PBId\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"Indtast PBId\" \" \" \"&3\" ");
 		}
 		else if (message == 1) {
-			scaleCon.sendToServer("RM20 8 \"PBId igen: ikke tal\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"PBId igen: ikke tal\" \" \" \"&3\" ");
 		}
 		else if (message == 2){
-			scaleCon.sendToServer("RM20 8 \"PBId igen: ugyldig\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"PBId igen: ugyldig\" \" \" \"&3\" ");
 		}
 		else {
-			scaleCon.sendToServer("RM20 8 \"PBId igen: status\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"PBId igen: status\" \" \" \"&3\" ");
 		}
 		try {
-			System.out.println(scaleCon.recieveFromServer());
-			String PBIdTemp = scaleCon.recieveFromServer();
+			System.out.println(weightConnection.recieveFromServer());
+			String PBIdTemp = weightConnection.recieveFromServer();
 			System.out.println(PBIdTemp);
 			PBIdTemp = PBIdTemp.replaceAll("\"", "");
 			PBId = Integer.parseInt(PBIdTemp.substring(7, PBIdTemp.length()));
@@ -354,21 +354,21 @@ public class Controller {
 				PBDTO.setOpr(Opr_PB);
 				PBDAO.updateProduktBatchStart(PBDTO);
 				ReceptDTO RDTO = RDAO.getRecept(PBDTO.getRecept().getReceptId());
-				scaleCon.sendToServer("RM20 8 \""+RDTO.getReceptNavn()+"\" \" \" \"&3\" ");
-				scaleCon.recieveFromServer();
-				scaleCon.recieveFromServer();
+				weightConnection.sendToServer("RM20 8 \""+RDTO.getReceptNavn()+"\" \" \" \"&3\" ");
+				weightConnection.recieveFromServer();
+				weightConnection.recieveFromServer();
 			}
 			else {
-				return recieveProductBatchId(scaleCon, 3);
+				return recieveProductBatchId(3);
 			}
 
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			return recieveProductBatchId(scaleCon, 1);
+			return recieveProductBatchId(1);
 
 		} catch (DALException e) {
 			e.printStackTrace();
-			return recieveProductBatchId(scaleCon, 2);
+			return recieveProductBatchId(2);
 
 		}
 
@@ -383,33 +383,33 @@ public class Controller {
 	 * @param opr The OperatoerDTO which matches the opr_id from the recieveUserId method
 	 * @return The opr_id from the opr parameter
 	 */
-	private int validateName(WeightSocket connection, int message, OperatoerDTO opr) throws IOException {
+	private int validateName(int message, OperatoerDTO opr) throws IOException {
 
 
 
 		if(message == 0){
 			if(opr.getOprNavn().length() > 14) {
-				connection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&1\" "); 
+				weightConnection.sendToServer("RM20 8 \"" + opr.getOprNavn().substring(0, 14) + " [y/n]\" \" \" \"&1\" "); 
 			}
 			else {
-				connection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&1\" ");
+				weightConnection.sendToServer("RM20 8 \"" + opr.getOprNavn() + " [y/n]\" \" \" \"&1\" ");
 			}
 		}
 		else {
-			connection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&1\" ");
+			weightConnection.sendToServer("RM20 8 \"forkert svar: [y/n]\" \" \" \"&1\" ");
 		}
-		System.out.println(connection.recieveFromServer());
+		System.out.println(weightConnection.recieveFromServer());
 		String responseTemp;
-		responseTemp = connection.recieveFromServer();
+		responseTemp = weightConnection.recieveFromServer();
 		responseTemp = responseTemp.replaceAll("\"", "");
 		System.out.println(responseTemp);
 		String response = responseTemp.substring(7, responseTemp.length());
 
 		if(response.equals("N")) {
-			recieveUserId(connection, 0);
+			recieveUserId(0);
 		}
 		else if(!response.equals("Y"))  {
-			validateName(connection, 1, opr);
+			validateName(1, opr);
 		}
 
 		Opr_PB = opr;
@@ -424,38 +424,38 @@ public class Controller {
 	 * @param connection Connection to the scale
 	 * @param message An int governing what message will be sent to the scale
 	 */
-	private void recieveUserId(WeightSocket connection, int message) throws IOException {
+	private void recieveUserId(int message) throws IOException {
 
 		if(message == 0) {
-			connection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"Indtast OprId\" \" \" \"&3\" ");
 		}
 		else if(message == 1) {
-			connection.sendToServer("RM20 8 \"OprId igen: ikke tal\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"OprId igen: ikke tal\" \" \" \"&3\" ");
 		}
 		else {
-			connection.sendToServer("RM20 8 \"OprId igen: findes ikke\" \" \" \"&3\" ");
+			weightConnection.sendToServer("RM20 8 \"OprId igen: findes ikke\" \" \" \"&3\" ");
 		}
 
 		MySQLOperatoerDAO oprDAO = new MySQLOperatoerDAO();
 		OperatoerDTO opr = null;
 		try {
-			if(!connection.recieveFromServer().equals("RM20 B")) {
-				System.out.println(connection.recieveFromServer());
+			if(!weightConnection.recieveFromServer().equals("RM20 B")) {
+				System.out.println(weightConnection.recieveFromServer());
 			}
 
-			String oprTemp = connection.recieveFromServer();
+			String oprTemp = weightConnection.recieveFromServer();
 			oprTemp = oprTemp.replaceAll("\"", "");
 			System.out.println(oprTemp);
 			opr = oprDAO.getOperatoer(Integer.parseInt(oprTemp.substring(7, oprTemp.length())));
 			System.out.println(opr);
 
-			validateName(connection, 0, opr);
+			validateName(0, opr);
 		}catch (DALException e) {
 			e.printStackTrace();
-			recieveUserId(connection, 2);
+			recieveUserId(2);
 		}catch (NumberFormatException e) {
 			e.printStackTrace();
-			recieveUserId(connection, 1);
+			recieveUserId(1);
 		}
 	}
 
@@ -464,8 +464,8 @@ public class Controller {
 	{
 		int pbId = 0;
 		try {
-			recieveUserId(weightConnection, 0);
-			pbId = recieveProductBatchId(weightConnection, 0);
+			recieveUserId(0);
+			pbId = recieveProductBatchId(0);
 
 			receptKompDBList = receptKompDB.getReceptKompList(produktBatchDB.getProduktBatch(pbId).getRecept().getReceptId());
 			System.out.println("size: " + receptKompDBList.size());
