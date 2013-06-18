@@ -105,6 +105,7 @@ public class Controller {
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")){
+					weightConnection.sendToServer("Z ");
 					sekvens();
 					break;
 				}
@@ -118,9 +119,6 @@ public class Controller {
 				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
-
-		weightConnection.sendToServer("Z ");
-
 	}
 
 	private void afvejning(ReceptKompDTO currentReceptKomp, int pbId) throws IOException{
