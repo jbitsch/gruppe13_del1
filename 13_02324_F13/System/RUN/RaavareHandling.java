@@ -16,12 +16,12 @@ public class RaavareHandling {
 		boolean dataExcist = false;
 		
 		String raavareId = request.getParameter("raavareId");
-		if(!(raavareId == null || raavareId.isEmpty())){
+		if(!(raavareId == null)){
 			raavareAdmin.setRaavareId(raavareId);
 			dataExcist = true;
 		}
 		String raavareNavn = request.getParameter("raavareNavn");
-		if(!(raavareNavn == null || raavareNavn.isEmpty())){
+		if(!(raavareNavn == null)){
 			raavareAdmin.setRaavareNavn(raavareNavn);
 			dataExcist = true;
 		}
@@ -29,7 +29,7 @@ public class RaavareHandling {
 	}	
 	public void searchRB(HttpServletRequest request, RaavareAdministration raavareAdmin) {
 		String searchRB = request.getParameter("searchRB"); 
-		if(!(searchRB == null || searchRB.isEmpty())){
+		if(!(searchRB == null)){
 			String searchName =request.getParameter("searchRBatch");
 			raavareAdmin.setRaavareNavn(searchName);
 		}
@@ -37,7 +37,7 @@ public class RaavareHandling {
 	public void raavareChoose(HttpServletRequest request,RaavareAdministration raavareAdmin,HttpSession session)
 	{
 		String raavareId = request.getParameter("raavarevalg");
-		if(!(raavareId == null || raavareId.isEmpty())){
+		if(!(raavareId == null)){
 			int raavareID = Integer.parseInt(raavareId);
 			try {
 				raavareAdmin.setRaavare(raavareID);
@@ -52,22 +52,22 @@ public class RaavareHandling {
 		boolean dataExcist = false;
 		
 		String raavarebatchId = request.getParameter("raavarebatchId");
-		if(!(raavarebatchId == null || raavarebatchId.isEmpty())){
+		if(!(raavarebatchId == null)){
 			raavareAdmin.setRaavareBatchId(raavarebatchId);
 			dataExcist = true;
 		}
 		String raavareMaengde = request.getParameter("raavareMaengde");
-		if(!(raavareMaengde == null || raavareMaengde.isEmpty())){
+		if(!(raavareMaengde == null)){
 			raavareAdmin.setMaengde(raavareMaengde);
 			dataExcist = true;
 		}
 		String raavarevalgBatch = request.getParameter("raavarevalgBatch");
-		if(!(raavarevalgBatch == null || raavarevalgBatch.isEmpty())){
+		if(!(raavarevalgBatch == null)){
 			raavareAdmin.setBatchRaavareId(raavarevalgBatch);
 			dataExcist = true;
 		}
 		String leverandoer = request.getParameter("leverandoer");
-		if(!(leverandoer == null || leverandoer.isEmpty())){
+		if(!(leverandoer == null)){
 			raavareAdmin.setLeverandoer(leverandoer);
 			dataExcist = true;
 		}
