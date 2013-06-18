@@ -164,6 +164,9 @@ public class Controller {
 					response = "";
 					break;
 				}
+				else if(response.startsWith("RM20 C")){
+					throw new IOException();
+				}
 				else{
 					weightConnection.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
 					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
@@ -197,6 +200,9 @@ public class Controller {
 					weightConnection.sendToServer("T");
 					System.out.println("Modtager svar fra tarering: \n" + weightConnection.recieveFromServer().toUpperCase());
 					break;
+				}
+				else if(response.startsWith("RM20 C")){
+					throw new IOException();
 				}
 				else{
 					weightConnection.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
@@ -253,6 +259,9 @@ public class Controller {
 					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}	
 			}
+			else if(response.startsWith("RM20 C")){
+				throw new IOException();
+			}
 			else{
 				weightConnection.sendToServer("RM20 8 \"RBnr: "+ raavareNavn + "\" \" \" \"&3\" ");
 				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
@@ -297,7 +306,7 @@ public class Controller {
 					}
 					else
 					{
-						weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
+						weightConnection.sendToServer("RM20 8 \"Tol +-: " + raavareValue*raavareTolerance/100 + " kg" + "\" \" \" \" \" ");
 						System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 					}
 				}
@@ -307,13 +316,29 @@ public class Controller {
 				}
 			}
 			else if(response.startsWith("RM20")){
+				if(response.startsWith("RM20 C")){
+					throw new IOException();
+				}
 			}
 			else{
 				weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
 				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
-		// STEP 14 Slut	
+		// STEP 14 Slut
+		weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
+		System.out.println("Afvejning Ok");
+		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
+		while(true){
+			response = weightConnection.recieveFromServer().toUpperCase();
+			System.out.println(response);
+			if(response.startsWith("RM20 A")) {
+				break;
+				}
+			else{
+			weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
+			}
+		}
 	}
 
 
@@ -466,7 +491,6 @@ public class Controller {
 		try {
 			recieveUserId(0);
 			pbId = recieveProductBatchId(0);
-
 			receptKompDBList = receptKompDB.getReceptKompList(produktBatchDB.getProduktBatch(pbId).getRecept().getReceptId());
 			System.out.println("size: " + receptKompDBList.size());
 			for(int i = 0; i < receptKompDBList.size(); i++) {
