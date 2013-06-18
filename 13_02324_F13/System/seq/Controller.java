@@ -329,16 +329,16 @@ public class Controller {
 		weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
 		System.out.println("Afvejning Ok");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
-		while(true){
-			response = weightConnection.recieveFromServer().toUpperCase();
-			System.out.println(response);
-			if(response.startsWith("RM20 A")) {
-				break;
-				}
-			else{
-			weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
-			}
-		}
+//		while(true){
+//			response = weightConnection.recieveFromServer().toUpperCase();
+//			System.out.println(response);
+//			if(response.startsWith("RM20 A")) {
+//				break;
+//				}
+//			else{
+//			weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
+//			}
+//		}
 	}
 
 
