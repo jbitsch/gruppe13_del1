@@ -46,8 +46,8 @@
 		else
 		{
 			%>
-				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
-				<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseRaavare.jsp" />	
+				<input type = "submit" name="Tilbage" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
+				<input type="hidden" name="menuValg" value="Administrer raavare" />	
 			<%
 		}
 		%>

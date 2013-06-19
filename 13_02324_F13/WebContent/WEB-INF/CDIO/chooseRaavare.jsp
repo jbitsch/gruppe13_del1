@@ -27,7 +27,7 @@
 		RaavareDTO raavare = raavareList.get(i);
 		%>
 			<input type="radio" name="raavarevalg" value="<%= raavare.getRaavareId() %>">
-			Råvare: <%= raavare.getRaavareNavn() %> <br>
+			Råvare id <%=raavare.getRaavareId() %>: <%= raavare.getRaavareNavn() %> <br>
 		<%
 	}
 %>

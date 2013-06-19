@@ -12,10 +12,10 @@
 	<%@include file="../../static/style.css" %>
 </style>
 
-<head><title>Vælg Råvarebatch</title></head>
+<head><title>Råvarebatch oversigt</title></head>
 <body>
 <jsp:include page="menubar.jsp" /><br>
-<h1>Vælg råvarebatch</h1>
+<h1>Råvarebatch oversigt</h1>
 
 
 <%
@@ -26,8 +26,13 @@
 	}
 	for (int i=0; i<raavarebatchList.size(); i++) {
 		dto.RaavareBatchDTO raavareBatch = raavarebatchList.get(i);
+		double maengde = raavareBatch.getMaengde();
+		String color = "black";
+		if(maengde<=0)
+			color = "red";
+			
 		%>
-			Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %> <br/>
+			<font color="<%=color%>">Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %></font> <br/>
 		<%
 	}
 %>
