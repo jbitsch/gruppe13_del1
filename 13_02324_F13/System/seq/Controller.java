@@ -147,11 +147,7 @@ public class Controller {
 		// STEP 7. 8. START
 		weightConnection.sendToServer("K 3");
 		System.out.println("Modtager svar fra K 3: \n" + weightConnection.recieveFromServer().toUpperCase());
-		
-//		weightConnection.sendToServer("DW");
-//		System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
-		System.out.println("Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’");
-		
+		System.out.println("Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’");	
 		weightConnection.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		
@@ -160,14 +156,9 @@ public class Controller {
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")) {
-//					weightConnection.sendToServer("DW");
-//					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
-					
-					System.out.println("Vægt tømt, svar: " + response);
-					
+					System.out.println("Vægt tømt, svar: " + response);					
 					weightConnection.sendToServer("T");
 					System.out.println("Modtager svar fra tarering: \n" + weightConnection.recieveFromServer().toUpperCase());
-//					response = "";
 					break;
 				}
 				else if(response.startsWith("RM20 C")){
@@ -196,9 +187,6 @@ public class Controller {
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")) {
-//					weightConnection.sendToServer("DW");
-//					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
-					
 					System.out.println("Gemmer tarabeholderens vægt");
 					weightConnection.sendToServer("S");
 					while(!response.contains("kg")) {
@@ -249,8 +237,6 @@ public class Controller {
 						System.out.println("Minimum vægt med tol: " +(currentReceptKomp.getNomNetto() - (currentReceptKomp.getNomNetto() * raavareTolerance/100))+ " uden tol: " + currentReceptKomp.getNomNetto());
 						if(currentReceptKomp.getRaavare().getRaavareId() == raavareBatchDB.getRaavareBatch(raavareBatchSelect).getRaavare().getRaavareId()) {
 							if(raavareStock >= (currentReceptKomp.getNomNetto() - (currentReceptKomp.getNomNetto() * raavareTolerance/100))) {
-//								weightConnection.sendToServer("DW");
-//								System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 								break;
 							}
 							else {
@@ -312,9 +298,6 @@ public class Controller {
 							RaavareBatchDTO RBDTO = raavareBatchDB.getRaavareBatch(raavareBatchSelect);
 							RBDTO.setMaengde(raavareStock-raavareMaengde);
 							raavareBatchDB.updateRaavareBatch(RBDTO);
-//							weightConnection.sendToServer("DW");
-//							System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
-							//							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
 						} catch (DALException e) {	
 							System.out.println("database error");
 							System.out.println(e.getMessage());
