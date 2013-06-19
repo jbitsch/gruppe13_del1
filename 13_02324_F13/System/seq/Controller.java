@@ -97,10 +97,12 @@ public class Controller {
 		}
 		for(int i = 0; i < 3; i++){
 			weightConnection.sendToServer("M12 2");
+			System.out.println("Modtager svar fra M12: \n" + weightConnection.recieveFromServer().toUpperCase());
 		}
 		weightConnection.sendToServer("K 1 ");
+		System.out.println("Modtager svar fra K 1: \n" + weightConnection.recieveFromServer().toUpperCase());
 		weightConnection.sendToServer("RM20 8 \"Faerdig\" \" \" \" \" ");
-		System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){		
 			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
