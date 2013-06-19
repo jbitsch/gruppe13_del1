@@ -174,7 +174,7 @@ public class WebInterface extends HttpServlet  {
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/userForm.jsp").forward(request,response);
 		}
-		else if("Administrer operatoerer".equals(session.getAttribute("menu")))
+		else if("Administrer bruger".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseUser.jsp").forward(request,response);
 		}
@@ -221,15 +221,6 @@ public class WebInterface extends HttpServlet  {
 		else if("Vis recept".equals(session.getAttribute("menu")))
 		{
 			request.getRequestDispatcher("/WEB-INF/CDIO/chooseRecept.jsp").forward(request,response);
-		}
-		else if("Tilbage".equals(session.getAttribute("menu")))
-		{
-			String page = request.getParameter("backpage");
-			delete();
-			if(page!=null)
-				request.getRequestDispatcher(page).forward(request,response);
-			else
-				request.getRequestDispatcher("/WEB-INF/CDIO/menu.jsp").forward(request,response);
 		}
 		else
 		{	

@@ -143,9 +143,9 @@ Du er logget ind som <%=name%> <input type="submit" class="submitLink" value="Lo
             </li>
             <li>
             	<form name="showUser" method="POST">
-    				<input type="hidden" name="menuValg" value="Administrer operatoerer">
+    				<input type="hidden" name="menuValg" value="Administrer bruger">
     				<input type="hidden" name="menuBar" value="menuBar">
-    				<A HREF="javascript:document.showUser.submit()">Administrer operatører</A>
+    				<A HREF="javascript:document.showUser.submit()">Administrer bruger</A>
 				</form>  
             </li>
         </ul>

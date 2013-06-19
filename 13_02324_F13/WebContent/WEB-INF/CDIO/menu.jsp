@@ -44,7 +44,7 @@
 			%>
 					<h3>Administrator opgaver:</h3>
 					<input class="submitLink" type="submit" name="menuValg" value="Opret bruger"><br>
-					<input class="submitLink" type="submit" name="menuValg" value="Administrer operatoerer"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Administrer bruger"><br>
 			<%
 		}
 	%>
