@@ -17,7 +17,7 @@
 <jsp:include page="menubar.jsp" /><br>
 <h1>Skift adgangskode </h1>
 
-<p><font color="red"><%= brugerAdmin.getError() %></font><br>
+<p><font color="red"><%= brugerAdmin.getError() %></font></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
 
 <form method="POST">
 	<input type="hidden" name="handling" value="changePw">

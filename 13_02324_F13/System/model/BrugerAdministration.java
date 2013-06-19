@@ -140,6 +140,7 @@ public class BrugerAdministration {
 		{
 			user.setPassword(new1);
 			operatoerDAO.updateOperatoer(user);
+			succes = "Password er nu aendret";
 		}		
 	}
 	
