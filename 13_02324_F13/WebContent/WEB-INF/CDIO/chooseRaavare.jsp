@@ -21,17 +21,27 @@
 <h1>Vælg råvare</h1>
 
 <form method="POST">
+<table border="1">
+    <tr>
+    <th WIDTH="10"></th>
+    <th>Råvarenavn</th>
+    <th>Råvare id</th>
+    </tr>	
 <%
 	ArrayList<RaavareDTO> raavareList = raavareAdmin.getRaavare();
 	for (int i=0; i<raavareList.size(); i++) {
 		RaavareDTO raavare = raavareList.get(i);
 		%>
-			<input type="radio" name="raavarevalg" value="<%= raavare.getRaavareId() %>">
-			Råvare id <%=raavare.getRaavareId() %>: <%= raavare.getRaavareNavn() %> <br>
+			<tr>
+				<td WIDTH="10"><input type="radio" name="raavarevalg" value="<%= raavare.getRaavareId() %>"></td>
+				<td>  <%= raavare.getRaavareNavn() %></td>
+				<td align="Right"><%=raavare.getRaavareId()%>
+				
+			</tr>
 		<%
 	}
 %>
-
+</table>
 <div class="bottomSubmit">
 	<input type="submit" value="Vælg raavare">
 </div>

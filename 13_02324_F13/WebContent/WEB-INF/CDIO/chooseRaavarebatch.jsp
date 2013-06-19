@@ -17,7 +17,15 @@
 <jsp:include page="menubar.jsp" /><br>
 <h1>Råvarebatch oversigt</h1>
 
-
+	<table border="1" cellpadding="2">	
+  	<tr>
+    	<th>Råvarenavn</th>
+    	<th>Råvare id</th>
+    	<th>Råvarebatch id</th>
+    	<th>Mængde tilbage</th>
+    	<th>Leverandør</th>
+    	<th>Indkøbs dato</th>
+  	</tr>
 <%
 	ArrayList<dto.RaavareBatchDTO>raavarebatchList = raavareAdmin.getRaavarebatch();
 	if(raavarebatchList.size()==0)
@@ -30,13 +38,20 @@
 		String color = "black";
 		if(maengde<=0)
 			color = "red";
-			
 		%>
-			<font color="<%=color%>">Råvarebatch id <%=raavareBatch.getRbId() %>: <%=raavareBatch.getRaavare().getRaavareNavn() %>, mængde tilbage:  <%=raavareBatch.getMaengde() %>kg., leverandør <%=raavareBatch.getLeverandoer() %>, indkøbt dato <%=raavareBatch.getDato() %></font> <br/>
+			<tr>
+			<td><font color="<%=color%>"><%=raavareBatch.getRaavare().getRaavareNavn()%></font></td>
+			<td align="right"><font color="<%=color%>"><%=raavareBatch.getRaavare().getRaavareId()%></font></td>
+			<td align="right"><font color="<%=color%>"><%=raavareBatch.getRbId()%></font></td>
+			<td align="right"><font color="<%=color%>"><%=raavareBatch.getMaengde()%></font></td>
+			<td><font color="<%=color%>"><%=raavareBatch.getLeverandoer()%></font></td>
+			<td><font color="<%=color%>"><%=raavareBatch.getDato() %></font></td>
+			</tr>
 		<%
 	}
 %>
 
+</table>
 
 <form method="POST">
 	<div class="bottomSubmit">
