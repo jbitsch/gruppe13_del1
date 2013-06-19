@@ -234,7 +234,7 @@ public class BrugerAdministration {
 	private boolean checkPassword(String password)
 	{
 		
-		String REGEX = "^[0-9[a-zA-Z[\\-\\.\\+\\?[_!=[\\s]]]]]{7,8}$+";
+		String REGEX = "(^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*{7,8}$)?(^(?=.*[0-9])(?=.*[a-z])(?=.*[\\-\\.\\+\\?[_!=[\\s]]]).*{7,8}$)?(^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\-\\.\\+\\?[_!=[\\s]]]).*{7,8}$)?(^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\-\\.\\+\\?[_!=[\\s]]]).*{7,8}$)?";
 		return checkRegex(REGEX, password);
 	}
 	private int unusedId() throws DALException {
