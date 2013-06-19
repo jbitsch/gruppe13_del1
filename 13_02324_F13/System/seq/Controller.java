@@ -44,6 +44,7 @@ public class Controller {
 		produktBatchKompDB = new MySQLProduktBatchKompDAO();
 		produktBatchDB = new MySQLProduktBatchDAO();
 		receptKompDB = new MySQLReceptKompDAO();
+		
 	}
 
 	public void run(){
@@ -143,26 +144,32 @@ public class Controller {
 
 		// STEP 7. 8. START
 		weightConnection.sendToServer("K 3");
-		weightConnection.sendToServer("DW");
-		System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 		System.out.println("Modtager svar fra K 3: \n" + weightConnection.recieveFromServer().toUpperCase());
+		
+//		weightConnection.sendToServer("DW");
+//		System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 		System.out.println("Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’");
+		
 		weightConnection.sendToServer("RM20 8 \"Empty the weight\" \" \" \" \" ");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
+		
 		while(true){		
 			response = weightConnection.recieveFromServer().toUpperCase();
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")) {
-					weightConnection.sendToServer("DW");
-					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
-					System.out.println("Weight emptied, response: " + response);
+//					weightConnection.sendToServer("DW");
+//					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+					
+					System.out.println("Vægt tømt, svar: " + response);
+					
 					weightConnection.sendToServer("T");
 					System.out.println("Modtager svar fra tarering: \n" + weightConnection.recieveFromServer().toUpperCase());
-					response = "";
+//					response = "";
 					break;
 				}
 				else if(response.startsWith("RM20 C")){
+					System.out.println("Brugeren har afbrudt sekvensen");
 					throw new IOException();
 				}
 				else{
@@ -179,6 +186,7 @@ public class Controller {
 
 		// STEP 9. 10. 11. 12. START
 		System.out.println("Vægten beder om tara beholder.");
+		
 		weightConnection.sendToServer("RM20 8 \"Placer tarabeholder\" \" \" \" \" ");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){
@@ -186,20 +194,26 @@ public class Controller {
 			System.out.println(response);
 			if(response.startsWith("RM20")) {
 				if(response.startsWith("RM20 A")) {
-					weightConnection.sendToServer("DW");
-					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+//					weightConnection.sendToServer("DW");
+//					System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+					
+					System.out.println("Gemmer tarabeholderens vægt");
 					weightConnection.sendToServer("S");
 					while(!response.contains("kg")) {
+						weightConnection.sendToServer("S");
 						response = weightConnection.recieveFromServer();
 					}
 					System.out.println(response);
+					
 					taraBeholderVægt = Double.parseDouble((response.replaceAll("\"", "").replaceAll(",", ".").substring(4, response.length() - 3)));
-					System.out.println("Taracontainer placed, response: " + response + ", taravægt: " + taraBeholderVægt);
+					System.out.println("Tarabeholder placeret, svar: " + response + ", taravægt: " + taraBeholderVægt);
+					
 					weightConnection.sendToServer("T");
 					System.out.println("Modtager svar fra tarering: \n" + weightConnection.recieveFromServer().toUpperCase());
 					break;
 				}
 				else if(response.startsWith("RM20 C")){
+					System.out.println("Brugeren har afbrudt sekvensen");
 					throw new IOException();
 				}
 				else{
@@ -233,8 +247,8 @@ public class Controller {
 						System.out.println("Minimum vægt med tol: " +(currentReceptKomp.getNomNetto() - (currentReceptKomp.getNomNetto() * raavareTolerance/100))+ " uden tol: " + currentReceptKomp.getNomNetto());
 						if(currentReceptKomp.getRaavare().getRaavareId() == raavareBatchDB.getRaavareBatch(raavareBatchSelect).getRaavare().getRaavareId()) {
 							if(raavareStock >= (currentReceptKomp.getNomNetto() - (currentReceptKomp.getNomNetto() * raavareTolerance/100))) {
-								weightConnection.sendToServer("DW");
-								System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+//								weightConnection.sendToServer("DW");
+//								System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 								break;
 							}
 							else {
@@ -244,6 +258,7 @@ public class Controller {
 						}
 						else {
 							weightConnection.sendToServer("RM20 8 \"Forkert RB"+ "\" \" \" \"&3\" ");
+							System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 						}
 					}
 					catch(DALException e){
@@ -253,11 +268,13 @@ public class Controller {
 					}	
 				}
 				catch(NumberFormatException e){
+					e.printStackTrace();
 					weightConnection.sendToServer("RM20 8 \"Angiv RBnr ved tal" + "\" \" \" \"&3\" ");
 					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}	
 			}
 			else if(response.startsWith("RM20 C")){
+				System.out.println("Brugeren har afbrudt sekvensen");
 				throw new IOException();
 			}
 			else{
@@ -286,16 +303,15 @@ public class Controller {
 					System.out.println("Raavare tolerance: " + raavareTolerance);
 					System.out.println("Raavare value: " + raavareValue);
 					if(raavareMaengde <= raavareValue + (raavareValue*raavareTolerance/100) && raavareMaengde >= raavareValue - (raavareValue*raavareTolerance/100)){
-						System.out.println("Raavare afvejet korrekt, response: " + response + ", raavareVægt: " + raavareMaengde);
+						System.out.println("Raavare afvejet korrekt, svar: " + response + ", raavareVægt: " + raavareMaengde);
 						try {
 							produktBatchKompDB.createProduktBatchKomp(new ProduktBatchKompDTO(pbId, raavareBatchDB.getRaavareBatch(raavareBatchSelect), taraBeholderVægt, raavareMaengde));
 							System.out.println("Ny lager maengde" + (raavareStock - raavareMaengde));
-							MySQLRaavareBatchDAO RBDAO = new MySQLRaavareBatchDAO();
-							RaavareBatchDTO RBDTO = RBDAO.getRaavareBatch(raavareBatchSelect);
+							RaavareBatchDTO RBDTO = raavareBatchDB.getRaavareBatch(raavareBatchSelect);
 							RBDTO.setMaengde(raavareStock-raavareMaengde);
-							RBDAO.updateRaavareBatch(RBDTO);
-							weightConnection.sendToServer("DW");
-							System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
+							raavareBatchDB.updateRaavareBatch(RBDTO);
+//							weightConnection.sendToServer("DW");
+//							System.out.println("Modtager svar fra text clear: \n" + weightConnection.recieveFromServer().toUpperCase());
 							//							raavareBatchDB.updateRaavareBatch(new RaavareBatchDTO(raavareBatchSelect, currentReceptKomp.getRaavare(), (raavareStock - raavareMaengde), raavareBatchDB.getRaavareBatch(raavareBatchSelect).getDato()));
 						} catch (DALException e) {	
 							System.out.println("database error");
@@ -307,16 +323,17 @@ public class Controller {
 					else
 					{
 						weightConnection.sendToServer("RM20 8 \"Tol +-: " + raavareValue*raavareTolerance/100 + " kg" + "\" \" \" \" \" ");
-						System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
+						System.out.println("Modtager svar fra RM20 Tol: \n" + weightConnection.recieveFromServer().toUpperCase());
 					}
 				}
 				else{
 					weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
-					System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
+					System.out.println("Modtager svar fra RM20 KC 4: \n" + weightConnection.recieveFromServer().toUpperCase());
 				}
 			}
 			else if(response.startsWith("RM20")){
 				if(response.startsWith("RM20 C")){
+					System.out.println("Brugeren har afbrudt sekvensen");
 					throw new IOException();
 				}
 			}
@@ -324,10 +341,12 @@ public class Controller {
 				weightConnection.sendToServer("RM20 8 \"Afvej: " + raavareValue + " kg" + "\" \" \" \" \" ");
 				System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
+
 		}
 		// STEP 14 Slut
-		weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
 		System.out.println("Afvejning Ok");
+		
+		weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
 		System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 		while(true){
 			response = weightConnection.recieveFromServer().toUpperCase();
@@ -336,9 +355,14 @@ public class Controller {
 				if(response.startsWith("RM20 A")){
 					break;
 					}
+				else if(response.startsWith("RM20 C")){
+					System.out.println("Brugeren har afbrudt sekvensen");
+					throw new IOException();
 				}
+			}
 			else {
 			weightConnection.sendToServer("RM20 8 \"Afvejning OK\" \" \" \" \" ");
+			System.out.println("Modtager svar fra RM20: \n" + weightConnection.recieveFromServer().toUpperCase());
 			}
 		}
 	}
