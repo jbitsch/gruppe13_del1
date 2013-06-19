@@ -239,6 +239,7 @@ public class Controller {
 					else if((inline.startsWith("M12 2")))
 					{
 						java.awt.Toolkit.getDefaultToolkit().beep();
+						data.writeTo("M12 A"+"\r\n");
 					}
 					else if ((inline.startsWith("Q"))){
 						break;
