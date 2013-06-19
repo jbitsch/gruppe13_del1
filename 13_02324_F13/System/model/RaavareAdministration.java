@@ -125,7 +125,7 @@ public class RaavareAdministration {
 					RaavareBatchDTO nytRaavareBatch = new RaavareBatchDTO(Integer.parseInt(raavareBatchId), raavareDAO.getRaavare(Integer.parseInt(batchRaavareId)), talMaengde, new Timestamp(date.getTime()),leverandoer);
 					
 					raavareBatchDAO.createRaavareBatch(nytRaavareBatch);
-					succes = "Råvarebatch nr." + nytRaavareBatch.getRbId() +"fra "+leverandoer +" er nu oprettet!";
+					succes = "Råvarebatch nr. " + nytRaavareBatch.getRbId() +" fra "+leverandoer +" er nu oprettet!";
 					delete();
 				}			
 			}

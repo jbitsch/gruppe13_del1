@@ -33,7 +33,7 @@
 		{
 			%>
 					<h3>Farmaceut opgaver:</h3>
-					<input class="submitLink" type="submit" name="menuValg" value="Opret recpet"><br>
+					<input class="submitLink" type="submit" name="menuValg" value="Opret recept"><br>
 					<input class="submitLink" type="submit" name="menuValg" value="Opret raavare"><br>
 					<input class="submitLink" type="submit" name="menuValg" value="Administrer raavare"><br>
 					<input class="submitLink" type="submit" name="menuValg" value="Vis recept"><br>

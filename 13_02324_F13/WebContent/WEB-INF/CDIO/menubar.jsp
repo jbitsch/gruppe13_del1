@@ -89,7 +89,7 @@ Du er logget ind som <%=name%> <input type="submit" class="submitLink" value="Lo
         <ul>
             <li>
             	<form name="createRecept" method="POST">
-    				<input type="hidden" name="menuValg" value="Opret recpet">
+    				<input type="hidden" name="menuValg" value="Opret recept">
     				<input type="hidden" name="menuBar" value="menuBar">
     				<A HREF="javascript:document.createRecept.submit()">Opret recpet</A>
 				</form> 

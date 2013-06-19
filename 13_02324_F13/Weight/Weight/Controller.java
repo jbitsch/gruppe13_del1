@@ -232,6 +232,7 @@ public class Controller {
 						data.writeTo("I0 B \"DW\"\r\n");
 						data.writeTo("I0 B \"K 1\"\r\n");
 						data.writeTo("I0 B \"K 3\"\r\n");
+						data.writeTo("I0 B \"M12 2\"\r\n");
 						data.writeTo("I0 B \"RM20 8\"\r\n");
 						data.writeTo("I0 B \"Q\"\r\n");
 						wg.setRecievedCommand("I0");

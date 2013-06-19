@@ -24,6 +24,15 @@ ProduktBatchDTO produktBatch = produktAdmin.getProduktBatch();
 <h1><%=produktBatch.getRecept().getReceptNavn()%></h1>
 <%
 String status = "Ikke påbegyndt";
+
+String dStart = "Ikke startet";
+if(produktBatch.getDatoStart()!=null)
+	dStart = produktBatch.getDatoStart().toString();
+
+String dSlut = "Ikke afsluttet";
+if(produktBatch.getDatoSlut()!=null)
+	dSlut = produktBatch.getDatoSlut().toString();
+
 if(produktBatch.getStatus()==1)
 {
 	status = "Under produktion";
@@ -39,6 +48,8 @@ else if(produktBatch.getStatus()==3)
 %>		
 <p>Produktbatch id: <%=produktBatch.getPbId() %></p>
 <p>Status: <%=status %></p>
+<P>Start dato: <%=dStart %> </P>
+<p>Slut dato: <%=dSlut%> </p>
 <p>Recept id: <%=produktBatch.getRecept().getReceptId() %></p>
 <p>Recept navn: <%=produktBatch.getRecept().getReceptNavn() %></p>
 <p><b>Receptkomoponeneter:</b></p>
