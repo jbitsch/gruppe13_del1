@@ -28,4 +28,7 @@ public class WeightSocket {
 	{
 		out.println(command);
 	}
+	public Socket getScaleSocket() {
+		return scaleSocket;
+	}
 }

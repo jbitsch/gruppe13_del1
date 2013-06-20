@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Scanner;
+
 import connector.Connector;
 import daoimpl.MySQLOperatoerDAO;
 import daoimpl.MySQLProduktBatchDAO;
@@ -49,6 +50,7 @@ public class Controller {
 
 	public void run(){
 		connectToWeight();
+		
 	}
 
 	private void connectToWeight(){
@@ -505,6 +507,7 @@ public class Controller {
 	{
 		int pbId = 0;
 		try {
+			new Thread(new ConnectionCheck()).start();
 			recieveUserId(0);
 			pbId = recieveProductBatchId(0);
 			receptKompDBList = receptKompDB.getReceptKompList(produktBatchDB.getProduktBatch(pbId).getRecept().getReceptId());
@@ -529,6 +532,35 @@ public class Controller {
 			e.printStackTrace();
 		}
 
+	}
+	
+	
+	
+	
+	public class ConnectionCheck implements Runnable {
+
+		
+		public void run() {
+			check();
+		}
+		
+		public void check(){
+			while(true) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				weightConnection.sendToServer("S ");
+				
+				try {
+					System.out.println(weightConnection.recieveFromServer());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		
+		}
 	}
 
 }
