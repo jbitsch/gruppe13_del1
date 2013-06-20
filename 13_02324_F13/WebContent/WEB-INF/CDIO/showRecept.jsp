@@ -40,8 +40,8 @@ for (int i=0; i<produktAdmin.getReceptKomp().size(); i++) {
 }
 %>
 
-<form method="POST">
-<input type="hidden" name="menuValg" value="Vis recept" />	
+<form method="POST" action="">
+<input type="hidden" name="menuValg" value="Vis recept">	
 
 <div class="bottomSubmit">
 	<input type = "submit" name="Tilbage" value="Tilbage">

@@ -19,7 +19,7 @@
 <jsp:include page="menubar.jsp" /><br>
 <h1>Vælg bruger</h1>
 
-<form method="POST">	
+<form method="POST" action="">	
 <%
 	ArrayList<OperatoerDTO> userList = brugerAdmin.getUsers();
 	for (int i=0; i<userList.size(); i++) {

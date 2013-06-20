@@ -17,7 +17,7 @@
 	<h1>Menu</h1>
 	
 <p>Velkommen <%=login.getUser().getOprNavn() %>, du har rettigheder til følgende opgaver:</p>
-<form method="POST">
+<form method="POST" action="">
 	<%
 		String rolle = login.getUser().getRolle();
 	%>
@@ -50,7 +50,7 @@
 	%>
 </form>
 
-<form method="POST">
+<form method="POST" action="">
 	<div class="bottomSubmit">
 		<input type="hidden" name="handling" value="log_ud">
 		<input type="submit" value="Log ud">

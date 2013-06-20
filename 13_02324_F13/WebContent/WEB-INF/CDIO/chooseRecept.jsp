@@ -17,7 +17,7 @@
 <body>
 <jsp:include page="menubar.jsp" /><br>
 <h1>Vælg recpet</h1>
-<form method="POST">
+<form method="POST" action="">
 	<%
 	ArrayList<ReceptDTO> receptList = produktAdmin.getRecepter();
 	for (int i=0; i<receptList.size(); i++) {

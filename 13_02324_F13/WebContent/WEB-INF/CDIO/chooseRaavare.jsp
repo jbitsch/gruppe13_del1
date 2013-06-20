@@ -20,7 +20,7 @@
 <jsp:include page="menubar.jsp" /><br>
 <h1>Vælg råvare</h1>
 
-<form method="POST">
+<form method="POST" action="">
 <table border="1">
     <tr>
     <th WIDTH="10"></th>

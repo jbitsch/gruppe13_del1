@@ -42,13 +42,13 @@ if(receptKomp!=null && receptKomp.size()>0 )
 	for (int i=0; i<receptKomp.size(); i++)
 	{
 	%>
-	<form method="POST">
+	<form method="POST" action="">
 		<table border="1">	
   		<tr>	 
 			<td WIDTH="300"><%= receptKomp.get(i).getRaavare().getRaavareNavn()%></td>		
 			<td WIDTH="50"><%= receptKomp.get(i).getNomNetto()%></td>
 			<td WIDTH="50"><input type="submit" name="handling" value="Slet">
-			<input type="hidden" name="raavareToDelete" value="<%= receptKomp.get(i).getRaavare().getRaavareId() %>"/>	</td>
+			<input type="hidden" name="raavareToDelete" value="<%= receptKomp.get(i).getRaavare().getRaavareId() %>">	</td>
 		</tr>
 		</table>
 	</form>
@@ -59,12 +59,12 @@ if(receptKomp!=null && receptKomp.size()>0 )
 
 %>
 <br>
-<form method="POST">	
-	Recept id: <input name="receptId" type="text" size = 8/><br>
-	Recept navn: <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"/><br>
-	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp" />
+<form method="POST" action="">	
+	Recept id: <input name="receptId" type="text" size = 8><br>
+	Recept navn: <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"><br>
+	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp">
 	<div class="bottomSubmit">
-		<input type="submit" name="handling" value="Opret recept"/>
+		<input type="submit" name="handling" value="Opret recept">
 	</div>
 
 </form>
@@ -85,14 +85,14 @@ if(receptKomp!=null && receptKomp.size()>0 )
 		RaavareDTO raavare = raavareList.get(i);
 		%>
 		
-			<form method="POST">
+			<form method="POST" action="">
 		<table border="1">	
   		<tr>	 
 			<td WIDTH="300"><%= raavare.getRaavareNavn() %></td>		
-			<td WIDTH="100"><input type = "text" size = 8 name="netto"/></td>
-			<td WIDTH="100"><input type = "text" size = 8 name="tolerance"/></td>
-			<td WIDTH="130"><input type="submit" name="handling" value="Tilfoej raavare"/>
-			<input type="hidden" name="raavareToAdd" value="<%= raavare.getRaavareId() %>"/></td>
+			<td WIDTH="100"><input type = "text" size = 8 name="netto"></td>
+			<td WIDTH="100"><input type = "text" size = 8 name="tolerance"></td>
+			<td WIDTH="130"><input type="submit" name="handling" value="Tilfoej raavare">
+			<input type="hidden" name="raavareToAdd" value="<%= raavare.getRaavareId() %>"></td>
 		</tr>
 		</table>
 	</form>

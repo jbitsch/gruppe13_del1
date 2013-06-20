@@ -12,7 +12,8 @@
 	<%@include file="../../static/style.css" %>
 </style>
 
-<head><title>Råvarebatch oversigt</title></head>
+<title>Råvarebatch oversigt</title>
+</head>
 <body>
 <jsp:include page="menubar.jsp" /><br>
 <h1>Råvarebatch oversigt</h1>
@@ -53,7 +54,7 @@
 
 </table>
 
-<form method="POST">
+<form method="POST" action="">
 	<div class="bottomSubmit">
 		Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch">
 	</div>

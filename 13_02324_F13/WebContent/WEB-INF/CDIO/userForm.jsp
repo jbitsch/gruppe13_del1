@@ -24,7 +24,7 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 <h1>Bruger formular</h1>
 
 <p><font color="red"><%=brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
-<form method="POST">
+<form method="POST" action="">
 	Operatør navn: <input name="oprName" type="text" size = 20 value = "<%=brugerAdmin.getName() %>"><br>
 	Initialer: <input type="text" name="ini" value = "<%= brugerAdmin.getIni() %>"><br>
 	CPR: <input type="text" name="cpr" value = "<%= brugerAdmin.getCpr() %>"><br>

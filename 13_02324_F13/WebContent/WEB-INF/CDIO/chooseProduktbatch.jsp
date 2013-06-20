@@ -18,7 +18,7 @@
 <jsp:include page="menubar.jsp" /><br> 
 <h1>Vælg produktbatch</h1>
 
-<form method="POST">
+<form method="POST" action="">
 	<%
 	ArrayList<ProduktBatchDTO> produktbatchList = produktAdmin.getProduktbatch();
 	for (int i=0; i<produktbatchList.size(); i++) {

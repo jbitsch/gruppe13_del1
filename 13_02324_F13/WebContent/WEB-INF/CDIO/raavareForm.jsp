@@ -19,7 +19,7 @@
 
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
-<form method="POST">
+<form method="POST" action="">
 	
 	<%
 	if(raavareAdmin.getIsnew())

@@ -21,10 +21,10 @@
 
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
-<form method="POST">
+<form method="POST" action="">
 	Råvarebatch id: <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"><br>
 	Leverandøer: <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"><br>
-	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br><br/>
+	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br><br>
 	
 	Vælg råvare:<br>
 	<%
