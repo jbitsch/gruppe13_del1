@@ -19,6 +19,9 @@
 <h1>Vælg produktbatch</h1>
 
 <form method="POST" action="">
+	<div class="bottomSubmit">
+		Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
+	</div>
 	<%
 	ArrayList<ProduktBatchDTO> produktbatchList = produktAdmin.getProduktbatch();
 	for (int i=0; i<produktbatchList.size(); i++) {
@@ -47,12 +50,6 @@
 		<%
 	}
 	%>
-	
-	<div class="bottomSubmit">
-		Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><br>
-		<input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
-	</div>
-	
 	<div class="bottomSubmit">
 		<input type="submit" value="Vælg produktbatch">
 	</div>

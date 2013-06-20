@@ -17,6 +17,13 @@
 <jsp:include page="menubar.jsp" /><br>
 <h1>Skift adgangskode </h1>
 
+<P>Adgangskoden skal være mellem 7 0g 8 tegn, samt indeholde 3 af følgende tegn typer:<p>
+- Små bogstaver<br>
+- Store bogstaver<br>
+- Tal<br>
+- Specialtegn
+
+
 <p><font color="red"><%= brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
 
 <form method="POST" action="">

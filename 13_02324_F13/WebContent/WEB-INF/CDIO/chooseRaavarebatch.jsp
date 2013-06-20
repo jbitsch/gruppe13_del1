@@ -18,6 +18,13 @@
 <jsp:include page="menubar.jsp" /><br>
 <h1>Råvarebatch oversigt</h1>
 
+<form method="POST" action="">
+	<div class="bottomSubmit">
+		Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch"><input type = "submit" name="searchRB" value="Soeg på raavare navn">
+	</div>
+	
+</form>
+
 	<table border="1" cellpadding="2">	
   	<tr>
     	<th>Råvarenavn</th>
@@ -53,17 +60,6 @@
 %>
 
 </table>
-
-<form method="POST" action="">
-	<div class="bottomSubmit">
-		Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch">
-	</div>
-	
-	<div class="bottomSubmit">
-		<input type = "submit" name="searchRB" value="Soeg på raavare navn">
-	</div>
-	
-</form>
 	
 </body>
 </html>
