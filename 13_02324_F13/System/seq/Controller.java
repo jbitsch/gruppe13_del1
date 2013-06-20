@@ -1,6 +1,8 @@
 package seq;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Scanner;
@@ -38,6 +40,7 @@ public class Controller {
 	private IProduktBatchDAO produktBatchDB;
 	private IReceptKompDAO receptKompDB;
 	private List<ReceptKompDTO> receptKompDBList;
+	private int pbId;
 
 	public Controller(){
 		weightConnection = new WeightSocket();
@@ -440,7 +443,7 @@ public class Controller {
 		}
 		System.out.println(weightConnection.recieveFromServer());
 		String responseTemp;
-		responseTemp = weightConnection.recieveFromServer();
+		responseTemp = weightConnection.recieveFromServer().toUpperCase();
 		responseTemp = responseTemp.replaceAll("\"", "");
 		System.out.println(responseTemp);
 		String response = responseTemp.substring(7, responseTemp.length());
@@ -505,7 +508,7 @@ public class Controller {
 
 	private void sekvens()
 	{
-		int pbId = 0;
+		pbId = 0;
 		try {
 			new Thread(new ConnectionCheck()).start();
 			recieveUserId(0);
@@ -517,21 +520,25 @@ public class Controller {
 			}
 			faerdig(pbId);
 		} catch (IOException e) {
-			try {
-				ProduktBatchDTO pb = produktBatchDB.getProduktBatch(pbId);
-				if(pb.getStatus() == 1) {
-					pb.setDatoSlut(new Timestamp(System.currentTimeMillis()));
-					pb.setStatus(3);
-					produktBatchDB.updateProduktBatch(pb);
-				}
-			} catch (DALException e1) {
-				e1.printStackTrace();
-			}
+			conLost();
 
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void conLost() {
+		try {
+			ProduktBatchDTO pb = produktBatchDB.getProduktBatch(pbId);
+			if(pb.getStatus() == 1) {
+				pb.setDatoSlut(new Timestamp(System.currentTimeMillis()));
+				pb.setStatus(3);
+				produktBatchDB.updateProduktBatch(pb);
+			}
+		} catch (DALException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	
@@ -545,21 +552,32 @@ public class Controller {
 		}
 		
 		public void check(){
+		
+			InetAddress Scale = null;
 			while(true) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				weightConnection.sendToServer("S ");
-				
 				try {
-					System.out.println(weightConnection.recieveFromServer());
+					Scale = InetAddress.getByName("169.254.2.3");
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				}
+				try {
+					if(!Scale.isReachable(5000) && !Scale.isReachable(5000) &&
+							!Scale.isReachable(5000) && !Scale.isReachable(5000)) {
+						System.out.println("connection lost");
+						break;
+					}
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
 			}
-		
+			conLost();
 		}
 	}
 
