@@ -35,15 +35,15 @@ public class BrugerAdministration {
 	///////////////////////////Change password////////////////////////
 	public void setOld(String old)
 	{
-		this.old = old;
+		this.old = replaceChar(old);
 	}
 	public void setNew1(String new1)
 	{
-		this.new1= new1;
+		this.new1= replaceChar(new1);
 	}
 	public void setNew2(String new2)
 	{
-		this.new2= new2;
+		this.new2= replaceChar(new2);
 	}
 	public void setId(int id)
 	{
@@ -52,23 +52,23 @@ public class BrugerAdministration {
 	////////////////////////////Change or create user///////////////
 	public void setName(String name)
 	{
-		this.name = name;
+		this.name = replaceChar(name);
 	}
 	public void setIni(String ini)
 	{
-		this.ini = ini;
+		this.ini = replaceChar(ini);
 	}
 	public void setCpr(String cpr)
 	{
-		this.cpr = cpr;
+		this.cpr = replaceChar(cpr);
 	}
 	public void setPassword(String password)
 	{
-		this.password = password;
+		this.password = replaceChar(password);
 	}
 	public void setRolle(String rolle)
 	{
-		this.rolle = rolle;
+		this.rolle = replaceChar(rolle);
 	}
 	public void setUser(int uId) throws DALException
 	{

@@ -264,37 +264,37 @@ public class RaavareAdministration {
 		return raavareId;
 	}
 	public void setRaavareId(String raavareId) {
-		this.raavareId = raavareId;
+		this.raavareId = replaceChar(raavareId);
 	}
 	public String getRaavareNavn() {
 		return raavareNavn;
 	}
 	public void setRaavareNavn(String raavareNavn) {
-		this.raavareNavn = raavareNavn;
+		this.raavareNavn = replaceChar(raavareNavn);
 	}
 	public String getLeverandoer() {
 		return leverandoer;
 	}
 	public void setLeverandoer(String leverandoer) {
-		this.leverandoer = leverandoer;
+		this.leverandoer = replaceChar(leverandoer);
 	}
 	public String getRaavareBatchId() {
 		return raavareBatchId;
 	}
 	public void setRaavareBatchId(String raavareBatchId) {
-		this.raavareBatchId = raavareBatchId;
+		this.raavareBatchId = replaceChar(raavareBatchId);
 	}
 	public String getBatchRaavareId() {
 		return batchRaavareId;
 	}
 	public void setBatchRaavareId(String batchRaavareId) {
-		this.batchRaavareId = batchRaavareId;
+		this.batchRaavareId = replaceChar(batchRaavareId);
 	}
 	public String getMaengde() {
 		return maengde;
 	}
 	public void setMaengde(String maengde) {
-		this.maengde = maengde;
+		this.maengde = replaceChar(maengde);
 	}
 	public String getSucces() {
 		return succes;

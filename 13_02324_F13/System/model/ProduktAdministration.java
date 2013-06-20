@@ -279,14 +279,14 @@ public class ProduktAdministration {
 		return receptNavn;
 	}
 	public void setReceptNavn(String receptNavn) {
-		this.receptNavn = receptNavn;
+		this.receptNavn = replaceChar(receptNavn);
 	}
 	public void setHandling(String handling)
 	{
 		this.handling = handling;
 	}
 	public void setProduktbatchReceptId(String produktbatchReceptId) {
-		this.produktbatchReceptId = produktbatchReceptId;
+		this.produktbatchReceptId = replaceChar(produktbatchReceptId);
 	}
 	public ArrayList<ProduktBatchDTO> getProduktbatch()throws DALException
 	{
