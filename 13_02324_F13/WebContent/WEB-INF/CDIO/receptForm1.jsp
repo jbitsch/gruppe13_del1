@@ -60,9 +60,17 @@ if(receptKomp!=null && receptKomp.size()>0 )
 %>
 <br>
 <form method="POST" action="">	
-	Recept id: <input name="receptId" type="text" size = 8><br>
-	Recept navn: <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"><br>
-	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp">
+	<table border="0">	
+		<tr>
+			<td>Recept id:</td> 
+			<td><input name="receptId" type="text" size = 8></td>
+		</tr>
+		<tr>
+			<td>Recept navn:</td>
+			<td> <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"><br>
+			<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp"></td>
+		</tr>
+	</table>	
 	<div class="bottomSubmit">
 		<input type="submit" name="handling" value="Opret recept">
 	</div>

@@ -22,11 +22,22 @@
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
 <form method="POST" action="">
-	Råvarebatch id: <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"><br>
-	Leverandøer: <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"><br>
-	Mængde: <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"><br><br>
+	<table border="0">
+	<tr>
+		<td>Råvarebatch id:</td>
+		<td> <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"></td>
+	</tr>
+	<tr>
+		<td>Leverandøer:</td>
+		<td> <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"></td>
+	</tr>
+	<tr>
+		<td>Mængde:</td>
+		<td> <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"></td>
+	</tr>
+	</table>
 	
-	Vælg råvare:<br>
+	<br><b>Vælg råvare:</b><br>
 	<%
 	ArrayList<RaavareDTO> raavareList = raavareAdmin.getRaavare();
 	for (int i=0; i<raavareList.size(); i++) {
