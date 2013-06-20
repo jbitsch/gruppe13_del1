@@ -20,12 +20,22 @@
 <p><font color="red"><%= brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
 
 <form method="POST" action="">
-	<input type="hidden" name="handling" value="changePw">
-	<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp">	
-	Gammelt password: <input type="password" name="old"><br> 
-	Indtast nyt password: <input type="password" name="new1"><br>
-	Gentag nyt password: <input type="password" name="new2"><br>
+<table border="0">	
 	
+	<tr>
+		<td><input type="hidden" name="handling" value="changePw">	
+		Gammelt password:</td>
+		<td> <input type="password" name="old"></td> 
+	</tr>
+	<tr>
+		<td>Indtast nyt password:</td>
+		<td> <input type="password" name="new1"></td>
+	</tr>
+	<tr>
+		<td>Gentag nyt password:</td>
+		<td> <input type="password" name="new2"></td>
+	</tr>
+</table>	
 	<div class="bottomSubmit">
 		<input type = "submit" name="submit" value="Skift">
 	</div>
