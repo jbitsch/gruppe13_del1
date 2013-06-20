@@ -20,21 +20,32 @@
 <p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
 
 <form method="POST" action="">
-	
+<table border="0">	
 	<%
 	if(raavareAdmin.getIsnew())
 	{
 	%>
-	Råvare id: <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"><br>
+	<tr>
+	<td>Råvare id:</td>
+	<td> <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"></td>
+	</tr>
 	<%
 	}
 	else
 	{
-		out.println("Råvare id: "+raavareAdmin.getRaavareId()+"<br>");	
+		%>
+		<tr>
+			<td>Råvare id:</td> 
+			<td><%=raavareAdmin.getRaavareId()%></td>	
+		</tr>
+		<%
 	}
 	%>
-	Råvare navn: <input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"><br>
-	
+	<tr>
+		<td>Råvare navn:</td>
+		<td><input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"></td>
+	</tr>
+</table>
 	<div class="bottomSubmit">
 		<%
 		if(raavareAdmin.getIsnew())

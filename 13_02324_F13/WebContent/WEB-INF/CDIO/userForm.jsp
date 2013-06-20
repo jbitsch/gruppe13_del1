@@ -24,36 +24,60 @@ String[] roller = new String[]{"Administrator","Farmaceut","Værkfører","Operatør
 <h1>Bruger formular</h1>
 
 <p><font color="red"><%=brugerAdmin.getError() %></font><font color="green"><%= brugerAdmin.getSucces() %></font><br>
+
 <form method="POST" action="">
-	Operatør navn: <input name="oprName" type="text" size = 20 value = "<%=brugerAdmin.getName() %>"><br>
-	Initialer: <input type="text" name="ini" value = "<%= brugerAdmin.getIni() %>"><br>
-	CPR: <input type="text" name="cpr" value = "<%= brugerAdmin.getCpr() %>"><br>
-	Password:<input type="password" name="newPw" value = "<%= brugerAdmin.getPassword() %>"><br>
+<table border="0">	
+	<tr>
+		<td> Operatør navn: </td>
+		<td><input name="oprName" type="text" size = 20 value = "<%=brugerAdmin.getName() %>"></td>
+	</tr>
+	<tr>
+		<td>Initialer:</td>
+		<td><input type="text" name="ini" value = "<%= brugerAdmin.getIni() %>"></td>
+	</tr>
+	<tr>
+		<td>CPR:</td>
+		<td><input type="text" name="cpr" value = "<%= brugerAdmin.getCpr() %>"></td>
+	</tr>
+	<tr>
+		<td>Password:</td>
+		<td><input type="password" name="newPw" value = "<%= brugerAdmin.getPassword() %>"></td>
 <%
 	if(brugerAdmin.getId()==0 || !("Operatør").equals(brugerAdmin.getRolle()))
 	{
 		%>
-				Rolle: <select name="rolle">
-				<option value="<%=brugerAdmin.getRolle()%>" selected="selected"><%=brugerAdmin.getRolle()%></option>
-				<%
-				for(int i = 0; i < roller.length; i++)
-				{
-					if(!roller[i].equals(brugerAdmin.getRolle()))
+				<tr>
+					<td>Rolle:</td>
+					 <td><select name="rolle">
+					<option value="<%=brugerAdmin.getRolle()%>" selected="selected"><%=brugerAdmin.getRolle()%></option>
+					<%
+					for(int i = 0; i < roller.length; i++)
 					{
-						%>
-							<option value="<%=roller[i]%>"><%=roller[i] %></option>
-						<%
+						if(!roller[i].equals(brugerAdmin.getRolle()))
+						{
+							%>
+								<option value="<%=roller[i]%>"><%=roller[i] %></option>
+							<%
 						
+						}
 					}
-				}
-				%>
-				</select><br>
+					%>
+					</select>
+					</td>
+				</tr>
 				<%
 	}else
 	{
-		out.println("Rolle: "+brugerAdmin.getRolle()+"<br>");
+		%>
+		<tr>
+			<td>Rolle:</td>
+			<td> <%=brugerAdmin.getRolle() %></td>
+		</tr>
+		<%
 	}
-	
+%>
+</table>
+<%
 	if(brugerAdmin.getId()==0)
 	{
 	%>

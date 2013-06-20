@@ -24,7 +24,7 @@ ReceptDTO recept = produktAdmin.getRecept();
 
 
 <p>Recept id: <%=recept.getReceptId() %></p>
-<p>Recept navn:<%= recept.getReceptNavn() %></p>
+<p>Recept navn: <%= recept.getReceptNavn() %></p>
 <p><b>Receptkomoponeneter:</b></p>
 <%
 
