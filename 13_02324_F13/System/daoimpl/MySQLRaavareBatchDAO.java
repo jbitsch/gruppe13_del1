@@ -27,7 +27,7 @@ public class MySQLRaavareBatchDAO implements IRaavareBatchDAO{
 	@Override
 	public ArrayList<RaavareBatchDTO> getRaavareBatch(String raavareNavn) throws DALException {
 		ArrayList<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
-		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND r.raavare_navn LIKE '" + raavareNavn +"' ORDER BY r.raavare_id ASC");
+		ResultSet rs = Connector.doQuery("SELECT r.*,rb.* FROM raavare r, raavarebatch rb WHERE r.raavare_id=rb.raavare_id AND r.raavare_navn LIKE '%" + raavareNavn +"%' ORDER BY r.raavare_id ASC");
 		try
 		{
 			while (rs.next()) 

@@ -82,7 +82,7 @@ public class MySQLProduktBatchDAO implements IProduktBatchDAO{
 	@Override
 	public ArrayList<ProduktBatchDTO> getProduktBatchList(String receptName) throws DALException {
 		ArrayList<ProduktBatchDTO> list = new ArrayList<ProduktBatchDTO>();
-		ResultSet rs = Connector.doQuery("SELECT pb.*,r.*, o.* FROM recept r, produktbatch pb LEFT JOIN operatoer o ON pb.opr_id = o.opr_id WHERE r.recept_id=pb.recept_id AND r.recept_navn LIKE '"+receptName +"' ORDER BY pb.status ASC");
+		ResultSet rs = Connector.doQuery("SELECT pb.*,r.*, o.* FROM recept r, produktbatch pb LEFT JOIN operatoer o ON pb.opr_id = o.opr_id WHERE r.recept_id=pb.recept_id AND r.recept_navn LIKE '%"+receptName +"%' ORDER BY pb.status ASC");
 		try
 		{
 			while (rs.next()) 
