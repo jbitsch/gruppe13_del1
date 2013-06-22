@@ -29,7 +29,6 @@
 		<font color="red"><%=produktAdmin.getError() %></font><font color="green"><%= produktAdmin.getSucces() %></font><br>
 		
 		
-		<div class="content" style="width: 100%;">
 		   <div style="float:left; width: 35%">
 		  <%
 		ArrayList<ReceptKompDTO> receptKomp = produktAdmin.getReceptKompToadd();
@@ -69,11 +68,11 @@
 		<form method="POST" action="">	
 			<table border="0">	
 				<tr>
-					<td>Recept id:</td> 
+					<td class="noPadding">Recept id:</td> 
 					<td><input name="receptId" type="text" size = 8></td>
 				</tr>
 				<tr>
-					<td>Recept navn:</td>
+					<td class="noPadding">Recept navn:</td>
 					<td> <input name="receptNavn" type="text" size = 20 value = "<%= produktAdmin.getReceptNavn() %>"><br>
 					<input type="hidden" name="backpage" value="/WEB-INF/CDIO/menu.jsp"></td>
 				</tr>
@@ -81,6 +80,7 @@
 			<div class="bottomSubmit">
 				<input type="submit" name="handling" value="Opret recept">
 			</div>
+			<br>
 		
 		</form>
 		   </div>
@@ -119,7 +119,6 @@
 		   </div>
 		</div>
 		<div style="clear:both"></div>
-	</div>
 
 </body>
 </html>

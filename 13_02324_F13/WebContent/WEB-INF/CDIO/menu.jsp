@@ -18,18 +18,18 @@
 			<jsp:include page="menubar.jsp" />
 		</div>
 	</div>
-	
+
 	<div class="content">
-	
+
 		<h1>Menu</h1>
-	
+
 		<p>Velkommen <%=login.getUser().getOprNavn() %>, du har rettigheder til følgende opgaver:</p>
 		<form method="POST" action="">
 			<%
 				String rolle = login.getUser().getRolle();
 			%>
 			<input class="submitLink" type="submit" name="menuValg" value="Skift Adgangskode"><br>
-			
+
 			<h3>Værkfører opgaver:</h3>	
 			<input class="submitLink" type="submit" name="menuValg" value="Opret raavarebatch"><br>
 			<input class="submitLink" type="submit" name="menuValg" value="Opret produktbatch"><br>					
@@ -56,14 +56,14 @@
 				}
 			%>
 		</form>
-		
+
 		<form method="POST" action="">
 			<div class="bottomSubmit">
 				<input type="hidden" name="handling" value="log_ud">
 				<input type="submit" value="Log ud">
 			</div>
 		</form>
-	
+
 	</div>
 
 </body>

@@ -19,54 +19,56 @@
 	<div class="header">
 		<div class="headerContent">
 			<jsp:include page="menubar.jsp" />
+
+			<h1 class="scrollIncluded">Råvarebatch oversigt</h1>
+			
+			<form method="POST" action="">
+				<div class="bottomSubmit">
+					Indtast råvare navn for at søge:<input class="onInputLine" type = "text" name = "searchRBatch"><input class="onInputLine" type = "submit" name="searchRB" value="Soeg på raavare navn">
+				</div>
+				
+			</form>
 		</div>
 	</div>
-	
+
 	<div class="content">
-		<h1>Råvarebatch oversigt</h1>
-		
-		<form method="POST" action="">
-			<div class="bottomSubmit">
-				Indtast råvare navn for at søge:<input type = "text" name = "searchRBatch"><input type = "submit" name="searchRB" value="Soeg på raavare navn">
-			</div>
+		<div class="space">
+				<table border="1" cellpadding="2">	
+			  	<tr>
+			    	<th>Råvarenavn</th>
+			    	<th>Råvare id</th>
+			    	<th>Råvarebatch id</th>
+			    	<th>Mængde tilbage</th>
+			    	<th>Leverandør</th>
+			    	<th>Indkøbs dato</th>
+			  	</tr>
+			<%
+				ArrayList<dto.RaavareBatchDTO>raavarebatchList = raavareAdmin.getRaavarebatch();
+				if(raavarebatchList.size()==0)
+				{
+					out.println("Der findes ingen raavarebatches med raavarenavnet: "+ raavareAdmin.getRaavareNavn());
+				}
+				for (int i=0; i<raavarebatchList.size(); i++) {
+					dto.RaavareBatchDTO raavareBatch = raavarebatchList.get(i);
+					double maengde = raavareBatch.getMaengde();
+					String color = "black";
+					if(maengde<=0)
+						color = "red";
+					%>
+						<tr>
+						<td><font color="<%=color%>"><%=raavareBatch.getRaavare().getRaavareNavn()%></font></td>
+						<td align="right"><font color="<%=color%>"><%=raavareBatch.getRaavare().getRaavareId()%></font></td>
+						<td align="right"><font color="<%=color%>"><%=raavareBatch.getRbId()%></font></td>
+						<td align="right"><font color="<%=color%>"><%=raavareBatch.getMaengde()%></font></td>
+						<td><font color="<%=color%>"><%=raavareBatch.getLeverandoer()%></font></td>
+						<td><font color="<%=color%>"><%=raavareBatch.getDato() %></font></td>
+						</tr>
+					<%
+				}
+			%>
 			
-		</form>
-		
-			<table border="1" cellpadding="2">	
-		  	<tr>
-		    	<th>Råvarenavn</th>
-		    	<th>Råvare id</th>
-		    	<th>Råvarebatch id</th>
-		    	<th>Mængde tilbage</th>
-		    	<th>Leverandør</th>
-		    	<th>Indkøbs dato</th>
-		  	</tr>
-		<%
-			ArrayList<dto.RaavareBatchDTO>raavarebatchList = raavareAdmin.getRaavarebatch();
-			if(raavarebatchList.size()==0)
-			{
-				out.println("Der findes ingen raavarebatches med raavarenavnet: "+ raavareAdmin.getRaavareNavn());
-			}
-			for (int i=0; i<raavarebatchList.size(); i++) {
-				dto.RaavareBatchDTO raavareBatch = raavarebatchList.get(i);
-				double maengde = raavareBatch.getMaengde();
-				String color = "black";
-				if(maengde<=0)
-					color = "red";
-				%>
-					<tr>
-					<td><font color="<%=color%>"><%=raavareBatch.getRaavare().getRaavareNavn()%></font></td>
-					<td align="right"><font color="<%=color%>"><%=raavareBatch.getRaavare().getRaavareId()%></font></td>
-					<td align="right"><font color="<%=color%>"><%=raavareBatch.getRbId()%></font></td>
-					<td align="right"><font color="<%=color%>"><%=raavareBatch.getMaengde()%></font></td>
-					<td><font color="<%=color%>"><%=raavareBatch.getLeverandoer()%></font></td>
-					<td><font color="<%=color%>"><%=raavareBatch.getDato() %></font></td>
-					</tr>
-				<%
-			}
-		%>
-		
-		</table>
+			</table>
+		</div>
 	</div>
 	
 </body>

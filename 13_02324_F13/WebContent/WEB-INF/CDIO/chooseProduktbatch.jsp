@@ -28,8 +28,9 @@
 		
 		<form method="POST" action="">
 			<div class="bottomSubmit">
-				Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
+				Indtast receptnavn for at søge:<input class="onInputLine" type = "text" name = "searchProduktBatch"><input class="onInputLine" type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
 			</div>
+			<br>
 			<%
 			ArrayList<ProduktBatchDTO> produktbatchList = produktAdmin.getProduktbatch();
 			for (int i=0; i<produktbatchList.size(); i++) {

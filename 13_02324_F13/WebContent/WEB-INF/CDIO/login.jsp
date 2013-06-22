@@ -16,29 +16,33 @@
 </head>
 <body>
 
-<h1>Log ind</h1>
-<font color="red"><%= login.getMeddelelse() %></font><br>
-<form method="POST" action="">
-<input type="hidden" name="handling" value=null>
-<table>
-<tr>
-	<td>ID:</td>
-	<td><input name="id" type="text"></td>
-</tr>
-<tr>
-	<td>Adgangskode:</td>
-	<td><input type="password" name="password"></td>
-</tr>
-<tr>
-	<td></td>
-	<td><input type="submit" name="handling" value="log ind"></td>
-</tr>
-</table>
-</form>
-<h2>Login med:</h2>
-	Administrator: ID = 10, password = Qwerty!<br>
-	Farmaceut: ID = 2, password = Qwerty!<br>
-	Værkfører: ID = 3, password = Qwerty!
+	<div class="content">
+
+		<h1>Log ind</h1>
+		<font color="red"><%= login.getMeddelelse() %></font><br>
+		<form method="POST" action="">
+		<input type="hidden" name="handling" value=null>
+		<table>
+		<tr>
+			<td>ID:</td>
+			<td><input name="id" type="text"></td>
+		</tr>
+		<tr>
+			<td>Adgangskode:</td>
+			<td><input type="password" name="password"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" name="handling" value="log ind"></td>
+		</tr>
+		</table>
+		</form>
+		<h2>Login med:</h2>
+			Administrator: ID = 10, password = Qwerty!<br>
+			Farmaceut: ID = 2, password = Qwerty!<br>
+			Værkfører: ID = 3, password = Qwerty!
+			
+	</div>
 
 
 </body>

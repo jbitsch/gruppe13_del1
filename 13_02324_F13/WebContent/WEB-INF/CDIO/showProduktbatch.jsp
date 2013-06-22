@@ -58,6 +58,8 @@
 		<p>Slut dato: <%=dSlut%> </p>
 		<p>Recept id: <%=produktBatch.getRecept().getReceptId() %></p>
 		<p>Recept navn: <%=produktBatch.getRecept().getReceptNavn() %></p>
+		<br>
+		<br>
 		<p><b>Receptkomoponeneter:</b></p>
 		<%
 		
@@ -66,12 +68,14 @@
 				
 				ReceptKompDTO receptKomp = (dto.ReceptKompDTO) produktAdmin.getReceptKomp().get(i);
 				%>
+				<br>
 				<b><%=i+1 %> Raavarenavn:</b> <%=receptKomp.getRaavare().getRaavareNavn() %><br>
 				Netto: <%=receptKomp.getNomNetto() %> <br>
 				Tolerance <%=receptKomp.getTolerance() %><br>
 				<%
 		}
 		%>
+		<br>
 		<p><b>Produktbatch komoponeneter:</b></p>
 		<%
 		for (int i=0; i<produktAdmin.getproduktbatchKomp().size(); i++) {

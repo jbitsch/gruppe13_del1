@@ -16,45 +16,54 @@
 </head>
 <body>
 
-<jsp:include page="menubar.jsp" /><br>
-<h1>Opret raavarebatch</h1>
-
-<p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
-
-<form method="POST" action="">
-	<table border="0">
-	<tr>
-		<td>Råvarebatch id:</td>
-		<td> <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"></td>
-	</tr>
-	<tr>
-		<td>Leverandøer:</td>
-		<td> <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"></td>
-	</tr>
-	<tr>
-		<td>Mængde:</td>
-		<td> <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"></td>
-	</tr>
-	</table>
+	<div class="header">
+		<div class="headerContent">
+			<jsp:include page="menubar.jsp" />
+		</div>
+	</div>
 	
-	<br><b>Vælg råvare:</b><br>
-	<%
-	ArrayList<RaavareDTO> raavareList = raavareAdmin.getRaavare();
-	for (int i=0; i<raavareList.size(); i++) {
-		RaavareDTO raavare = raavareList.get(i);
-		%>
-			<input type="radio" name="raavarevalgBatch" value="<%= raavare.getRaavareId() %>">
-			Råvare: <%= raavare.getRaavareNavn() %><br>
-		<%
-	}
-%>
-
-<div class="bottomSubmit">
-	<input type="submit" name="handling" value="Opret Raavarebatch">
-</div>
-
-</form>
-
+	<div class="content">
+		<h1>Opret raavarebatch</h1>
+		
+		<p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
+		
+		<form method="POST" action="">
+			<table border="0">
+			<tr>
+				<td>Råvarebatch id:</td>
+				<td> <input name="raavarebatchId" type="text" size = 8 value = "<%=raavareAdmin.getRaavareBatchId()  %>"></td>
+			</tr>
+			<tr>
+				<td>Leverandøer:</td>
+				<td> <input name="leverandoer" type="text" size = 20 value = "<%=raavareAdmin.getLeverandoer()  %>"></td>
+			</tr>
+			<tr>
+				<td>Mængde:</td>
+				<td> <input name="raavareMaengde" type="text" size = 8 value = "<%= raavareAdmin.getMaengde() %>"></td>
+			</tr>
+			</table>
+			
+			<br><b>Vælg råvare:</b><br>
+			
+			<div class="scrollBox">
+				<%
+				ArrayList<RaavareDTO> raavareList = raavareAdmin.getRaavare();
+				for (int i=0; i<raavareList.size(); i++) {
+					RaavareDTO raavare = raavareList.get(i);
+					%>
+						<input type="radio" name="raavarevalgBatch" value="<%= raavare.getRaavareId() %>">
+						Råvare: <%= raavare.getRaavareNavn() %><br>
+					<%
+				}
+				%>
+			</div>
+		
+		<div class="bottomSubmit">
+			<input type="submit" name="handling" value="Opret Raavarebatch">
+		</div>
+		
+		</form>
+	</div>
 
 
 </body>

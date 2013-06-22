@@ -64,7 +64,7 @@
 				else
 				{
 					%>
-						<input type = "submit" name="Tilbage" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
+						<input type = "submit" name="Tilbage" value="Tilbage"><input class="onInputLine" type="submit" name="handling" value="Ændre Raavare">
 						<input type="hidden" name="menuValg" value="Administrer raavare" />	
 					<%
 				}

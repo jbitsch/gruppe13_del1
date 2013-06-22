@@ -31,7 +31,10 @@
 		
 		<p>Recept id: <%=recept.getReceptId() %></p>
 		<p>Recept navn: <%= recept.getReceptNavn() %></p>
+		<br>
+		<br>
 		<p><b>Receptkomoponeneter:</b></p>
+
 		<%
 		
 		
@@ -39,6 +42,7 @@
 				
 				ReceptKompDTO receptKomp = (dto.ReceptKompDTO) produktAdmin.getReceptKomp().get(i);
 				%>
+				<br>
 				<b><%=i+1 %> Raavarenavn:</b> <%=receptKomp.getRaavare().getRaavareNavn() %><br>
 				Netto: <%=receptKomp.getNomNetto() %> <br>
 				Tolerance <%=receptKomp.getTolerance() %><br>

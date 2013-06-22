@@ -97,7 +97,7 @@
 			{
 				%>
 					<div class="bottomSubmit">
-						<input type = "submit" name="Tilbage" value="Tilbage"><input type="submit" name="handling" value="Ændre">
+						<input type = "submit" name="Tilbage" value="Tilbage"><input class="onInputLine" type="submit" name="handling" value="Ændre">
 						<input type="hidden" name="menuValg" value="Administrer bruger" />	
 						<%
 						if(!(brugerAdmin.getId()==login.getId()) && !("Operatør".equals(brugerAdmin.getRolle())))
