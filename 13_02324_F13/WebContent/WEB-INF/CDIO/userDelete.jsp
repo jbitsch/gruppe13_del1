@@ -5,17 +5,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<style type="text/css">
+	<%@include file="../../static/style2.css" %>
+</style>
+
 <title>Bruger slettet</title>
 </head>
 <body>
-<jsp:include page="menubar.jsp" /><br>
-<h1>Bruger er slettet</h1>
 
-<font color="green"><%= brugerAdmin.getSucces() %></font><br>
-<form method="post" action="">
-				<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
-				<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp" />
-</form>
+	<div class="header">
+		<div class="headerContent">
+			<jsp:include page="menubar.jsp" />
+		</div>
+	</div>
+	
+	<div class="content">
+		<h1>Bruger er slettet</h1>
+		
+		<font color="green"><%= brugerAdmin.getSucces() %></font><br>
+		<form method="post" action="">
+						<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
+						<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp" />
+		</form>
+	</div>
 
 </body>
 </html>

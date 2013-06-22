@@ -9,51 +9,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <style type="text/css">
-	<%@include file="../../static/style.css" %>
+	<%@include file="../../static/style2.css" %>
 </style>
 
 <title>Vælg produktbatch</title>
 </head>
 <body>
-<jsp:include page="menubar.jsp" /><br> 
-<h1>Vælg produktbatch</h1>
 
-<form method="POST" action="">
-	<div class="bottomSubmit">
-		Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
+	<div class="header">
+		<div class="headerContent">
+			<jsp:include page="menubar.jsp" />
+		</div>
 	</div>
-	<%
-	ArrayList<ProduktBatchDTO> produktbatchList = produktAdmin.getProduktbatch();
-	for (int i=0; i<produktbatchList.size(); i++) {
+
+
+	<div class="content">
+		<h1>Vælg produktbatch</h1>
 		
-		dto.ProduktBatchDTO produktBatch = produktbatchList.get(i);
-		String color = "black";
-		String status = "Ikke påbegyndt";
-		if(produktBatch.getStatus()==1)
-		{
-			color = "green";
-			status = "Under produktion";
-		}
-		else if(produktBatch.getStatus()==2)
-		{
-			color = "";
-			status = "Afsluttet";
-		}
-		else if(produktBatch.getStatus()==3)
-		{
-			color = "red";
-			status = "FEJL under afvejning";
-		}
-		%>
-			<input type="radio" name="produktbatchValg" value="<%= produktBatch.getPbId() %>">
-			<font color="<%=color%>">Status:<%=status %> produktbatch id <%=produktBatch.getPbId() %>: <%=produktBatch.getRecept().getReceptNavn() %></font><br>
-		<%
-	}
-	%>
-	<div class="bottomSubmit">
-		<input type="submit" value="Vælg produktbatch">
+		<form method="POST" action="">
+			<div class="bottomSubmit">
+				Indtast receptnavn for at søge:<input type = "text" name = "searchProduktBatch"><input type = "submit" name="searchProduktB" value="Soeg på recept navn"><br>
+			</div>
+			<%
+			ArrayList<ProduktBatchDTO> produktbatchList = produktAdmin.getProduktbatch();
+			for (int i=0; i<produktbatchList.size(); i++) {
+				
+				dto.ProduktBatchDTO produktBatch = produktbatchList.get(i);
+				String color = "black";
+				String status = "Ikke påbegyndt";
+				if(produktBatch.getStatus()==1)
+				{
+					color = "green";
+					status = "Under produktion";
+				}
+				else if(produktBatch.getStatus()==2)
+				{
+					color = "";
+					status = "Afsluttet";
+				}
+				else if(produktBatch.getStatus()==3)
+				{
+					color = "red";
+					status = "FEJL under afvejning";
+				}
+				%>
+					<input type="radio" name="produktbatchValg" value="<%= produktBatch.getPbId() %>">
+					<font color="<%=color%>">Status:<%=status %> produktbatch id <%=produktBatch.getPbId() %>: <%=produktBatch.getRecept().getReceptNavn() %></font><br>
+				<%
+			}
+			%>
+			<div class="bottomSubmit">
+				<input type="submit" value="Vælg produktbatch">
+			</div>
+			
+		</form>
+		
 	</div>
-	
-</form>
+		
 </body>
 </html>

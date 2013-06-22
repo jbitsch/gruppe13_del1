@@ -10,43 +10,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
-	<%@include file="../../static/style.css" %>
+	<%@include file="../../static/style2.css" %>
 </style>
 
 <title>Vælg Råvare</title>
 
 </head>
 <body>
-<jsp:include page="menubar.jsp" /><br>
-<h1>Vælg råvare</h1>
 
-<form method="POST" action="">
-<table border="1">
-    <tr>
-    <th WIDTH="10"></th>
-    <th>Råvarenavn</th>
-    <th>Råvare id</th>
-    </tr>	
-<%
-	ArrayList<RaavareDTO> raavareList = raavareAdmin.getRaavare();
-	for (int i=0; i<raavareList.size(); i++) {
-		RaavareDTO raavare = raavareList.get(i);
-		%>
-			<tr>
-				<td WIDTH="10"><input type="radio" name="raavarevalg" value="<%= raavare.getRaavareId() %>"></td>
-				<td>  <%= raavare.getRaavareNavn() %></td>
-				<td align="Right"><%=raavare.getRaavareId()%>
-				
-			</tr>
+	<div class="header">
+		<div class="headerContent">
+			<jsp:include page="menubar.jsp" />
+		</div>
+	</div>
+	
+	
+	<div class="content">
+	
+		<h1>Vælg råvare</h1>
+		
+		<form method="POST" action="">
+		<table border="1">
+		    <tr>
+		    <th WIDTH="10"></th>
+		    <th>Råvarenavn</th>
+		    <th>Råvare id</th>
+		    </tr>	
 		<%
-	}
-%>
-</table>
-<div class="bottomSubmit">
-	<input type="submit" value="Vælg raavare">
-</div>
-
-</form>
+			ArrayList<RaavareDTO> raavareList = raavareAdmin.getRaavare();
+			for (int i=0; i<raavareList.size(); i++) {
+				RaavareDTO raavare = raavareList.get(i);
+				%>
+					<tr>
+						<td WIDTH="10"><input type="radio" name="raavarevalg" value="<%= raavare.getRaavareId() %>"></td>
+						<td>  <%= raavare.getRaavareNavn() %></td>
+						<td align="Right"><%=raavare.getRaavareId()%>
+						
+					</tr>
+				<%
+			}
+		%>
+		</table>
+		<div class="bottomSubmit">
+			<input type="submit" value="Vælg raavare">
+		</div>
+		
+		</form>
+	
+	</div>
 
 </body>
 

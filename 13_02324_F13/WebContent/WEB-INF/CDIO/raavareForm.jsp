@@ -8,64 +8,71 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <style type="text/css">
-	<%@include file="../../static/style.css" %>
+	<%@include file="../../static/style2.css" %>
 </style>
 
 <title>Råvare form</title>
 </head>
 <body>
-<jsp:include page="menubar.jsp" /><br>
-<h1>Indtast råvare information</h1>
 
-<p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
-
-<form method="POST" action="">
-<table border="0">	
-	<%
-	if(raavareAdmin.getIsnew())
-	{
-	%>
-	<tr>
-	<td>Råvare id:</td>
-	<td> <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"></td>
-	</tr>
-	<%
-	}
-	else
-	{
-		%>
-		<tr>
-			<td>Råvare id:</td> 
-			<td><%=raavareAdmin.getRaavareId()%></td>	
-		</tr>
-		<%
-	}
-	%>
-	<tr>
-		<td>Råvare navn:</td>
-		<td><input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"></td>
-	</tr>
-</table>
-	<div class="bottomSubmit">
-		<%
-		if(raavareAdmin.getIsnew())
-		{
-			%>
-				<input type="submit" name="handling" value="Opret Raavare">
-			<%
-		}
-		else
-		{
-			%>
-				<input type = "submit" name="Tilbage" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
-				<input type="hidden" name="menuValg" value="Administrer raavare" />	
-			<%
-		}
-		%>
+	<div class="header">
+		<div class="headerContent">
+			<jsp:include page="menubar.jsp" />
+		</div>
 	</div>
 	
-</form>
-
+	<div class="content">
+		<h1>Indtast råvare information</h1>
+		
+		<p><font color="red"><%=raavareAdmin.getError() %></font><font color="green"><%= raavareAdmin.getSucces() %></font><br>
+		
+		<form method="POST" action="">
+		<table border="0">	
+			<%
+			if(raavareAdmin.getIsnew())
+			{
+			%>
+			<tr>
+			<td>Råvare id:</td>
+			<td> <input name="raavareId" type="text" size = 8 value = "<%= raavareAdmin.getRaavareId() %>"></td>
+			</tr>
+			<%
+			}
+			else
+			{
+				%>
+				<tr>
+					<td>Råvare id:</td> 
+					<td><%=raavareAdmin.getRaavareId()%></td>	
+				</tr>
+				<%
+			}
+			%>
+			<tr>
+				<td>Råvare navn:</td>
+				<td><input name="raavareNavn" type="text" size = 20 value = "<%= raavareAdmin.getRaavareNavn() %>"></td>
+			</tr>
+		</table>
+			<div class="bottomSubmit">
+				<%
+				if(raavareAdmin.getIsnew())
+				{
+					%>
+						<input type="submit" name="handling" value="Opret Raavare">
+					<%
+				}
+				else
+				{
+					%>
+						<input type = "submit" name="Tilbage" value="Tilbage"><input type="submit" name="handling" value="Ændre Raavare">
+						<input type="hidden" name="menuValg" value="Administrer raavare" />	
+					<%
+				}
+				%>
+			</div>
+			
+		</form>
+	</div>
 
 
 </body>
