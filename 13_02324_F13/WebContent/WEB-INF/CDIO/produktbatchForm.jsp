@@ -8,7 +8,7 @@
 <html>
 
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 		<style type="text/css">
 			<%@include file="../../static/style2.css" %>
@@ -21,7 +21,7 @@
 
 		<div class="header">
 			<div class="headerContent">
-				<jsp:include page="menubar.jsp" />
+				<jsp:include page="menubar.jsp"/>
 			</div>
 		</div>
 		
@@ -35,7 +35,7 @@
 				<div class="indhold">
 					<div  id="receptListe">
 					   <div id="radios">
-						   <form method="POST">
+						   <form method="POST" action="">
 								<%
 									ArrayList<ReceptDTO>recepter =  produktAdmin.getRecepter();
 							
@@ -45,7 +45,7 @@
 									int id = recept.getReceptId();
 								%>
 									<div class="row">
-										<input type="radio" name="produktbatchReceptId" value="<%=id %>" style="display:inline"/>
+										<input type="radio" name="produktbatchReceptId" value="<%=id %>" style="display:inline">
 										Receptnavn: <%= recept.getReceptNavn() %>
 									</div>
 								<%
@@ -62,9 +62,9 @@
 					   	for (int i=0; i<recepter.size(); i++) {
 					   	%>
 					   	<div class="row">
-						   	<form method="post">
+						   	<form method="post" action="">
 							   	<input class="submitLink" type ="submit" name="show" value="Vis raavare">
-							   	<input type="hidden" name="visInfo" value="<%=recepter.get(i).getReceptId()%>"/> <br>
+							   	<input type="hidden" name="visInfo" value="<%=recepter.get(i).getReceptId()%>"> <br>
 						   	</form>
 						</div>
 					   	<%

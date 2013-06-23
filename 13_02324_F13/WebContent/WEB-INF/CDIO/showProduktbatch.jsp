@@ -89,8 +89,8 @@
 				<%
 		}
 		%>
-		<form method="POST">
-		<input type="hidden" name="menuValg" value="Vis produktbatch" />
+		<form method="POST" action="">
+		<input type="hidden" name="menuValg" value="Vis produktbatch">
 		
 		<div class="bottomSubmit">	
 			<input type = "submit" name="Tilbage" value="Tilbage">

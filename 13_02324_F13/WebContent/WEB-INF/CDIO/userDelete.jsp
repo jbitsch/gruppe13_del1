@@ -26,7 +26,7 @@
 		<font color="green"><%= brugerAdmin.getSucces() %></font><br>
 		<form method="post" action="">
 						<input type = "submit" name="menuValg" value="Tilbage"><input type="submit" name="handling" value="Ændre">
-						<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp" />
+						<input type="hidden" name="backpage" value="/WEB-INF/CDIO/chooseUser.jsp">
 		</form>
 	</div>
 
