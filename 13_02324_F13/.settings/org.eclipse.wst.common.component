@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="13_02324_F13_Final">
+    <wb-module deploy-name="gr13Bilag">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/Weight"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/System"/>
-        <property name="java-output-path" value="/13_02324_F13_Final/build/classes"/>
-        <property name="context-root" value="13_02324_F13_Final"/>
+        <property name="java-output-path" value="/gr13Bilag/build/classes"/>
+        <property name="context-root" value="gr13Bilag"/>
     </wb-module>
 </project-modules>

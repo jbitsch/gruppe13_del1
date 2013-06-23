@@ -75,7 +75,6 @@ public class Controller {
 			connectToWeight();
 		}
 		connectToDB();
-		System.out.println("hejconnection");
 		sekvens();
 	}
 
@@ -561,7 +560,7 @@ public class Controller {
 					e.printStackTrace();
 				}
 				try {
-					Scale = InetAddress.getByName("169.254.2.3");
+					Scale = InetAddress.getByName(ip);
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				}
