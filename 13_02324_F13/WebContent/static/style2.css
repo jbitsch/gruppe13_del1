@@ -160,6 +160,30 @@ input
 	border-bottom: 1px solid gray;
 }
 
+.hr
+{
+	width:755px;
+	padding-top:5px;
+	border-bottom:2px solid #ADE695;
+	margin-bottom:5px;
+}
+.punkHr
+{
+	width:755px;
+	padding-top:5px;
+	border-bottom:1px dashed #000;
+	margin-bottom:5px;
+
+}
+#tableTemplate
+{
+	position:relative;
+	width:755px;
+	text-align:left; 
+	height: 52px; 
+	border:none;
+}
+
 /*
 Menubar
 I foelgende er der hentet inspiration fra:
