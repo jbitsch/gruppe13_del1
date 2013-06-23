@@ -133,11 +133,11 @@ Råvare navn: <%=receptKomp.getRaavare().getRaavareNavn() %><br>
 }%>
 <p class=information>
 <%
-	DecimalFormat df = new DecimalFormat("#.00000");
+	DecimalFormat df = new DecimalFormat("#.000");
 	df.format(sNetto); 
 %>
 Sum Tara: 	<%=sTara %><br>
-Sum Netto:	<%=sNetto %><br>
+Sum Netto:	<%=df.format(sNetto) %><br>
 </p>
 
 <p class=information>
