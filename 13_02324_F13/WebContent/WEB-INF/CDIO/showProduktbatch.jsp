@@ -2,6 +2,7 @@
 <%@page import="dto.ReceptKompDTO"%>
 <%@page import="dto.ProduktBatchDTO"%>
 <%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.text.DecimalFormat" %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -131,6 +132,10 @@ Råvare navn: <%=receptKomp.getRaavare().getRaavareNavn() %><br>
 <%
 }%>
 <p class=information>
+<%
+	DecimalFormat df = new DecimalFormat("#.00000");
+	df.format(sNetto); 
+%>
 Sum Tara: 	<%=sTara %><br>
 Sum Netto:	<%=sNetto %><br>
 </p>
